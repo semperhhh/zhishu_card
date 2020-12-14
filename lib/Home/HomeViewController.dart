@@ -29,8 +29,8 @@ class _HomeViewControllerState extends State<HomeViewController> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add_alarm),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Icon(Icons.add_alarm),
         onPressed: () {
           print("FloatingActionButton");
         },
