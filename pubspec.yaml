@@ -30,7 +30,9 @@ dependencies:
   cupertino_icons: ^1.0.1
   # 屏幕适配
   flutter_screenutil: ^4.0.0-beta1
-
+  # 图片选择
+  image_picker: ^0.6.7
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

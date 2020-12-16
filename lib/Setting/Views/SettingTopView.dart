@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../SettingViewController.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -8,15 +8,33 @@ class SettingTopView extends StatefulWidget {
 }
 
 class _SettingTopViewState extends State<SettingTopView> {
+  MethodChannel _methodChannel = MethodChannel("picture_page");
+
+  @override
+  void initState() {
+    super.initState();
+    _methodChannel.setMethodCallHandler((call) async {
+      if (call.method == "picture-ios") {
+        print("ios call arguments --- " + call.arguments);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var headView = Container(
       height: 60,
       width: 60,
-      child: Image.asset(
-        "asset/images/my_微信_icon.png",
-        height: 56,
-        width: 56,
+      child: GestureDetector(
+        onTap: () {
+          print("点击了头像 调出原生相册");
+          _methodChannel.invokeMapMethod("picture");
+        },
+        child: Image.asset(
+          "asset/images/me_head_empty.png",
+          height: 56,
+          width: 56,
+        ),
       ),
       decoration: BoxDecoration(
           shape: BoxShape.circle,
