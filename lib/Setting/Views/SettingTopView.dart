@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,13 +11,22 @@ class SettingTopView extends StatefulWidget {
 
 class _SettingTopViewState extends State<SettingTopView> {
   MethodChannel _methodChannel = MethodChannel("picture_page");
-
+  String _imageFile;
   @override
   void initState() {
     super.initState();
     _methodChannel.setMethodCallHandler((call) async {
       if (call.method == "picture-ios") {
-        print("ios call arguments --- " + call.arguments);
+        if (call.arguments == "error") {
+          print("图片获取失败");
+        } else if (call.arguments == "fileError") {
+          print("图片地址获取失败");
+        } else {
+          print("图片地址 -- " + call.arguments);
+          setState(() {
+            _imageFile = call.arguments;
+          });
+        }
       }
     });
   }
@@ -30,10 +41,13 @@ class _SettingTopViewState extends State<SettingTopView> {
           print("点击了头像 调出原生相册");
           _methodChannel.invokeMapMethod("picture");
         },
-        child: Image.asset(
-          "asset/images/me_head_empty.png",
-          height: 56,
-          width: 56,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: _imageFile == null
+                    ? AssetImage("asset/images/me_head_empty.png")
+                    : FileImage(File(_imageFile))),
+          ),
         ),
       ),
       decoration: BoxDecoration(

@@ -11,13 +11,21 @@ import PhotosUI
             picker.dismiss(animated: true, completion: nil)
             return
         }
+
         // UTType.image.identifier 图片格式
+        // 这个 api 返回的是一个 URL 类型的临时文件路径，苹果在这个 API 的说明中指出：系统会把请求的文件数据复制到这个路径对应的地址，并且在回调执行完毕后删除临时文件。
         if let itemProvider: NSItemProvider = results.first?.itemProvider {
             itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { (url, error) in
-                guard let u = url else {
+
+                guard error == nil else {
+                    self.methodChannel.invokeMethod("picture-ios", arguments: "error")
                     return
                 }
-                self.methodChannel.invokeMethod("picture-ios", arguments: u)
+                guard let fileStr:String = url?.path else {
+                    self.methodChannel.invokeMethod("picture-ios", arguments: "fileError")
+                    return
+                }
+                self.methodChannel.invokeMethod("picture-ios", arguments: fileStr)
             }
         }
         picker.dismiss(animated: true, completion: nil)
