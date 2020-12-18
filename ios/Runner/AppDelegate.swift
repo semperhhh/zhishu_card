@@ -11,10 +11,13 @@ import PhotosUI
             picker.dismiss(animated: true, completion: nil)
             return
         }
+        // UTType.image.identifier 图片格式
         if let itemProvider: NSItemProvider = results.first?.itemProvider {
-            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
-                let img: UIImage? = object as? UIImage
-                self?.methodChannel.invokeMethod("picture-ios", arguments: "img")
+            itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { (url, error) in
+                guard let u = url else {
+                    return
+                }
+                self.methodChannel.invokeMethod("picture-ios", arguments: u)
             }
         }
         picker.dismiss(animated: true, completion: nil)
@@ -29,6 +32,8 @@ import PhotosUI
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
+    requestUserPrivateState()
+
     // 调用相册
     let vc: FlutterViewController = self.window.rootViewController as! FlutterViewController
 
@@ -36,6 +41,7 @@ import PhotosUI
     config.selectionLimit = 1
     config.filter = PHPickerFilter.images
     let picker = PHPickerViewController(configuration: config)
+    picker.modalPresentationStyle = .fullScreen
     picker.delegate = self
 
     methodChannel = FlutterMethodChannel(name: "picture_page", binaryMessenger: vc as! FlutterBinaryMessenger)
@@ -49,4 +55,22 @@ import PhotosUI
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
+    /// 获取用户权限
+    func requestUserPrivateState() {
+        let level: PHAccessLevel = PHAccessLevel.readWrite
+        // 请求权限, limited 权限仅在 accessLevel 为 readAndWrite 时生效
+        PHPhotoLibrary.requestAuthorization(for: level) { (status) in
+            switch status {
+            case .authorized:
+                print("-- authorized 授权")
+            case .denied:
+                print("-- denied 拒绝")
+            case .limited:
+                print("-- limited 有限的")
+            default:
+                break
+            }
+        }
+    }
 }
