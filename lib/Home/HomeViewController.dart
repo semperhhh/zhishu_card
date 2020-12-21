@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 
 // 主页
@@ -9,7 +10,7 @@ class HomeViewController extends StatefulWidget {
 
 class _HomeViewControllerState extends State<HomeViewController> {
   // 数据
-  List<String> dataList = ["1", "2", "3", "4"];
+  List<String> dataList = ["1", "2", "3", "4", "5", "6"];
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,9 @@ class _HomeViewControllerState extends State<HomeViewController> {
       ),
       body: Container(
         child: ListView.builder(
+          padding: EdgeInsets.all(15),
           itemBuilder: (context, index) {
-            return Text(dataList[index]);
+            return HomeTableViewCell(name: index.toString());
           },
           itemCount: dataList.length,
         ),
@@ -35,6 +37,49 @@ class _HomeViewControllerState extends State<HomeViewController> {
           print("FloatingActionButton");
         },
         backgroundColor: Colors.blue,
+      ),
+    );
+  }
+}
+
+// cell
+class HomeTableViewCell extends StatefulWidget {
+  final String name;
+  // init
+  HomeTableViewCell({Key key, @required this.name}) : super(key: key);
+  @override
+  _HomeTableViewCellState createState() => _HomeTableViewCellState();
+}
+
+class _HomeTableViewCellState extends State<HomeTableViewCell> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: ColorUtil.blue,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey,
+                offset: Offset(3, 3),
+                blurRadius: 6,
+                spreadRadius: 2),
+          ]),
+      margin: EdgeInsets.only(top: 8, bottom: 8),
+      height: 128,
+      child: Row(
+        children: [
+          Text(widget.name),
+          SizedBox(
+            width: 10,
+          ),
+          Text(widget.name)
+        ],
       ),
     );
   }
