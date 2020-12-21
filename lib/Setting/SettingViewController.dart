@@ -43,16 +43,6 @@ class _SettingViewControllerState extends State<SettingViewController>
 
   @override
   Widget build(BuildContext context) {
-    var floatingActionButton2 = FloatingActionButton.extended(
-      onPressed: () {
-        setState(() {
-          _currentIndex += 1;
-          print("currentIndex - $widget.currentIndex");
-        });
-      },
-      label: Icon(Icons.add),
-      backgroundColor: Colors.red,
-    );
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,11 +51,26 @@ class _SettingViewControllerState extends State<SettingViewController>
         ),
       ),
       body: SettingInheritedWidget(
-          child: Row(
-            children: [SettingTopView()],
+          child: Column(
+        children: [
+          SettingTopView(),
+          Row(
+            children: [
+              Text("推送设置"),
+            ],
           ),
-          index: _currentIndex),
-      floatingActionButton: floatingActionButton2,
+          Row(
+            children: [
+              Text("关于质数任务"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("退出登录"),
+            ],
+          ),
+        ],
+      )),
     );
   }
 

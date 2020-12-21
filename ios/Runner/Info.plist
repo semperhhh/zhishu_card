@@ -49,5 +49,7 @@
 	<string>&apos;质数任务&apos;请求访问您的相册</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>&apos;质数任务&apos;请求访问您的本地网络</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<false/>
 </dict>
 </plist>

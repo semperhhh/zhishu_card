@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -12,9 +13,24 @@ class SettingTopView extends StatefulWidget {
 class _SettingTopViewState extends State<SettingTopView> {
   MethodChannel _methodChannel = MethodChannel("picture_page");
   String _imageFile;
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickerdFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickerdFile != null) {
+        print(pickerdFile.path);
+        _image = File(pickerdFile.path);
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    /* 调用原生相册
     _methodChannel.setMethodCallHandler((call) async {
       if (call.method == "picture-ios") {
         if (call.arguments == "error") {
@@ -29,6 +45,7 @@ class _SettingTopViewState extends State<SettingTopView> {
         }
       }
     });
+    */
   }
 
   @override
@@ -38,24 +55,21 @@ class _SettingTopViewState extends State<SettingTopView> {
       width: 60,
       child: GestureDetector(
         onTap: () {
-          print("点击了头像 调出原生相册");
-          _methodChannel.invokeMapMethod("picture");
+          print("GestureDetector");
+          getImage();
         },
         child: Container(
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            border: Border.all(width: 4, color: Colors.cyan),
             image: DecorationImage(
-                image: _imageFile == null
+                fit: BoxFit.cover,
+                image: _image == null
                     ? AssetImage("asset/images/me_head_empty.png")
-                    : FileImage(File(_imageFile))),
+                    : FileImage(_image)),
           ),
         ),
       ),
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.cyan,
-            width: 4,
-          )),
     );
     var nameView = Container(
         margin: EdgeInsets.only(left: 8),
