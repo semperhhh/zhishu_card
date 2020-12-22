@@ -14,14 +14,14 @@ class MyApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         ScreenUtil.init(constraints,
-            designSize: Size(750, 1334), allowFontScaling: false);
+            designSize: Size(375, 667), allowFontScaling: false);
         return MaterialApp(
-          home: RootViewController(),
-          theme: ThemeData(
-            primaryColor: Colors.cyan,
-            fontFamily: "PingFangSC",
-          ),
-        );
+            home: RootViewController(),
+            theme: ThemeData(
+                primaryColor: Colors.cyan,
+                fontFamily: "PingFangSC",
+                splashColor: Colors.transparent, // 水波纹
+                highlightColor: Colors.transparent));
       },
     );
   }
@@ -47,6 +47,7 @@ class _RootViewControllerState extends State<RootViewController> {
         controller: _pageController,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 12,
         unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
         selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
         items: [

@@ -74,7 +74,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       height: 128,
       child: Row(
         children: [
-          Text(widget.name),
+          Text(widget.name + "12331231331231"),
           SizedBox(
             width: 10,
           ),
