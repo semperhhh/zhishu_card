@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card_flutter/Home/HomeViewController.dart';
 import 'package:zhishu_card_flutter/Setting/SettingViewController.dart';
+import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 
 main(List<String> args) {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             home: RootViewController(),
             theme: ThemeData(
-                primaryColor: Colors.cyan,
+                primaryColor: ColorUtil.blue,
                 fontFamily: "PingFangSC",
                 splashColor: Colors.transparent, // 水波纹
                 highlightColor: Colors.transparent));

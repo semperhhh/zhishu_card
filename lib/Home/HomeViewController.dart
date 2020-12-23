@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 
@@ -22,6 +25,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
         ),
       ),
       body: Container(
+        color: ColorUtil.grey,
         child: ListView.builder(
           padding: EdgeInsets.all(15),
           itemBuilder: (context, index) {
@@ -66,12 +70,12 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
           boxShadow: [
             BoxShadow(
                 color: Colors.grey,
-                offset: Offset(3, 3),
-                blurRadius: 6,
+                offset: Offset(1, 1),
+                blurRadius: 3,
                 spreadRadius: 2),
           ]),
-      margin: EdgeInsets.only(top: 8, bottom: 8),
-      height: 128,
+      margin: EdgeInsets.only(top: 8, bottom: 10),
+      height: 108,
       child: Row(
         children: [
           Text(widget.name + "12331231331231"),

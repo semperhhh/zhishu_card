@@ -52,14 +52,17 @@ class _SettingViewControllerState extends State<SettingViewController>
       ),
       body: SettingInheritedWidget(
         index: 0,
-        child: Column(
-          children: [
-            SettingTopView(),
-            SizedBox(height: 55),
-            SettingViewCell(name: "推送设置", color: ColorUtil.red),
-            SettingViewCell(name: "关于", color: ColorUtil.orange),
-            SettingViewCell(name: "退出登录", color: ColorUtil.green),
-          ],
+        child: Container(
+          color: ColorUtil.grey,
+          child: Column(
+            children: [
+              SettingTopView(),
+              SizedBox(height: 40),
+              SettingViewCell(name: "推送设置"),
+              SettingViewCell(name: "关于"),
+              SettingViewCell(name: "退出登录", color: ColorUtil.green),
+            ],
+          ),
         ),
       ),
     );
@@ -73,7 +76,7 @@ class _SettingViewControllerState extends State<SettingViewController>
 class SettingViewCell extends StatefulWidget {
   String name;
   Color color;
-  SettingViewCell({Key key, @required this.name, @required this.color});
+  SettingViewCell({Key key, @required this.name, this.color = Colors.white});
   @override
   _SettingViewCellState createState() => _SettingViewCellState();
 }
@@ -86,7 +89,7 @@ class _SettingViewCellState extends State<SettingViewCell> {
           print("gesture -- ${widget.name}");
         },
         child: Container(
-          margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+          margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
           height: 64,
           child: Center(
             child: Text(

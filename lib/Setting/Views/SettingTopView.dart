@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -22,6 +24,9 @@ class _SettingTopViewState extends State<SettingTopView> {
       if (pickerdFile != null) {
         print(pickerdFile.path);
         _image = File(pickerdFile.path);
+        SharedPreferences.getInstance().then((p) {
+          p.setString("head", pickerdFile.path);
+        });
       }
     });
   }
@@ -29,6 +34,16 @@ class _SettingTopViewState extends State<SettingTopView> {
   @override
   void initState() {
     super.initState();
+
+    SharedPreferences.getInstance().then((p) {
+      String path = p.getString("head");
+      print(path);
+      if (path != null) {
+        setState(() {
+          _image = File(path);
+        });
+      }
+    });
 
     /* 调用原生相册
     _methodChannel.setMethodCallHandler((call) async {
@@ -61,7 +76,7 @@ class _SettingTopViewState extends State<SettingTopView> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            border: Border.all(width: 4, color: Colors.cyan),
+            border: Border.all(width: 4, color: ColorUtil.blue),
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: _image == null
@@ -89,7 +104,11 @@ class _SettingTopViewState extends State<SettingTopView> {
           ],
         ));
     Widget content = Container(
-      color: Colors.yellow,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      margin: EdgeInsets.only(top: 20, left: 15, right: 15),
       height: 140,
       width: ScreenUtil().screenWidth,
       padding: EdgeInsets.only(left: 20),

@@ -32,6 +32,10 @@ dependencies:
   flutter_screenutil: ^4.0.0-beta1
   # 图片选择
   image_picker: ^0.6.7
+  # userPrefer
+  shared_preferences: ^0.5.12+4
+  # 文件操作
+  path_provider: ^1.6.24
   
 dev_dependencies:
   flutter_test:
