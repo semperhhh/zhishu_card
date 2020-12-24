@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
+import 'package:zhishu_card_flutter/Tools/FileUtil.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -20,27 +22,29 @@ class _SettingTopViewState extends State<SettingTopView> {
 
   Future getImage() async {
     final pickerdFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickerdFile != null) {
-        print(pickerdFile.path);
-        _image = File(pickerdFile.path);
-        SharedPreferences.getInstance().then((p) {
-          p.setString("head", pickerdFile.path);
+    if (pickerdFile != null) {
+      print(pickerdFile.path);
+      _image = File(pickerdFile.path);
+      setState(() {}); // 更新状态
+      // 保存图片
+      _image.readAsBytes().then((list) {
+        FileUtil.writeAsFile("head.png", list).then((value) {
+          if (value) {
+            print("头像保存成功");
+          }
         });
-      }
-    });
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
 
-    SharedPreferences.getInstance().then((p) {
-      String path = p.getString("head");
-      print(path);
-      if (path != null) {
+    FileUtil.getLocalFile("head.png").then((value) {
+      if (value != null) {
         setState(() {
-          _image = File(path);
+          _image = value;
         });
       }
     });
