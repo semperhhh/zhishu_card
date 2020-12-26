@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 import '../Models/HomeModel.dart';
@@ -8,8 +7,10 @@ import '../Models/HomeModel.dart';
 // cell
 class HomeTableViewCell extends StatefulWidget {
   final String name;
+  // 数据
+  HomeModel model;
   // init
-  HomeTableViewCell({Key key, @required this.name}) : super(key: key);
+  HomeTableViewCell(this.model, {Key key, this.name}) : super(key: key);
   @override
   _HomeTableViewCellState createState() => _HomeTableViewCellState();
 }
@@ -22,13 +23,13 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
 
   @override
   Widget build(BuildContext context) {
-    final int timeInt = Random().nextInt(120);
+    final int timeInt = widget.model.time;
 
     // 背景样式
     CellColor _cellcolor = CellColor.random(timeInt);
 
     // 标题
-    Text nameText = Text("标题",
+    Text nameText = Text(widget.model.name,
         style: TextStyle(
             fontSize: 16.w, color: Colors.white, fontWeight: fontMedium));
 
@@ -77,6 +78,8 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     TextButton clockButton = TextButton(
       onPressed: () {
         print("click button");
+        widget.model.isDone = true;
+        setState(() {});
       },
       child: Container(
         padding: EdgeInsets.only(left: 15, right: 15),
@@ -91,6 +94,21 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
               fontWeight: fontMedium,
               fontSize: 14.w),
         ),
+      ),
+    );
+
+    // 完成
+    Widget doneView = Container(
+      padding: EdgeInsets.only(left: 15, right: 15),
+      alignment: Alignment.center,
+      height: 36,
+      child: Text(
+        "Done!",
+        style: TextStyle(
+            color: Colors.black,
+            fontWeight: fontMedium,
+            fontSize: 14.w,
+            fontFamily: fontErasBold),
       ),
     );
 
@@ -117,7 +135,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         ),
         Positioned(
           right: 15,
-          child: clockButton,
+          child: widget.model.isDone == true ? doneView : clockButton,
         )
       ],
     );

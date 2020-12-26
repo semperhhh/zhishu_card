@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card_flutter/Home/HomeViewController.dart';
+import 'package:zhishu_card_flutter/Setting/SettingAboutVC.dart';
+import 'package:zhishu_card_flutter/Setting/SettingSendVC.dart';
 import 'package:zhishu_card_flutter/Setting/SettingViewController.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';

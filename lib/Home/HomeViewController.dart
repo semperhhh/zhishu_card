@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
-
+import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
 
 // 主页
@@ -17,7 +17,12 @@ class _HomeViewControllerState extends State<HomeViewController>
   bool get wantKeepAlive => true;
 
   // 数据
-  List<String> dataList = ["1", "2", "3", "4", "5", "6"];
+  List<HomeModel> dataList = [
+    HomeModel("英语单词", 30),
+    HomeModel("Swift底层", 150, isDone: true),
+    HomeModel("FlutterUI", 100, isDone: true),
+    HomeModel("工作", 300, isDone: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _HomeViewControllerState extends State<HomeViewController>
         child: ListView.builder(
           padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
           itemBuilder: (context, index) {
-            return HomeTableViewCell(name: index.toString());
+            return HomeTableViewCell(dataList[index]);
           },
           itemCount: dataList.length,
         ),

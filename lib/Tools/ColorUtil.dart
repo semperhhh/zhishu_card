@@ -41,11 +41,11 @@ class CellColor {
 
   static CellColor random(int time) {
     CellColorType type;
-    if (time < 15) {
+    if (time < 45) {
       type = CellColorType.blue;
-    } else if (time < 45) {
+    } else if (time < 90) {
       type = CellColorType.green;
-    } else if (time < 75) {
+    } else if (time < 120) {
       type = CellColorType.purple;
     } else {
       type = CellColorType.orange;

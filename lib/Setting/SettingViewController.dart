@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zhishu_card_flutter/Setting/SettingAboutVC.dart';
+import 'package:zhishu_card_flutter/Setting/SettingSendVC.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 import 'Views/SettingTopView.dart';
@@ -60,7 +62,7 @@ class _SettingViewControllerState extends State<SettingViewController>
               SizedBox(height: 40),
               SettingViewCell(name: "推送设置"),
               SettingViewCell(name: "关于"),
-              SettingViewCell(name: "退出登录", color: ColorUtil.green),
+              SettingViewCell(name: "退出登录", color: ColorUtil.green)
             ],
           ),
         ),
@@ -76,7 +78,8 @@ class _SettingViewControllerState extends State<SettingViewController>
 class SettingViewCell extends StatefulWidget {
   String name;
   Color color;
-  SettingViewCell({Key key, @required this.name, this.color = Colors.white});
+  SettingViewCell({Key key, @required this.name, this.color = Colors.white})
+      : super(key: key);
   @override
   _SettingViewCellState createState() => _SettingViewCellState();
 }
@@ -86,7 +89,16 @@ class _SettingViewCellState extends State<SettingViewCell> {
   Widget build(BuildContext context) {
     var gesture = GestureDetector(
         onTap: () {
-          print("gesture -- ${widget.name}");
+          final name = widget.name;
+          if (name == "退出登录") {
+            print("exit -- ");
+          } else if (name == "推送设置") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingSendVC()));
+          } else if (name == "关于") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingAboutVC()));
+          }
         },
         child: Container(
           margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
