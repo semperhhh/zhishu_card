@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
             home: RootViewController(),
             theme: ThemeData(
                 primaryColor: ColorUtil.blue,
-                fontFamily: "PingFangSC",
+                fontFamily: fontPingFange,
                 splashColor: Colors.transparent, // 水波纹
                 highlightColor: Colors.transparent));
       },

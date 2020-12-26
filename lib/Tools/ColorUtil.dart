@@ -26,4 +26,43 @@ class ColorUtil {
     return Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
         .withOpacity(1.0);
   }
+
+  // 返回一个class, class包含文字颜色, 背景图
+
+}
+
+enum CellColorType { blue, purple, green, orange }
+
+class CellColor {
+  final Color bgColor;
+  final String imageName;
+  final Color timeColor;
+  CellColor(this.bgColor, this.imageName, this.timeColor);
+
+  static CellColor random(int time) {
+    CellColorType type;
+    if (time < 15) {
+      type = CellColorType.blue;
+    } else if (time < 45) {
+      type = CellColorType.green;
+    } else if (time < 75) {
+      type = CellColorType.purple;
+    } else {
+      type = CellColorType.orange;
+    }
+    switch (type) {
+      case CellColorType.blue:
+        return CellColor(ColorUtil.fromHex("#5B7CFF"), "cell_1",
+            ColorUtil.fromHex("#CED7FE"));
+      case CellColorType.green:
+        return CellColor(ColorUtil.fromHex("#01D5AC"), "cell_2",
+            ColorUtil.fromHex("#C9FFF5"));
+      case CellColorType.purple:
+        return CellColor(ColorUtil.fromHex("#8968FF"), "cell_3",
+            ColorUtil.fromHex("#D1C5FF"));
+      default:
+        return CellColor(ColorUtil.fromHex("#FFB223"), "cell_4",
+            ColorUtil.fromHex("#FFF2DB"));
+    }
+  }
 }
