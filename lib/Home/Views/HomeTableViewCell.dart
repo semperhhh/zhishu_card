@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math';
-
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import '../Models/HomeModel.dart';
 
 // cell
 class HomeTableViewCell extends StatefulWidget {
@@ -40,50 +40,37 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     TextSpan hourTextSpan = TextSpan(
       children: [
         TextSpan(
-          text: hourInt.toString(),
-          style: TextStyle(
-            fontSize: 24.w,
-            fontWeight: fontMedium,
-            color: Colors.white,
-          ),
-        ),
+            text: hourInt.toString(),
+            style: TextStyle(
+                fontSize: 24.w, fontWeight: fontMedium, color: Colors.white)),
         TextSpan(
-          text: "时",
-          style: TextStyle(
-            fontSize: 15.w,
-            fontWeight: FontWeight.bold,
-            color: _cellcolor.timeColor,
-          ),
-        ),
+            text: "时",
+            style: TextStyle(
+                fontSize: 15.w,
+                fontWeight: FontWeight.bold,
+                color: _cellcolor.timeColor)),
       ],
     );
 
     // 分
     TextSpan minuteTextSpan = TextSpan(children: [
       TextSpan(
-        text: minuteInt.toString(),
-        style: TextStyle(
-          fontSize: 24.w,
-          fontWeight: fontMedium,
-          color: Colors.white,
-        ),
-      ),
+          text: minuteInt.toString(),
+          style: TextStyle(
+              fontSize: 24.w, fontWeight: fontMedium, color: Colors.white)),
       TextSpan(
-        text: "分",
-        style: TextStyle(
-          fontSize: 15.w,
-          fontWeight: FontWeight.bold,
-          color: _cellcolor.timeColor,
-        ),
-      )
+          text: "分",
+          style: TextStyle(
+              fontSize: 15.w,
+              fontWeight: FontWeight.bold,
+              color: _cellcolor.timeColor))
     ]);
 
     // 时间
     Text subNameText = Text.rich(
       TextSpan(
-        children:
-            hourInt > 0 ? [hourTextSpan, minuteTextSpan] : [minuteTextSpan],
-      ),
+          children:
+              hourInt > 0 ? [hourTextSpan, minuteTextSpan] : [minuteTextSpan]),
     );
 
     // 打卡按钮
@@ -107,39 +94,45 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       ),
     );
 
-    return Container(
-        decoration: BoxDecoration(
-          color: _cellcolor.bgColor,
-          borderRadius: BorderRadius.circular(8),
+    Widget stackView = Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(
+          left: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              nameText,
+              SizedBox(height: 12),
+              subNameText,
+            ],
+          ),
         ),
+        Positioned(
+          top: -10,
+          right: -20,
+          width: 100,
+          height: 100,
+          child: Image.asset("asset/images/${_cellcolor.imageName}.png"),
+        ),
+        Positioned(
+          right: 15,
+          child: clockButton,
+        )
+      ],
+    );
+
+    Widget _container = Container(
         margin: EdgeInsets.only(top: 8, bottom: 10),
         height: 108,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  nameText,
-                  SizedBox(height: 12),
-                  subNameText,
-                ],
-              ),
-            ),
-            Positioned(
-              top: -10,
-              right: -20,
-              width: 100,
-              height: 100,
-              child: Image.asset("asset/images/${_cellcolor.imageName}.png"),
-            ),
-            Positioned(
-              right: 15,
-              child: clockButton,
-            )
-          ],
+        child: ClipRRect(
+          child: Container(
+            child: stackView,
+            color: _cellcolor.bgColor,
+          ),
+          borderRadius: BorderRadius.circular(8),
         ));
+
+    return _container;
   }
 }
