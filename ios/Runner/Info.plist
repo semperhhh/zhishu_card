@@ -24,6 +24,14 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>'质数任务'请求访问您的照相机</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>'质数任务'请求访问您的本地网络</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>'质数任务'请求访问您的相册</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -42,14 +50,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>&apos;质数任务&apos;请求访问您的照相机</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&apos;质数任务&apos;请求访问您的相册</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>&apos;质数任务&apos;请求访问您的本地网络</string>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<false/>
 </dict>
 </plist>

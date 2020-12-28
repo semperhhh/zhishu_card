@@ -119,13 +119,21 @@ class _SettingTopViewState extends State<SettingTopView> {
             children: [
               ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 180.w),
-                  child: Text("ofjsfsdoffjsofj",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18.sp))),
+                  child: _nameStr != ""
+                      ? Text(_nameStr,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp))
+                      : Text("给自己起个名字吧",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.sp))),
               SizedBox(width: 7),
               Image.asset(
                 "asset/images/my_bianji_icon.png",
@@ -137,13 +145,18 @@ class _SettingTopViewState extends State<SettingTopView> {
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
           SizedBox(height: 6),
-          Text(_descStr,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.bold))
+          _descStr != ""
+              ? Text(_descStr,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold))
+              : Text("定个小目标",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black45, fontSize: 12.sp))
         ],
       ),
     );
