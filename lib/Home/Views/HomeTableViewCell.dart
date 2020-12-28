@@ -99,18 +99,14 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
 
     // 完成
     Widget doneView = Container(
-      padding: EdgeInsets.only(left: 15, right: 15),
-      alignment: Alignment.center,
-      height: 36,
-      child: Text(
-        "Done!",
-        style: TextStyle(
-            color: Colors.black,
-            fontWeight: fontMedium,
-            fontSize: 14.w,
-            fontFamily: fontErasBold),
-      ),
-    );
+        padding: EdgeInsets.only(left: 15, right: 15),
+        alignment: Alignment.center,
+        child: Text("Done!",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: fontMedium,
+                fontSize: 16.sp,
+                fontFamily: fontErasBold)));
 
     Widget stackView = Stack(
       alignment: Alignment.center,
@@ -151,6 +147,13 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
           borderRadius: BorderRadius.circular(8),
         ));
 
-    return _container;
+    Widget _gesture = GestureDetector(
+      child: _container,
+      onLongPress: () {
+        print("长按添加记录");
+      },
+    );
+
+    return _gesture;
   }
 }

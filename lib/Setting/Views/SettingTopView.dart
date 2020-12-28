@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/FileUtil.dart';
+import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -18,6 +19,8 @@ class _SettingTopViewState extends State<SettingTopView> {
   MethodChannel _methodChannel = MethodChannel("picture_page");
   String _imageFile;
   File _image;
+  String _nameStr = ""; // 名称
+  String _descStr = ""; // 描述
   final picker = ImagePicker();
 
   Future getImage() async {
@@ -41,6 +44,22 @@ class _SettingTopViewState extends State<SettingTopView> {
   void initState() {
     super.initState();
 
+    // set name
+    /*
+    SharedPreferences.getInstance().then((value) {
+      value.setString("name", "zhangsan");
+      value.setString("desc", "换个好工作");
+    });
+    */
+
+    // get name
+    SharedPreferences.getInstance().then((value) {
+      _nameStr = value.getString("name") != null ? value.getString("name") : "";
+      _descStr = value.getString("desc") != null ? value.getString("desc") : "";
+      setState(() {});
+    });
+
+    // get head
     FileUtil.getLocalFile("head.png").then((value) {
       if (value != null) {
         setState(() {
@@ -91,35 +110,68 @@ class _SettingTopViewState extends State<SettingTopView> {
       ),
     );
     var nameView = Container(
-        margin: EdgeInsets.only(left: 8),
-        height: 56,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "name",
+      margin: EdgeInsets.only(left: 8, right: 8),
+      height: 56,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 180.w),
+                  child: Text("ofjsfsdoffjsofj",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.sp))),
+              SizedBox(width: 7),
+              Image.asset(
+                "asset/images/my_bianji_icon.png",
+                color: Colors.grey[400],
+                height: 16.w,
+                width: 16.w,
+              ),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.center,
+          ),
+          SizedBox(height: 6),
+          Text(_descStr,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18),
-            ),
-            SizedBox(height: 6),
-            Text("描述 描述 描述 ", textAlign: TextAlign.left),
-          ],
-        ));
-    Widget content = Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      margin: EdgeInsets.only(top: 20, left: 15, right: 15),
-      height: 140,
-      width: ScreenUtil().screenWidth,
-      padding: EdgeInsets.only(left: 20),
-      child: Row(
-        children: [headView, nameView],
+                  color: Colors.black54,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold))
+        ],
       ),
     );
+
+    Widget nameGesture = GestureDetector(
+      child: nameView,
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return SimpleDialog(
+                title: Text("dialog"),
+              );
+            });
+      },
+    );
+
+    Widget content = Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.only(top: 20, left: 15, right: 15),
+        height: 140,
+        padding: EdgeInsets.only(left: 20),
+        child: Row(
+          children: [headView, Expanded(child: nameGesture)],
+        ));
     return content;
   }
 
