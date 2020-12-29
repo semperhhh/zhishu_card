@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/FileUtil.dart';
@@ -43,14 +42,6 @@ class _SettingTopViewState extends State<SettingTopView> {
   @override
   void initState() {
     super.initState();
-
-    // set name
-    /*
-    SharedPreferences.getInstance().then((value) {
-      value.setString("name", "zhangsan");
-      value.setString("desc", "换个好工作");
-    });
-    */
 
     // get name
     SharedPreferences.getInstance().then((value) {
@@ -161,14 +152,58 @@ class _SettingTopViewState extends State<SettingTopView> {
       ),
     );
 
+    TextEditingController _nameController = TextEditingController();
+    TextEditingController _descController = TextEditingController();
+
     Widget nameGesture = GestureDetector(
       child: nameView,
       onTap: () {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return SimpleDialog(
-                title: Text("dialog"),
+              return AlertDialog(
+                title: Text("信息"),
+                content: SingleChildScrollView(
+                    child: ListBody(children: [
+                  TextField(
+                      controller: _nameController,
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                          labelText: "昵称", hintText: "不超过10个字符")),
+                  TextField(
+                      controller: _descController,
+                      maxLength: 20,
+                      decoration: InputDecoration(
+                          labelText: "小目标", hintText: "不超过20个字符")),
+                ])),
+                actions: [
+                  FlatButton(
+                      child: Text("确定"),
+                      onPressed: () {
+                        // 昵称
+                        if (_nameController.text.length > 0) {
+                          _nameStr = _nameController.text;
+                          SharedPreferences.getInstance().then((value) {
+                            value.setString("name", _nameStr);
+                          });
+                        }
+                        // 描述
+                        if (_descController.text.length > 0) {
+                          _descStr = _descController.text;
+                          SharedPreferences.getInstance().then((value) {
+                            value.setString("desc", _descStr);
+                          });
+                        }
+                        Navigator.pop(context);
+                        // 更新topview
+                        setState(() {});
+                      }),
+                  FlatButton(
+                      child: Text("取消"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      })
+                ],
               );
             });
       },
