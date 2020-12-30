@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zhishu_card_flutter/Home/HomeAddVC.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 import 'Models/HomeModel.dart';
@@ -48,6 +49,10 @@ class _HomeViewControllerState extends State<HomeViewController>
         label: Icon(Icons.add_alarm),
         onPressed: () {
           print("FloatingActionButton");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (builderText) => HomeAddVC(),
+            fullscreenDialog: true,
+          ));
         },
         backgroundColor: Colors.blue,
       ),

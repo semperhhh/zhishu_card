@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zhishu_card_flutter/Setting/SettingAboutVC.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/FileUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
@@ -160,7 +162,7 @@ class _SettingTopViewState extends State<SettingTopView> {
       onTap: () {
         showDialog(
             context: context,
-            builder: (BuildContext context) {
+            builder: (BuildContext currentText) {
               return AlertDialog(
                 title: Text("信息"),
                 content: SingleChildScrollView(
@@ -194,14 +196,14 @@ class _SettingTopViewState extends State<SettingTopView> {
                             value.setString("desc", _descStr);
                           });
                         }
-                        Navigator.pop(context);
+                        Navigator.of(currentText).pop();
                         // 更新topview
                         setState(() {});
                       }),
                   FlatButton(
                       child: Text("取消"),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.of(currentText).pop();
                       })
                 ],
               );
