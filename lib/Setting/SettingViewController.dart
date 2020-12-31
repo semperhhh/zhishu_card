@@ -47,10 +47,7 @@ class _SettingViewControllerState extends State<SettingViewController>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "setting",
-          style: TextStyle(fontFamily: fontErasBold),
-        ),
+        title: Text("设置"),
       ),
       body: SettingInheritedWidget(
         index: 0,

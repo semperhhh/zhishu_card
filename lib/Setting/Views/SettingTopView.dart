@@ -92,7 +92,7 @@ class _SettingTopViewState extends State<SettingTopView> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            border: Border.all(width: 4, color: ColorUtil.blue),
+            border: Border.all(width: 4, color: ColorUtil.grey),
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: _image == null
@@ -104,9 +104,9 @@ class _SettingTopViewState extends State<SettingTopView> {
     );
     var nameView = Container(
       margin: EdgeInsets.only(left: 8, right: 8),
-      height: 56,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
@@ -118,22 +118,16 @@ class _SettingTopViewState extends State<SettingTopView> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.black87,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.sp))
+                              fontWeight: FontWeight.w600,
+                              fontFamily: fontPingFange,
+                              fontSize: 20.sp))
                       : Text("给自己起个名字吧",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.black45,
                               fontWeight: FontWeight.w600,
-                              fontSize: 16.sp))),
-              SizedBox(width: 7),
-              Image.asset(
-                "asset/images/my_bianji_icon.png",
-                color: Colors.grey[400],
-                height: 16.w,
-                width: 16.w,
-              ),
+                              fontSize: 20.sp)))
             ],
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
@@ -144,12 +138,12 @@ class _SettingTopViewState extends State<SettingTopView> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.black54,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold))
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.normal))
               : Text("定个小目标",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black45, fontSize: 12.sp))
+                  style: TextStyle(color: Colors.black45, fontSize: 13.sp))
         ],
       ),
     );

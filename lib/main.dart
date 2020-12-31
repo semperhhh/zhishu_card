@@ -19,7 +19,11 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             home: RootViewController(),
             theme: ThemeData(
-                primaryColor: ColorUtil.blue,
+                platform: TargetPlatform.iOS,
+                // brightness: Brightness.light, // 主题颜色
+                primaryColor: Colors.blue[400],
+                appBarTheme: AppBarTheme(
+                    color: ColorUtil.grey, shadowColor: Colors.white),
                 fontFamily: fontPingFange,
                 splashColor: Colors.transparent, // 水波纹
                 highlightColor: Colors.transparent));

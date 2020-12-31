@@ -136,16 +136,40 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       ],
     );
 
+    // 描述
+    Widget descView = Container(
+      child: Stack(
+        children: [
+          Padding(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: Container(height: 0.5, color: ColorUtil.grey)),
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                widget.model.descriptionString,
+                style: TextStyle(fontFamily: fontErasBold, fontSize: 13.sp),
+              ))
+        ],
+      ),
+    );
+
+    Widget contentView = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widget.model.descriptionString != ""
+          ? [Container(height: 108, child: stackView), descView]
+          : [Container(height: 108, child: stackView)],
+    );
+
     Widget _container = Container(
-        margin: EdgeInsets.only(top: 8, bottom: 10),
-        height: 108,
-        child: ClipRRect(
-          child: Container(
-            child: stackView,
-            color: _cellcolor.bgColor,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ));
+      margin: EdgeInsets.only(top: 8, bottom: 10),
+      child: ClipRRect(
+        child: Container(
+          child: contentView,
+          color: _cellcolor.bgColor,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
 
     Widget _gesture = GestureDetector(
       child: _container,

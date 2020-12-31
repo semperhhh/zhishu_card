@@ -20,8 +20,12 @@ class _HomeViewControllerState extends State<HomeViewController>
   // 数据
   List<HomeModel> dataList = [
     HomeModel("英语单词", 30),
-    HomeModel("Swift底层", 150, isDone: true),
-    HomeModel("FlutterUI", 100, isDone: true),
+    HomeModel("Swift底层", 150,
+        isDone: true, descriptionString: "💻晚上22:22完成了Swift的学习,明天加油!"),
+    HomeModel("FlutterUI", 100, isDone: true, descriptionString: """🤚完成了第一章的学习
+⌚️完成了第一章的练习题
+🍐明天开始学习第二章
+    """),
     HomeModel("工作", 300, isDone: false),
   ];
 
@@ -29,10 +33,7 @@ class _HomeViewControllerState extends State<HomeViewController>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "home",
-          style: TextStyle(fontFamily: fontErasBold),
-        ),
+        title: Text("任务"),
       ),
       body: Container(
         color: ColorUtil.grey,
@@ -54,7 +55,6 @@ class _HomeViewControllerState extends State<HomeViewController>
             fullscreenDialog: true,
           ));
         },
-        backgroundColor: Colors.blue,
       ),
     );
   }

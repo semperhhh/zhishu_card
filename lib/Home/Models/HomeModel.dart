@@ -5,6 +5,9 @@ class HomeModel {
   int time;
   // 是否完成
   bool isDone;
+  // 描述
+  String descriptionString;
 
-  HomeModel(this.name, this.time, {this.isDone = false});
+  HomeModel(this.name, this.time,
+      {this.isDone = false, this.descriptionString = ""});
 }

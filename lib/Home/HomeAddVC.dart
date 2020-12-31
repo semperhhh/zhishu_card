@@ -9,10 +9,7 @@ class HomeAddVC extends StatelessWidget {
         title: Text("add task", style: TextStyle(fontFamily: fontErasBold)),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.add_to_photos,
-              color: Colors.white,
-            ),
+            icon: Icon(Icons.add_to_photos),
             onPressed: () {
               print("点击了添加");
               Navigator.of(context).pop();
