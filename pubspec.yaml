@@ -31,7 +31,7 @@ dependencies:
   # 屏幕适配
   flutter_screenutil: ^4.0.0-beta1
   # 图片选择
-  image_picker: ^0.6.7
+  image_picker: ^0.6.7+17
   # userPrefer
   shared_preferences: ^0.5.12+4
   # 文件操作
@@ -73,6 +73,9 @@ flutter:
     - family: ErasBold-ITC
       fonts:
         - asset: asset/fonts/Eras-Bold-ITC.TTF
+    - family: ZCOOLKuaiLe-Regular
+      fonts:
+        - asset: asset/fonts/ZCOOLKuaiLe-Regular.ttf
     # - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
