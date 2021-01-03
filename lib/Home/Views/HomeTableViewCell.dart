@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zhishu_card_flutter/Custom/PopView/ZPPopView.dart';
+import 'package:zhishu_card_flutter/Custom/PopView/PHPopDialog.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
 
 // cell
@@ -181,105 +183,13 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       onLongPress: () {
         print("长按添加记录");
 
-        ZPHCustomDialogView(
-          context: context,
-          child: Container(
-            child: Text("13"),
-          ),
-          barrierColor: Colors.yellow,
-          transitionDuration: const Duration(milliseconds: 300),
-        ).show();
+        showToastDialog(
+            context: context,
+            child: Text(
+                "131312321sfsfsfsjssjfsfjLfjsldjfosdfjsil方就搜到福建省副书记弗兰克司法局就是考虑到福建省离开福建省离开福建省离开是减肥上课了建设路口副经理说"));
         // setState(() {});
       },
     );
     return _gesture;
-  }
-}
-
-Future showCustomDialogView(
-    {@required context,
-    @required child,
-    barrierColor = Colors.black54,
-    barrierEnable = true,
-    transitionDuration: const Duration(milliseconds: 200)}) {
-  return showGeneralDialog(
-    context: context,
-    pageBuilder: (builderText, animation, secondaryAnimation) {
-      return UnconstrainedBox(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 280, maxWidth: 280),
-          child: Material(
-            child: child,
-            type: MaterialType.card,
-          ),
-        ),
-      );
-    },
-    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    barrierColor: barrierColor,
-    barrierDismissible: barrierEnable,
-    transitionDuration: transitionDuration,
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
-        child: child,
-      );
-    },
-  );
-}
-
-// 自定义弹窗
-class ZPHCustomDialogView extends StatelessWidget {
-  ZPHCustomDialogView(
-      {@required this.context,
-      @required this.child,
-      Key key,
-      this.barrierColor = Colors.black54,
-      this.barrierEnable = true,
-      this.transitionDuration: const Duration(milliseconds: 200)})
-      : super(key: key);
-
-  // 上下文
-  final BuildContext context;
-  //控件
-  final Widget child;
-  // 遮罩背景
-  final Color barrierColor;
-  // 背景点击隐藏
-  final bool barrierEnable;
-  // 动画时间
-  final Duration transitionDuration;
-
-  @override
-  Widget build(BuildContext context) {
-    return child;
-  }
-
-  Future show() {
-    return showGeneralDialog(
-      context: this.context,
-      pageBuilder: (builderText, animation, secondaryAnimation) {
-        return UnconstrainedBox(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 280, maxWidth: 280),
-            child: Material(
-              child: child,
-              type: MaterialType.card,
-            ),
-          ),
-        );
-      },
-      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-      barrierColor: barrierColor,
-      barrierDismissible: barrierEnable,
-      transitionDuration: transitionDuration,
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return ScaleTransition(
-          scale:
-              CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
-          child: child,
-        );
-      },
-    );
   }
 }
