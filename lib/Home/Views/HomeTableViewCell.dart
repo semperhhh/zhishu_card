@@ -180,17 +180,106 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       child: _container,
       onLongPress: () {
         print("长按添加记录");
-        final popview = ZPPopView();
-        showDialog(
+
+        ZPHCustomDialogView(
           context: context,
-          builder: (builderText) {
-            return popview;
-          },
-        );
+          child: Container(
+            child: Text("13"),
+          ),
+          barrierColor: Colors.yellow,
+          transitionDuration: const Duration(milliseconds: 300),
+        ).show();
         // setState(() {});
       },
     );
-
     return _gesture;
+  }
+}
+
+Future showCustomDialogView(
+    {@required context,
+    @required child,
+    barrierColor = Colors.black54,
+    barrierEnable = true,
+    transitionDuration: const Duration(milliseconds: 200)}) {
+  return showGeneralDialog(
+    context: context,
+    pageBuilder: (builderText, animation, secondaryAnimation) {
+      return UnconstrainedBox(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 280, maxWidth: 280),
+          child: Material(
+            child: child,
+            type: MaterialType.card,
+          ),
+        ),
+      );
+    },
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: barrierColor,
+    barrierDismissible: barrierEnable,
+    transitionDuration: transitionDuration,
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return ScaleTransition(
+        scale: CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
+        child: child,
+      );
+    },
+  );
+}
+
+// 自定义弹窗
+class ZPHCustomDialogView extends StatelessWidget {
+  ZPHCustomDialogView(
+      {@required this.context,
+      @required this.child,
+      Key key,
+      this.barrierColor = Colors.black54,
+      this.barrierEnable = true,
+      this.transitionDuration: const Duration(milliseconds: 200)})
+      : super(key: key);
+
+  // 上下文
+  final BuildContext context;
+  //控件
+  final Widget child;
+  // 遮罩背景
+  final Color barrierColor;
+  // 背景点击隐藏
+  final bool barrierEnable;
+  // 动画时间
+  final Duration transitionDuration;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+
+  Future show() {
+    return showGeneralDialog(
+      context: this.context,
+      pageBuilder: (builderText, animation, secondaryAnimation) {
+        return UnconstrainedBox(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 280, maxWidth: 280),
+            child: Material(
+              child: child,
+              type: MaterialType.card,
+            ),
+          ),
+        );
+      },
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: barrierColor,
+      barrierDismissible: barrierEnable,
+      transitionDuration: transitionDuration,
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return ScaleTransition(
+          scale:
+              CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
+          child: child,
+        );
+      },
+    );
   }
 }
