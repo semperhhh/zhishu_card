@@ -179,17 +179,12 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     );
 
     Widget _gesture = GestureDetector(
-      child: _container,
-      onLongPress: () {
-        print("长按添加记录");
-
-        showToastDialog(
-            context: context,
-            child: Text(
-                "131312321sfsfsfsjssjfsfjLfjsldjfosdfjsil方就搜到福建省副书记弗兰克司法局就是考虑到福建省离开福建省离开福建省离开是减肥上课了建设路口副经理说"));
-        // setState(() {});
-      },
-    );
+        child: _container,
+        onLongPress: () {
+          print("长按添加记录");
+          showToastDialog(
+              context: context, milliseconds: 2000, text: "点击了弹窗!!!");
+        });
     return _gesture;
   }
 }

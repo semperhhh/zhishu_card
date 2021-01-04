@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 自定义toast
-Future showToastDialog(
-    {@required BuildContext context, @required Widget child}) {
-  return Navigator.of(context).push(
+void showToastDialog(
+    {@required BuildContext context,
+    @required String text,
+    int milliseconds = 2000}) async {
+  Navigator.of(context).push(
     _PHCustomDialogRoute(
       pageBuilder: (context, animation, secondaryAnimation) {
         return UnconstrainedBox(
+            alignment: Alignment(0, 0.7),
             child: Material(
-                color: Colors.transparent,
                 type: MaterialType.card,
+                color: Colors.transparent,
                 child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 280),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        padding: EdgeInsets.all(15),
-                        child: child))));
+                  constraints: BoxConstraints(maxWidth: 300.w),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(5)),
+                      padding: EdgeInsets.only(
+                          left: 15, right: 15, top: 8, bottom: 8),
+                      child: Text(text, style: TextStyle(color: Colors.white))),
+                )));
       },
-      barrierColor: Colors.black87,
-      barrierDismissible: true,
-      transitionDuration: Duration(milliseconds: 200),
+      barrierColor: Colors.transparent,
+      barrierDismissible: false,
+      transitionDuration: Duration(milliseconds: 100),
     ),
   );
+
+  Future.delayed(Duration(milliseconds: milliseconds)).then((value) {
+    Navigator.of(context).pop();
+  });
 }
 
 // 自定义弹窗
