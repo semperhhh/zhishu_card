@@ -182,8 +182,10 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         child: _container,
         onLongPress: () {
           print("长按添加记录");
-          showToastDialog(
-              context: context, milliseconds: 2000, text: "点击了弹窗!!!");
+
+          showTextFieldDialogView(context: context);
+          // showToastDialog(
+          // context: context, milliseconds: 2000, text: "点击了弹窗!!!");
         });
     return _gesture;
   }

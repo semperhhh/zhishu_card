@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
+import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 
 // 自定义toast
 void showToastDialog(
@@ -37,10 +39,76 @@ void showToastDialog(
 }
 
 // 自定义弹窗
-Future showCustomDialogView(
-    {@required BuildContext context, @required RoutePageBuilder pageBuilder}) {
-  return Navigator.of(context)
-      .push(_PHCustomDialogRoute(pageBuilder: pageBuilder));
+Future<String> showTextFieldDialogView({@required BuildContext context}) {
+  Navigator.of(context).push(_PHCustomDialogRoute(
+    pageBuilder: (context, animation, secondaryAnimation) {
+      TextEditingController _textcontroller = TextEditingController();
+      // 输入框
+      Widget contentView = Container(
+          constraints: BoxConstraints(minHeight: 80, maxHeight: 280),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(4)),
+          width: 280,
+          child: TextField(
+              controller: _textcontroller,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(15),
+                  hintText: "记录下努力的过程吧~",
+                  hintStyle:
+                      TextStyle(fontSize: 15.sp, fontFamily: fontKuaile)),
+              style: TextStyle(fontFamily: fontKuaile, fontSize: 16.sp),
+              maxLines: null));
+
+      // 按钮
+      Widget buttonView = ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 280, maxHeight: 44),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+                child: FlatButton(
+                    onPressed: () {},
+                    color: ColorUtil.grey,
+                    child: Text("稍后",
+                        style: TextStyle(
+                            fontFamily: fontKuaile,
+                            fontSize: 16,
+                            color: Colors.black54)))),
+            Expanded(
+                child: FlatButton(
+                    onPressed: () {
+                      print("textcontroller - ${_textcontroller.text}");
+                    },
+                    color: ColorUtil.blue,
+                    child: Text("确定",
+                        style: TextStyle(
+                            fontFamily: fontKuaile,
+                            fontSize: 16,
+                            color: Colors.black87)))),
+          ],
+        ),
+      );
+
+      return UnconstrainedBox(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Material(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    contentView,
+                    SizedBox(height: 8),
+                    buttonView,
+                  ],
+                ),
+              )));
+    },
+    barrierColor: Colors.black54,
+    barrierDismissible: true,
+    transitionDuration: Duration(milliseconds: 300),
+  ));
 }
 
 class _PHCustomDialogRoute extends PopupRoute {
