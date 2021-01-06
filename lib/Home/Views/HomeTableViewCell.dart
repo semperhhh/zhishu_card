@@ -183,7 +183,14 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         onLongPress: () {
           print("长按添加记录");
 
-          showTextFieldDialogView(context: context);
+          showTextFieldDialogView(
+                  context: context, currentStr: widget.model.descriptionString)
+              .then((value) {
+            print("showTextFieldDialogView - $value");
+            setState(() {
+              widget.model.descriptionString = value;
+            });
+          });
           // showToastDialog(
           // context: context, milliseconds: 2000, text: "点击了弹窗!!!");
         });

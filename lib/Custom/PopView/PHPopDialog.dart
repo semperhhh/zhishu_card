@@ -39,76 +39,88 @@ void showToastDialog(
 }
 
 // 自定义弹窗
-Future<String> showTextFieldDialogView({@required BuildContext context}) {
-  Navigator.of(context).push(_PHCustomDialogRoute(
-    pageBuilder: (context, animation, secondaryAnimation) {
-      TextEditingController _textcontroller = TextEditingController();
-      // 输入框
-      Widget contentView = Container(
-          constraints: BoxConstraints(minHeight: 80, maxHeight: 280),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(4)),
-          width: 280,
-          child: TextField(
-              controller: _textcontroller,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(15),
-                  hintText: "记录下努力的过程吧~",
-                  hintStyle:
-                      TextStyle(fontSize: 15.sp, fontFamily: fontKuaile)),
-              style: TextStyle(fontFamily: fontKuaile, fontSize: 16.sp),
-              maxLines: null));
+Future<String> showTextFieldDialogView(
+    {@required BuildContext context, String currentStr}) async {
+  TextEditingController _textcontroller =
+      TextEditingController(text: currentStr);
+  var result = await Navigator.of(context).push(
+    _PHCustomDialogRoute(
+      pageBuilder: (pagetext, animation, secondaryAnimation) {
+        // 输入框
+        TextField _textfield = TextField(
+            controller: _textcontroller,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.all(15),
+                hintText: "记录下努力的过程吧~",
+                hintStyle: TextStyle(fontSize: 15.sp, fontFamily: fontKuaile)),
+            style: TextStyle(fontFamily: fontKuaile, fontSize: 16.sp),
+            maxLines: null);
 
-      // 按钮
-      Widget buttonView = ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 280, maxHeight: 44),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-                child: FlatButton(
-                    onPressed: () {},
-                    color: ColorUtil.grey,
-                    child: Text("稍后",
-                        style: TextStyle(
-                            fontFamily: fontKuaile,
-                            fontSize: 16,
-                            color: Colors.black54)))),
-            Expanded(
-                child: FlatButton(
-                    onPressed: () {
-                      print("textcontroller - ${_textcontroller.text}");
-                    },
-                    color: ColorUtil.blue,
-                    child: Text("确定",
-                        style: TextStyle(
-                            fontFamily: fontKuaile,
-                            fontSize: 16,
-                            color: Colors.black87)))),
-          ],
-        ),
-      );
+        // 输入View
+        Widget contentView = Container(
+            constraints: BoxConstraints(minHeight: 80, maxHeight: 280),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(4)),
+            width: 280,
+            child: _textfield);
 
-      return UnconstrainedBox(
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Material(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    contentView,
-                    SizedBox(height: 8),
-                    buttonView,
-                  ],
-                ),
-              )));
-    },
-    barrierColor: Colors.black54,
-    barrierDismissible: true,
-    transitionDuration: Duration(milliseconds: 300),
-  ));
+        // 按钮
+        Widget buttonView = ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 280, maxHeight: 44),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      color: ColorUtil.grey,
+                      child: Text("稍后",
+                          style: TextStyle(
+                              fontFamily: fontKuaile,
+                              fontSize: 16,
+                              color: Colors.black54)))),
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {
+                        print("textcontroller - ${_textcontroller.text}");
+                        Navigator.of(context).pop("navigator pop");
+                      },
+                      color: ColorUtil.blue,
+                      child: Text("确定",
+                          style: TextStyle(
+                              fontFamily: fontKuaile,
+                              fontSize: 16,
+                              color: Colors.black87)))),
+            ],
+          ),
+        );
+
+        return UnconstrainedBox(
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Material(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      contentView,
+                      SizedBox(height: 8),
+                      buttonView,
+                    ],
+                  ),
+                )));
+      },
+      barrierColor: Colors.black54,
+      barrierDismissible: true,
+      transitionDuration: Duration(milliseconds: 300),
+    ),
+  );
+
+  print("result - $result");
+  return _textcontroller.text;
 }
 
 class _PHCustomDialogRoute extends PopupRoute {
