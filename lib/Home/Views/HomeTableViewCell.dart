@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zhishu_card_flutter/Custom/PopView/PHPopDialog.dart';
+import 'package:zhishu_card_flutter/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
 import 'package:zhishu_card_flutter/Tools/MainTool.dart';
 import '../../Tools/ColorUtil.dart';

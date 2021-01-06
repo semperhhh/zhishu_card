@@ -9,7 +9,7 @@ void showToastDialog(
     @required String text,
     int milliseconds = 2000}) async {
   Navigator.of(context).push(
-    _PHCustomDialogRoute(
+    _ZPHCustomDialogRoute(
       pageBuilder: (context, animation, secondaryAnimation) {
         return UnconstrainedBox(
             alignment: Alignment(0, 0.7),
@@ -44,7 +44,7 @@ Future<String> showTextFieldDialogView(
   TextEditingController _textcontroller =
       TextEditingController(text: currentStr);
   var result = await Navigator.of(context).push(
-    _PHCustomDialogRoute(
+    _ZPHCustomDialogRoute(
       pageBuilder: (pagetext, animation, secondaryAnimation) {
         // 输入框
         TextField _textfield = TextField(
@@ -123,8 +123,8 @@ Future<String> showTextFieldDialogView(
   return _textcontroller.text;
 }
 
-class _PHCustomDialogRoute extends PopupRoute {
-  _PHCustomDialogRoute(
+class _ZPHCustomDialogRoute extends PopupRoute {
+  _ZPHCustomDialogRoute(
       {@required RoutePageBuilder pageBuilder,
       bool barrierDismissible = true,
       Color barrierColor = Colors.red,
