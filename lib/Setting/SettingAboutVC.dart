@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/ColorUtil.dart';
 
 class SettingAboutVC extends StatelessWidget {
   @override

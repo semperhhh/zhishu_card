@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zhishu_card_flutter/Setting/SettingAboutVC.dart';
-import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
-import 'package:zhishu_card_flutter/Tools/FileUtil.dart';
-import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import 'package:zhishu_card/Setting/SettingAboutVC.dart';
+import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/FileUtil.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
 
 class SettingTopView extends StatefulWidget {
   @override

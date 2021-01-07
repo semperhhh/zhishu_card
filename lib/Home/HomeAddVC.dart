@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
 
 class HomeAddVC extends StatelessWidget {
   @override

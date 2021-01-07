@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card_flutter/Setting/SettingAboutVC.dart';
-import 'package:zhishu_card_flutter/Setting/SettingSendVC.dart';
-import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
-import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import 'package:zhishu_card/Setting/SettingAboutVC.dart';
+import 'package:zhishu_card/Setting/SettingSendVC.dart';
+import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
 import 'Views/SettingTopView.dart';
 
 // 数据共享

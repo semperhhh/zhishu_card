@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
-import 'package:zhishu_card_flutter/Home/HomeAddVC.dart';
-import 'package:zhishu_card_flutter/Tools/ColorUtil.dart';
-import 'package:zhishu_card_flutter/Tools/MainTool.dart';
+import 'package:zhishu_card/Home/HomeAddVC.dart';
+import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
 import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
 

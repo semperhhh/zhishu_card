@@ -1,4 +1,4 @@
-# zhishu_card_flutter
+# zhishu_card
 
 A new Flutter project.
 
