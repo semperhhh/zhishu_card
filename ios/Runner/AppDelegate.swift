@@ -3,7 +3,7 @@ import Flutter
 import PhotosUI
 
 @UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate, PHPickerViewControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+@objc class AppDelegate: FlutterAppDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         print(info)
@@ -13,6 +13,7 @@ import PhotosUI
 
     }
 
+    /*
     // MARK: PHPickerViewControllerDelegate
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard results.count > 0 else {
@@ -59,19 +60,10 @@ import PhotosUI
         }
         picker.dismiss(animated: true, completion: nil)
     }
+*/
 
     /// 通道
     var methodChannel: FlutterMethodChannel!
-
-    lazy var pickerVC: PHPickerViewController = {
-        var config = PHPickerConfiguration()
-        config.selectionLimit = 1
-        config.filter = PHPickerFilter.images
-        let picker = PHPickerViewController(configuration: config)
-        picker.modalPresentationStyle = .fullScreen
-        picker.delegate = self
-        return picker
-    }()
 
   override func application(
     _ application: UIApplication,
@@ -91,13 +83,14 @@ import PhotosUI
     methodChannel.setMethodCallHandler { (call, result) in
         if call.method == "picture" {
             print("call method - ", call.method)
-            self.selectUserPrivateState()
+//            self.selectUserPrivateState()
         }
     }
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
+    /*
     func selectUserPrivateState() {
         let level: PHAccessLevel = PHAccessLevel.readWrite
         let status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(for: level)
@@ -158,6 +151,7 @@ import PhotosUI
             }
         }
     }
+    */
 }
 
 /*

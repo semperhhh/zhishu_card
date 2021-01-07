@@ -115,7 +115,14 @@ Future<String> showTextFieldDialogView(
       },
       barrierColor: Colors.black54,
       barrierDismissible: true,
-      transitionDuration: Duration(milliseconds: 300),
+      transitionDuration: Duration(milliseconds: 200),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return ScaleTransition(
+          scale:
+              CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
+          child: child,
+        );
+      },
     ),
   );
 
@@ -130,15 +137,20 @@ class _ZPHCustomDialogRoute extends PopupRoute {
       Color barrierColor = Colors.red,
       String barrierLabel,
       Duration transitionDuration = const Duration(seconds: 2),
+      RouteTransitionsBuilder transitionBuilder,
       RouteSettings settings})
       : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierColor = barrierColor,
         _barrierLabel = barrierLabel,
+        _transitionBuilder = transitionBuilder,
         _transitionDuration = transitionDuration,
         super(settings: settings);
 
   final RoutePageBuilder _pageBuilder;
+
+  // 动画
+  final RouteTransitionsBuilder _transitionBuilder;
 
   @override
   Color get barrierColor => _barrierColor;
@@ -165,4 +177,18 @@ class _ZPHCustomDialogRoute extends PopupRoute {
   @override
   Duration get transitionDuration => _transitionDuration;
   final Duration _transitionDuration;
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (_transitionBuilder == null) {
+      return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.linear,
+          ),
+          child: child);
+    } // Some default transition
+    return _transitionBuilder(context, animation, secondaryAnimation, child);
+  }
 }
