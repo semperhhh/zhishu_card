@@ -115,11 +115,10 @@ Future<String> showTextFieldDialogView(
       },
       barrierColor: Colors.black54,
       barrierDismissible: true,
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return ScaleTransition(
-          scale:
-              CurvedAnimation(parent: animation, curve: Curves.easeInOutBack),
+          scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
           child: child,
         );
       },

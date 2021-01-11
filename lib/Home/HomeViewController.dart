@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar/flutter_calendar.dart';
 import 'package:zhishu_card/Home/HomeAddVC.dart';
+import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/MainTool.dart';
+import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
 
@@ -36,7 +36,19 @@ class _HomeViewControllerState extends State<HomeViewController>
       appBar: AppBar(
         title: Text("任务"),
         actions: <Widget>[
-          Text("日历"),
+          IconButton(
+              icon: Icon(
+                Icons.calendar_today,
+                color: ColorUtil.blue,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (buildertext) {
+                    return HomeCalendarVC();
+                  },
+                  fullscreenDialog: true,
+                ));
+              }),
         ],
       ),
       body: Container(

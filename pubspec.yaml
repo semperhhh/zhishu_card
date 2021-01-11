@@ -37,7 +37,7 @@ dependencies:
   # 文件操作
   path_provider: ^1.6.24
   # 日历
-  flutter_calendar: ^0.0.1
+  table_calendar: ^2.3.3
   
 dev_dependencies:
   flutter_test:

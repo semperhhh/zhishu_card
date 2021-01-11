@@ -4,9 +4,10 @@ import 'package:zhishu_card/Home/HomeViewController.dart';
 import 'package:zhishu_card/Setting/SettingViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 main(List<String> args) {
-  runApp(MyApp());
+  initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
