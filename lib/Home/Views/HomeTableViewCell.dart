@@ -113,7 +113,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
                 fontFamily: fontErasBold)));
 
     Widget stackView = Container(
-      height: 108,
+      height: 78,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -123,7 +123,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 nameText,
-                SizedBox(height: 12),
+                SizedBox(height: 6),
                 subNameText,
               ],
             ),
@@ -131,8 +131,8 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
           Positioned(
             top: -10,
             right: -20,
-            width: 100,
-            height: 100,
+            width: 70,
+            height: 70,
             child: Image.asset("asset/images/${_cellcolor.imageName}.png"),
           ),
           Positioned(
@@ -168,7 +168,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     );
 
     Widget _container = Container(
-      margin: EdgeInsets.only(top: 8, bottom: 10),
+      margin: EdgeInsets.only(top: 6, bottom: 6),
       child: ClipRRect(
         child: Container(
           child: contentView,

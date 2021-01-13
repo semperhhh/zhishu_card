@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zhishu_card/Home/HomeAddVC.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/SharedTool.dart';
 import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
@@ -29,6 +30,13 @@ class _HomeViewControllerState extends State<HomeViewController>
     """),
     HomeModel("工作", 300, isDone: false),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    SharedTool.shared.sharedCurrentTime();
+    SharedTool.shared.sharedAllTask();
+  }
 
   @override
   Widget build(BuildContext context) {
