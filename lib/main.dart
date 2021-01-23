@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 platform: TargetPlatform.iOS,
                 // brightness: Brightness.light, // 主题颜色
-                primaryColor: Colors.blue[400],
+                primaryColor: ColorUtil.styleGreen,
                 appBarTheme: AppBarTheme(
-                    color: ColorUtil.grey, shadowColor: Colors.white),
+                    color: ColorUtil.styleGreen, shadowColor: Colors.white),
                 fontFamily: fontPingFange,
                 splashColor: Colors.transparent, // 水波纹
                 highlightColor: Colors.transparent));
@@ -46,28 +46,28 @@ class _RootViewControllerState extends State<RootViewController> {
   @override
   Widget build(BuildContext context) {
     Widget scaf = Scaffold(
-      body: PageView(
-        pageSnapping: false, // 回弹
-        physics: NeverScrollableScrollPhysics(), //
-        children: pageList,
-        controller: _pageController,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-        selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "setting"),
-        ],
-        onTap: ((index) {
-          _currentIndex = index;
-          _pageController.jumpToPage(index);
-          setState(() {});
-        }),
-        currentIndex: _currentIndex,
-      ),
-    );
+        body: PageView(
+          pageSnapping: false, // 回弹
+          physics: NeverScrollableScrollPhysics(), //
+          children: pageList,
+          controller: _pageController,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 12,
+          unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+          selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "setting"),
+          ],
+          onTap: ((index) {
+            _currentIndex = index;
+            _pageController.jumpToPage(index);
+            setState(() {});
+          }),
+          currentIndex: _currentIndex,
+        ));
     return scaf;
   }
 }

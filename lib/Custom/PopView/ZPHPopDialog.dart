@@ -53,8 +53,8 @@ Future<String> showTextFieldDialogView(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.all(15),
                 hintText: "记录下努力的过程吧~",
-                hintStyle: TextStyle(fontSize: 15.sp, fontFamily: fontKuaile)),
-            style: TextStyle(fontFamily: fontKuaile, fontSize: 16.sp),
+                hintStyle: TextStyle(fontSize: 15.sp)),
+            style: TextStyle(fontSize: 16.sp),
             maxLines: null);
 
         // 输入View
@@ -79,10 +79,8 @@ Future<String> showTextFieldDialogView(
                       },
                       color: ColorUtil.grey,
                       child: Text("稍后",
-                          style: TextStyle(
-                              fontFamily: fontKuaile,
-                              fontSize: 16,
-                              color: Colors.black54)))),
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.black54)))),
               Expanded(
                   child: FlatButton(
                       onPressed: () {
@@ -91,10 +89,8 @@ Future<String> showTextFieldDialogView(
                       },
                       color: ColorUtil.blue,
                       child: Text("确定",
-                          style: TextStyle(
-                              fontFamily: fontKuaile,
-                              fontSize: 16,
-                              color: Colors.black87)))),
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.black87)))),
             ],
           ),
         );

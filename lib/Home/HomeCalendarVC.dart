@@ -11,14 +11,15 @@ class HomeCalendarVC extends StatefulWidget {
 class _HomeCalendarVCState extends State<HomeCalendarVC> {
   // 数据
   List<HomeModel> dataList = [
-    HomeModel("英语单词", 30),
-    HomeModel("Swift底层", 150,
+    HomeModel(0, "英语单词", 30),
+    HomeModel(1, "Swift底层", 150,
         isDone: true, descriptionString: "💻晚上22:22完成了Swift的学习,明天加油!"),
-    HomeModel("FlutterUI", 100, isDone: true, descriptionString: """🤚完成了第一章的学习
+    HomeModel(2, "FlutterUI", 100,
+        isDone: true, descriptionString: """🤚完成了第一章的学习
 ⌚️完成了第一章的练习题
 🍐明天开始学习第二章
     """),
-    HomeModel("工作", 300, isDone: false),
+    HomeModel(3, "工作", 300, isDone: false),
   ];
 
   CalendarController _calendarController;

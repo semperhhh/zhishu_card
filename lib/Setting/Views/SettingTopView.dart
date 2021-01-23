@@ -121,7 +121,7 @@ class _SettingTopViewState extends State<SettingTopView> {
                               fontWeight: FontWeight.w600,
                               fontFamily: fontPingFange,
                               fontSize: 20.sp))
-                      : Text("给自己起个名字吧",
+                      : Text("名字",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -140,7 +140,7 @@ class _SettingTopViewState extends State<SettingTopView> {
                       color: Colors.black54,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.normal))
-              : Text("定个小目标",
+              : Text("目标",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.black45, fontSize: 13.sp))

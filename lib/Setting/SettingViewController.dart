@@ -47,7 +47,7 @@ class _SettingViewControllerState extends State<SettingViewController>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("设置"),
+        title: Text("设置", style: TextStyle(color: Colors.white)),
       ),
       body: SettingInheritedWidget(
         index: 0,
@@ -59,7 +59,7 @@ class _SettingViewControllerState extends State<SettingViewController>
               SizedBox(height: 40),
               SettingViewCell(name: "推送设置"),
               SettingViewCell(name: "关于"),
-              SettingViewCell(name: "退出登录", color: ColorUtil.green)
+              SettingViewCell(name: "退出登录", color: ColorUtil.styleGreen)
             ],
           ),
         ),

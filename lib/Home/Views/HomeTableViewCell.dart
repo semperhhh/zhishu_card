@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/SharedTool.dart';
 import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
 
@@ -84,6 +85,8 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         print("click button");
         widget.model.isDone = true;
         setState(() {});
+        // 回调
+        
       },
       child: Container(
         padding: EdgeInsets.only(left: 15, right: 15),
@@ -154,7 +157,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
               padding: EdgeInsets.all(10),
               child: Text(
                 widget.model.descriptionString,
-                style: TextStyle(fontFamily: fontKuaile, fontSize: 13.sp),
+                style: TextStyle(fontSize: 13.sp),
               ))
         ],
       ),

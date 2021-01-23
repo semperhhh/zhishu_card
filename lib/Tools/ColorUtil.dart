@@ -13,6 +13,9 @@ class ColorUtil {
   static const Color green = Color(0xFFA5DE37);
   static const Color purple = Color(0xFF7B72E9);
 
+  // 主题颜色-绿
+  static const Color styleGreen = Color(0xFF21C38F);
+
   // 颜色生成
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();
