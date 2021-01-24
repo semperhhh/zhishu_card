@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zhishu_card/Home/HomeAddVC.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/SharedTool.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Tools/ColorUtil.dart';
@@ -55,9 +56,7 @@ class _HomeViewControllerState extends State<HomeViewController>
       setState(() {});
     }); // 任务
 
-    SqliteTool.openData().then((value) {
-      
-    });
+    SqliteTool.openData().then((value) {});
     // 数据库操作
     // SqliteTool.insert();
   }
@@ -119,7 +118,7 @@ class _HomeViewControllerState extends State<HomeViewController>
                     Padding(
                       padding: EdgeInsets.only(top: 8, right: 115),
                       child: Text(
-                          "今天的鸡汤dfjOsdofjsofjoo哦哦飞机搜房解耦佛建瓯市就佛教佛山接of解耦司法局噢司法局OS董事局佛山金佛山金佛的解耦福建省",
+                          "今天的鸡汤d哦哦飞机搜房解耦佛建瓯市就佛教佛山接of解耦司法局噢司法局OS董事局佛山金佛山金佛的解耦福建省",
                           style: TextStyle(fontSize: 18.sp)),
                     ),
                   ],
