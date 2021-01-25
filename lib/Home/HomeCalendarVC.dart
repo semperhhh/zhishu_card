@@ -58,7 +58,7 @@ class _HomeCalendarVCState extends State<HomeCalendarVC> {
       padding: EdgeInsets.all(5),
       itemCount: dataList.length,
       itemBuilder: (context, index) {
-        return HomeTableViewCell(dataList[index]);
+        return HomeTableViewCell(model: dataList[index]);
       },
     ));
   }

@@ -5,11 +5,15 @@ class SqliteTool {
   static Database db;
 
   static Future openData() async {
+    if (db != null) {
+      return;
+    }
+
     var databasesPath = await getDatabasesPath();
     print("databasespath = $databasesPath");
     var path = "$databasesPath/zhishu.db";
 
-    await deleteDatabase(path);
+    // await deleteDatabase(path);
 
     db = await openDatabase(
       path,
@@ -21,7 +25,8 @@ class SqliteTool {
 	        content text,
 	        isFinish int default 0,
 	        allTime int default 0,
-	        time int default 0
+          doneTime int default 0,
+	        todayTime int default 0
         )
         """);
         db.execute("""
@@ -35,8 +40,15 @@ class SqliteTool {
   }
 
   // 增-每天任务
-  static Future<bool> insertFromYesterday(String yesterday) {
-    print("yesterDay -- $yesterday");
+  static void insertFromYesterday(List l, String saveDay) {
+    Map<String, dynamic> m =
+        SqliteToolYesterday._parseMapFromYesterday(l, saveDay);
+    // print("保存数据库-昨天的内容 ---- $m");
+    if (m is Map<String, dynamic>) {
+      db.insert("allTask", m).then((i) {
+        print("object----------- $i");
+      });
+    }
   }
 
   // 增
@@ -53,7 +65,7 @@ class SqliteTool {
 
   // 查
   static Future<List> getMap() {
-    return db.query("home").then((value) {
+    return db.query("allTask").then((value) {
       return value;
     });
   }
@@ -65,4 +77,43 @@ class SqliteTool {
     });
   }
   // 改
+}
+
+class SqliteToolYesterday extends SqliteTool {
+  // 处理昨天任务的保存数据库
+  static Map<String, dynamic> _parseMapFromYesterday(
+      List list, String saveDay) {
+    print("处理昨天任务的保存数据库");
+    Map m = Map<String, dynamic>();
+    int index = 0;
+    int isFinish = 0;
+    int doneTime = 0;
+    int allTime = 0;
+    list.forEach((element) {
+      if (element is Map) {
+        if (element["isDone"] == true) {
+          // 是否完成
+          isFinish += 1;
+          doneTime += element["time"];
+        }
+        if (element["time"] != null) {
+          // 完成的时间(分钟)
+          allTime += element["time"];
+        }
+      }
+      index += 1;
+    });
+    if (isFinish == index) {
+      m["isFinish"] = 2;
+    } else if (isFinish == 0) {
+      m["isFinish"] = 0;
+    } else {
+      m["isFinish"] = 1;
+    }
+    m["doneTime"] = doneTime;
+    m["allTime"] = allTime;
+    m["todayTime"] = saveDay;
+    m["content"] = list.toString();
+    return m;
+  }
 }

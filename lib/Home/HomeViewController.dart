@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zhishu_card/Home/HomeAddVC.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/SharedTool.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Tools/ColorUtil.dart';
@@ -24,41 +23,32 @@ class _HomeViewControllerState extends State<HomeViewController>
   bool get wantKeepAlive => true;
 
   // 数据
-  List<HomeModel> dataList = [
-    HomeModel(0, "英语单词", 30),
-    HomeModel(1, "Swift底层", 150,
-        isDone: true, descriptionString: "💻晚上22:22完成了Swift的学习,明天加油!"),
-    HomeModel(2, "FlutterUI", 100,
-        isDone: true, descriptionString: """🤚完成了第一章的学习
-⌚️完成了第一章的练习题
-🍐明天开始学习第二章
-    """),
-    HomeModel(3, "工作", 300, isDone: false),
-  ];
+  List<HomeModel> dataList = [];
 
   @override
   void initState() {
     super.initState();
-    SharedTool.shared.sharedCurrentTime(); // 时间
-    SharedTool.shared.sharedReadCurrentTask().then((str) {
-      if (str == null) {
-        return;
-      }
-      // 字符串转list
-      List m = JSONTool.toClass(str);
+    // 第一次打开
+    if (SharedToolUser.isFirstLaunchApp) {
+      dataList.addAll([
+        HomeModel(0, "英语单词", 30),
+        HomeModel(1, "数学习题", 100,
+            isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
+      ]);
+    }
+    // 打开数据库
+    SqliteTool.openData().then((value) {
+      SharedTool.shared.sharedCurrentTime(); // 时间
+    });
+    SharedTool.shared.sharedReadCurrentTask().then((list) {
       // list转model
-      for (Map s in m) {
-        HomeModel model = HomeModel.fromJson(s);
+      list.forEach((element) {
+        HomeModel model = HomeModel.fromJson(element);
         print(model);
         dataList.add(model);
-      }
-      print(dataList.length);
+      });
       setState(() {});
     }); // 任务
-
-    SqliteTool.openData().then((value) {});
-    // 数据库操作
-    // SqliteTool.insert();
   }
 
   @override
@@ -89,14 +79,26 @@ class _HomeViewControllerState extends State<HomeViewController>
             child: ListView.builder(
                 padding:
                     EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return _topView();
-                  } else {
-                    return HomeTableViewCell(dataList[index - 1]);
-                  }
-                },
+                itemBuilder: (context, index) => _itemBuilder(context, index),
                 itemCount: dataList.length + 1)));
+  }
+
+  // cell
+  Widget _itemBuilder(BuildContext context, int index) {
+    if (index == 0) {
+      return _topView();
+    } else {
+      return HomeTableViewCell(
+        model: dataList[index - 1],
+        didSetCallback: () {
+          // 更新偏好
+          SharedTool.shared.sharedWriteCurrentTask(dataList).then((value) {
+            print(value);
+          });
+          // 更新数据库
+        },
+      );
+    }
   }
 
   Widget _topView() {

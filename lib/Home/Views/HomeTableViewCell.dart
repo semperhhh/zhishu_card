@@ -8,14 +8,23 @@ import 'package:zhishu_card/Tools/SharedTool.dart';
 import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
 
+typedef CellDidSelectCallback = void Function();
+
 // cell
 class HomeTableViewCell extends StatefulWidget {
   // 名称
   final String name;
   // 数据
   HomeModel model;
+  // 点击cell时的回调
+  CellDidSelectCallback didSetCallback;
   // init
-  HomeTableViewCell(this.model, {Key key, this.name}) : super(key: key);
+  HomeTableViewCell({
+    Key key,
+    this.name,
+    this.didSetCallback,
+    @required this.model,
+  }) : super(key: key);
   @override
   _HomeTableViewCellState createState() => _HomeTableViewCellState();
 }
@@ -85,8 +94,8 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         print("click button");
         widget.model.isDone = true;
         setState(() {});
+        widget.didSetCallback();
         // 回调
-        
       },
       child: Container(
         padding: EdgeInsets.only(left: 15, right: 15),
@@ -116,7 +125,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
                 fontFamily: fontErasBold)));
 
     Widget stackView = Container(
-      height: 78,
+      height: 88,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -185,7 +194,6 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         child: _container,
         onLongPress: () {
           print("长按添加记录");
-
           showTextFieldDialogView(
                   context: context, currentStr: widget.model.descriptionString)
               .then((value) {

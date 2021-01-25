@@ -5,9 +5,12 @@ import 'package:zhishu_card/Setting/SettingViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:zhishu_card/Tools/SqliteTool.dart';
 
 main(List<String> args) {
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
