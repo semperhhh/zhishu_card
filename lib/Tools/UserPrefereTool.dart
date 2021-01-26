@@ -10,16 +10,21 @@ import '../Home/Models/HomeModel.dart';
 
 const String isFIRSTLSUNCHAPP = "isFirstLaunchApp"; // 第一次打开app
 
-class SharedTool {
-  static var shared = SharedTool();
+class UserPrefereTool {
+  static SharedPreferences _pres;
+
+  static Future init() async {
+    _pres = await SharedPreferences.getInstance();
+    UserPrefereToolUser.isFirstLaunch();
+    print("userPreferences load success ---- ");
+  }
 
   // 全部任务
   void sharedAllTask() async {}
 
   // 今天任务读取
-  Future<List> sharedReadCurrentTask() async {
-    SharedPreferences shared = await SharedPreferences.getInstance();
-    final str = shared.getString("currentTask");
+  static Future<List> sharedReadCurrentTask() async {
+    final str = _pres.getString("currentTask");
     if (str == null) {
       return [];
     }
@@ -29,35 +34,35 @@ class SharedTool {
   }
 
   // 今天任务写入
-  Future<String> sharedWriteCurrentTask(List<HomeModel> dataList) async {
+  static Future<String> sharedWriteCurrentTask(List<HomeModel> dataList) async {
     List<Map> list = [];
     for (var model in dataList) {
       Map c = model.toJson();
       list.add(c);
     }
-    // list.forEach((element) {});
     final currentTaskString = JSONTool.toJSONString(list);
-    SharedPreferences shared = await SharedPreferences.getInstance();
-    final String str = shared.getString("currentTask");
+    final String str = _pres.getString("currentTask");
     print("currentTaskString = $currentTaskString \nstr = $str");
     if (str == currentTaskString) {
       return "和上次没有改变,不需要写入";
     } else {
-      shared.setString("currentTask", currentTaskString);
+      _pres.setString("currentTask", currentTaskString);
       return "写入成功";
     }
   }
 
   // 今天时间
-  void sharedCurrentTime() async {
-    SharedPreferences shared = await SharedPreferences.getInstance();
+  static void sharedCurrentTime() async {
     DateTime time = DateTime.now();
     final nowDay = DateFormat("yyyy-MM-dd").format(time);
-    final String saveDay = shared.getString("currentTime");
+    final String saveDay = _pres.getString("currentTime");
     // todo
-    if (nowDay == saveDay) {
+    if (nowDay != saveDay) {
       print("时间和上次保存不同 $nowDay");
-      shared.setString("currentTime", nowDay);
+      _pres.setString("currentTime", nowDay);
+      if (saveDay == null) {
+        return;
+      }
       // 数据库保存信息
       List l = await sharedReadCurrentTask();
       SqliteTool.insertFromYesterday(l, saveDay);
@@ -67,18 +72,19 @@ class SharedTool {
   }
 }
 
-class SharedToolUser extends SharedTool {
+class UserPrefereToolUser extends UserPrefereTool {
   // 第一次打开app,引导
-  bool isFirstLaunchApp = true;
+  static bool isFirstLaunchApp;
 
   // 是不是第一次打开app,引导
-  void userPreferIsFirstLaunch() async {
-    SharedPreferences shared = await SharedPreferences.getInstance();
-    final isFirst = shared.getBool(isFIRSTLSUNCHAPP);
-    if (!isFirst) {
-      shared.setBool(isFIRSTLSUNCHAPP, false);
+  static void isFirstLaunch() {
+    final isFirst = UserPrefereTool._pres.getBool(isFIRSTLSUNCHAPP);
+    if (isFirst == null) {
+      isFirstLaunchApp = true;
+      UserPrefereTool._pres.setBool(isFIRSTLSUNCHAPP, false);
+    } else {
+      isFirstLaunchApp = false;
     }
-    isFirstLaunchApp = isFirst;
   }
 }
 

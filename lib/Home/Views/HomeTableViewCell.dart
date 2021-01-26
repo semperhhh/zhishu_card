@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
-import 'package:zhishu_card/Tools/SharedTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
 

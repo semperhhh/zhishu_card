@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
 import 'package:zhishu_card/Setting/SettingViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:zhishu_card/Tools/SqliteTool.dart';
 
 main(List<String> args) {
-  initializeDateFormatting().then((_) {
-    runApp(MyApp());
-  });
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting()
+      .then((_) => Global.init().then((value) => runApp(MyApp())));
 }
 
 class MyApp extends StatelessWidget {

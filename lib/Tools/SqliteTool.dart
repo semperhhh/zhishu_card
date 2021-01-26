@@ -2,20 +2,19 @@ import 'package:sqflite/sqflite.dart';
 
 class SqliteTool {
   // 数据库
-  static Database db;
+  static Database _db;
 
   static Future openData() async {
-    if (db != null) {
+    if (_db != null) {
       return;
     }
-
     var databasesPath = await getDatabasesPath();
     print("databasespath = $databasesPath");
     var path = "$databasesPath/zhishu.db";
 
     // await deleteDatabase(path);
 
-    db = await openDatabase(
+    _db = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) {
@@ -37,23 +36,24 @@ class SqliteTool {
         """);
       },
     );
+
+    print("数据库 load success ---- ");
   }
 
   // 增-每天任务
   static void insertFromYesterday(List l, String saveDay) {
     Map<String, dynamic> m =
         SqliteToolYesterday._parseMapFromYesterday(l, saveDay);
-    // print("保存数据库-昨天的内容 ---- $m");
     if (m is Map<String, dynamic>) {
-      db.insert("allTask", m).then((i) {
-        print("object----------- $i");
+      _db.insert("allTask", m).then((i) {
+        print("保存数据库 昨天的内容----------- $i");
       });
     }
   }
 
   // 增
   static Future<bool> insert() {
-    return db.insert("home", {}).then((i) {
+    return _db.insert("home", {}).then((i) {
       print(i);
       if (i != null) {
         return true;
@@ -65,14 +65,14 @@ class SqliteTool {
 
   // 查
   static Future<List> getMap() {
-    return db.query("allTask").then((value) {
+    return _db.query("allTask").then((value) {
       return value;
     });
   }
 
   // 删
   static Future<int> delete(int id) {
-    return db.delete("home", where: "id = ?'", whereArgs: [id]).then((value) {
+    return _db.delete("home", where: "id = ?'", whereArgs: [id]).then((value) {
       return value;
     });
   }

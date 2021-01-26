@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:zhishu_card/Home/HomeAddVC.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/SharedTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
-import '../Tools/SharedTool.dart';
+import '../Tools/UserPrefereTool.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 主页
@@ -29,22 +29,24 @@ class _HomeViewControllerState extends State<HomeViewController>
   void initState() {
     super.initState();
     // 第一次打开
-    if (SharedToolUser.isFirstLaunchApp) {
-      dataList.addAll([
+    if (UserPrefereToolUser.isFirstLaunchApp) {
+      final List<HomeModel> l = [
         HomeModel(0, "英语单词", 30),
         HomeModel(1, "数学习题", 100,
             isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
-      ]);
+      ];
+      // 更新偏好
+      UserPrefereTool.sharedWriteCurrentTask(l);
     }
     // 打开数据库
     SqliteTool.openData().then((value) {
-      SharedTool.shared.sharedCurrentTime(); // 时间
+      // 判断时间,是不是保存昨天的
+      UserPrefereTool.sharedCurrentTime();
     });
-    SharedTool.shared.sharedReadCurrentTask().then((list) {
+    UserPrefereTool.sharedReadCurrentTask().then((list) {
       // list转model
       list.forEach((element) {
         HomeModel model = HomeModel.fromJson(element);
-        print(model);
         dataList.add(model);
       });
       setState(() {});
@@ -92,7 +94,7 @@ class _HomeViewControllerState extends State<HomeViewController>
         model: dataList[index - 1],
         didSetCallback: () {
           // 更新偏好
-          SharedTool.shared.sharedWriteCurrentTask(dataList).then((value) {
+          UserPrefereTool.sharedWriteCurrentTask(dataList).then((value) {
             print(value);
           });
           // 更新数据库
