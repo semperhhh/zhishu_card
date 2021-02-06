@@ -6,6 +6,8 @@ import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'Home/HomeAddVC.dart';
+import 'Custom/Extensions/CustomFloatingActionLocation.dart';
 
 main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,34 +45,62 @@ class RootViewController extends StatefulWidget {
 
 class _RootViewControllerState extends State<RootViewController> {
   int _currentIndex = 0;
-  List<Widget> pageList = [HomeViewController(), SettingViewController()];
+  List<Widget> pageList = [
+    HomeViewController(),
+    HomeAddVC(),
+    SettingViewController()
+  ];
   final _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
     Widget scaf = Scaffold(
-        body: PageView(
-          pageSnapping: false, // 回弹
-          physics: NeverScrollableScrollPhysics(), //
-          children: pageList,
-          controller: _pageController,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedFontSize: 12,
-          unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-          selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "setting"),
-          ],
-          onTap: ((index) {
+      body: PageView(
+        pageSnapping: false, // 回弹
+        physics: NeverScrollableScrollPhysics(), //
+        children: pageList,
+        controller: _pageController,
+      ),
+      bottomNavigationBar:
+          // BottomAppBar(
+          //     shape: CircularNotchedRectangle(),
+          //     child: Row(
+          //       children: [
+          //         IconButton(icon: Icon(Icons.ac_unit)),
+          //         SizedBox(),
+          //         IconButton(icon: Icon(Icons.settings)),
+          //       ],
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //     )),
+          BottomNavigationBar(
+        selectedFontSize: 12,
+        unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+        selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: "add"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "setting"),
+        ],
+        onTap: ((index) {
+          _pageController.jumpToPage(index);
+          setState(() {
             _currentIndex = index;
-            _pageController.jumpToPage(index);
-            setState(() {});
+          });
+        }),
+        currentIndex: _currentIndex,
+      ),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.miniCenterDocked, 0, 0),
+      floatingActionButton: FloatingActionButton.extended(
+          label: Icon(Icons.add_alarm),
+          onPressed: () {
+            print("FloatingActionButton");
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (builderText) => HomeAddVC(),
+              fullscreenDialog: true,
+            ));
           }),
-          currentIndex: _currentIndex,
-        ));
+    );
     return scaf;
   }
 }

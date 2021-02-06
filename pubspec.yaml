@@ -90,9 +90,6 @@ flutter:
     - family: ZCOOLKuaiLe-Regular
       fonts:
         - asset: asset/fonts/ZCOOLKuaiLe-Regular.ttf
-    - family: ZCOOLQingKeHuangYou-Regular
-      fonts:
-        - asset: asset/fonts/ZCOOLQingKeHuangYou-Regular.ttf
     # - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

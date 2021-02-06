@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card/Home/HomeAddVC.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
-import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
@@ -29,28 +27,41 @@ class _HomeViewControllerState extends State<HomeViewController>
   void initState() {
     super.initState();
     // 第一次打开
-    if (UserPrefereToolUser.isFirstLaunchApp) {
+    if (UserPrefereToolFirst.isFirstLaunchApp) {
       final List<HomeModel> l = [
-        HomeModel(0, "英语单词", 30),
-        HomeModel(1, "数学习题", 100,
+        HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30),
+        HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
             isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
       ];
       // 更新偏好
       UserPrefereTool.sharedWriteCurrentTask(l);
+      UserPrefereTool.sharedWriteAllTask(l);
+      UserPrefereToolFirst.userSaveTimeFirstLaunch();
     }
-    // 打开数据库
-    SqliteTool.openData().then((value) {
-      // 判断时间,是不是保存昨天的
-      UserPrefereTool.sharedCurrentTime();
-    });
-    UserPrefereTool.sharedReadCurrentTask().then((list) {
-      // list转model
-      list.forEach((element) {
-        HomeModel model = HomeModel.fromJson(element);
-        dataList.add(model);
+
+    // 判断时间,是不是保存昨天的
+    if (UserPrefereTool.sharedTimeIsToday() == true) {
+      // 今天,读已有数据
+      UserPrefereTool.sharedReadCurrentTask().then((list) {
+        // list转model
+        list.forEach((element) {
+          HomeModel model = HomeModel.fromJson(element);
+          dataList.add(model);
+        });
+        setState(() {});
+      }); // 任务
+    } else {
+      // 昨天,保存数据,读新数据
+      UserPrefereTool.sharedSaveDataFromSqlite();
+      UserPrefereTool.sharedReadAllTask().then((list) {
+        list.forEach((element) {
+          HomeModel model = HomeModel.fromJson(element);
+          dataList.add(model);
+        });
+        // dataList = list.map((e) => HomeModel.fromJson(e));
+        setState(() {});
       });
-      setState(() {});
-    }); // 任务
+    }
   }
 
   @override
@@ -62,16 +73,6 @@ class _HomeViewControllerState extends State<HomeViewController>
           // _topView(),
           _bodyView()
         ]),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-        floatingActionButton: FloatingActionButton.extended(
-            label: Icon(Icons.add_alarm),
-            onPressed: () {
-              print("FloatingActionButton");
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (builderText) => HomeAddVC(),
-                fullscreenDialog: true,
-              ));
-            }),
       );
 
   Widget _bodyView() {

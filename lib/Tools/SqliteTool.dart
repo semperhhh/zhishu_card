@@ -36,19 +36,7 @@ class SqliteTool {
         """);
       },
     );
-
     print("数据库 load success ---- ");
-  }
-
-  // 增-每天任务
-  static void insertFromYesterday(List l, String saveDay) {
-    Map<String, dynamic> m =
-        SqliteToolYesterday._parseMapFromYesterday(l, saveDay);
-    if (m is Map<String, dynamic>) {
-      _db.insert("allTask", m).then((i) {
-        print("保存数据库 昨天的内容----------- $i");
-      });
-    }
   }
 
   // 增
@@ -79,7 +67,17 @@ class SqliteTool {
   // 改
 }
 
-class SqliteToolYesterday extends SqliteTool {
+extension SqliteToolTask on SqliteTool {
+  // 增-每天任务
+  static void insertFromYesterday(List l, String saveDay) {
+    Map<String, dynamic> m = SqliteToolTask._parseMapFromYesterday(l, saveDay);
+    if (m is Map<String, dynamic>) {
+      SqliteTool._db.insert("allTask", m).then((i) {
+        print("保存数据库 昨天的内容----------- $i");
+      });
+    }
+  }
+
   // 处理昨天任务的保存数据库
   static Map<String, dynamic> _parseMapFromYesterday(
       List list, String saveDay) {

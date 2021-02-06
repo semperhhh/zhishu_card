@@ -45,7 +45,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     // 标题
     Text nameText = Text(widget.model.name,
         style: TextStyle(
-            fontSize: 16.w, color: Colors.white, fontWeight: fontMedium));
+            fontSize: 16.sp, color: Colors.white, fontWeight: fontMedium));
 
     // 时间内容
     final int hourInt = timeInt ~/ 60;
@@ -57,11 +57,11 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         TextSpan(
             text: hourInt.toString(),
             style: TextStyle(
-                fontSize: 24.w, fontWeight: fontMedium, color: Colors.white)),
+                fontSize: 24.sp, fontWeight: fontMedium, color: Colors.white)),
         TextSpan(
             text: "时",
             style: TextStyle(
-                fontSize: 15.w,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.bold,
                 color: _cellcolor.timeColor)),
       ],
@@ -72,11 +72,11 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       TextSpan(
           text: minuteInt.toString(),
           style: TextStyle(
-              fontSize: 24.w, fontWeight: fontMedium, color: Colors.white)),
+              fontSize: 24.sp, fontWeight: fontMedium, color: Colors.white)),
       TextSpan(
           text: "分",
           style: TextStyle(
-              fontSize: 15.w,
+              fontSize: 15.sp,
               fontWeight: FontWeight.bold,
               color: _cellcolor.timeColor))
     ]);
@@ -108,7 +108,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
           style: TextStyle(
               color: _cellcolor.bgColor,
               fontWeight: fontMedium,
-              fontSize: 14.w),
+              fontSize: 14.sp),
         ),
       ),
     );
@@ -125,7 +125,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
                 fontFamily: fontErasBold)));
 
     Widget stackView = Container(
-      height: 88,
+      height: 88.h,
       child: Stack(
         alignment: Alignment.center,
         children: [
