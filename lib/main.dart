@@ -61,18 +61,7 @@ class _RootViewControllerState extends State<RootViewController> {
         children: pageList,
         controller: _pageController,
       ),
-      bottomNavigationBar:
-          // BottomAppBar(
-          //     shape: CircularNotchedRectangle(),
-          //     child: Row(
-          //       children: [
-          //         IconButton(icon: Icon(Icons.ac_unit)),
-          //         SizedBox(),
-          //         IconButton(icon: Icon(Icons.settings)),
-          //       ],
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     )),
-          BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,
         unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
         selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
@@ -89,17 +78,18 @@ class _RootViewControllerState extends State<RootViewController> {
         }),
         currentIndex: _currentIndex,
       ),
-      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
-          FloatingActionButtonLocation.miniCenterDocked, 0, 0),
-      floatingActionButton: FloatingActionButton.extended(
-          label: Icon(Icons.add_alarm),
-          onPressed: () {
-            print("FloatingActionButton");
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (builderText) => HomeAddVC(),
-              fullscreenDialog: true,
-            ));
-          }),
+      floatingActionButtonLocation:
+          CustomFloatingActionButtonLocation.tabbarCenter,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add_alarm),
+        onPressed: () {
+          print("FloatingActionButton");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (builderText) => HomeAddVC(),
+            fullscreenDialog: true,
+          ));
+        },
+      ),
     );
     return scaf;
   }

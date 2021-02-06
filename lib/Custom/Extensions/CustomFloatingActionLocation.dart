@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomFloatingActionButtonLocation extends FloatingActionButtonLocation {
+
+  // tabbar中间按钮
+  static CustomFloatingActionButtonLocation tabbarCenter =
+      _tabbarCenterLocation();
+
+  static CustomFloatingActionButtonLocation _tabbarCenterLocation() {
+    return CustomFloatingActionButtonLocation(
+        FloatingActionButtonLocation.miniCenterDocked, 0, 20);
+  }
+
   FloatingActionButtonLocation location;
   double offsetX;
   double offsetY;
