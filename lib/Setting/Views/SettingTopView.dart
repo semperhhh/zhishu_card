@@ -1,15 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zhishu_card/Setting/SettingAboutVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 
 class SettingTopView extends StatefulWidget {
   @override
@@ -46,12 +45,9 @@ class _SettingTopViewState extends State<SettingTopView> {
     super.initState();
 
     // get name
-    SharedPreferences.getInstance().then((value) {
-      _nameStr = value.getString("name") != null ? value.getString("name") : "";
-      _descStr = value.getString("desc") != null ? value.getString("desc") : "";
-      setState(() {});
-    });
-
+    print("设置获取名字 -- ");
+    _nameStr = UserPrefereToolLogin.getName() ?? "";
+    _descStr = UserPrefereToolLogin.getDesc() ?? "";
     // get head
     FileUtil.getLocalFile("head.png").then((value) {
       if (value != null) {
@@ -179,16 +175,12 @@ class _SettingTopViewState extends State<SettingTopView> {
                         // 昵称
                         if (_nameController.text.length > 0) {
                           _nameStr = _nameController.text;
-                          SharedPreferences.getInstance().then((value) {
-                            value.setString("name", _nameStr);
-                          });
+                          UserPrefereToolLogin.setName(_nameController.text);
                         }
                         // 描述
                         if (_descController.text.length > 0) {
                           _descStr = _descController.text;
-                          SharedPreferences.getInstance().then((value) {
-                            value.setString("desc", _descStr);
-                          });
+                          UserPrefereToolLogin.setDesc(_descController.text);
                         }
                         Navigator.of(currentText).pop();
                         // 更新topview

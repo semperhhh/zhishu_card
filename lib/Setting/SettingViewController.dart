@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zhishu_card/Login/LoginViewController.dart';
 import 'package:zhishu_card/Setting/SettingAboutVC.dart';
 import 'package:zhishu_card/Setting/SettingSendVC.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Views/SettingTopView.dart';
 
 // 数据共享
@@ -52,17 +55,14 @@ class _SettingViewControllerState extends State<SettingViewController>
       body: SettingInheritedWidget(
         index: 0,
         child: Container(
-          color: ColorUtil.grey,
-          child: Column(
-            children: [
+            color: ColorUtil.grey,
+            child: ListView(children: [
               SettingTopView(),
               SizedBox(height: 40),
               SettingViewCell(name: "推送设置"),
               SettingViewCell(name: "关于"),
-              SettingViewCell(name: "退出登录", color: ColorUtil.styleGreen)
-            ],
-          ),
-        ),
+              SettingViewCell(name: "重新开始", color: ColorUtil.styleGreen)
+            ])),
       ),
     );
   }
@@ -87,8 +87,14 @@ class _SettingViewCellState extends State<SettingViewCell> {
     var gesture = GestureDetector(
         onTap: () {
           final name = widget.name;
-          if (name == "退出登录") {
+          if (name == "重新开始") {
             print("exit -- ");
+            UserPrefereToolLogin.exit();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (buildContext) => LoginViewController(),
+                    fullscreenDialog: true));
           } else if (name == "推送设置") {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SettingSendVC()));

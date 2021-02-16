@@ -310,6 +310,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.5.1"
+  keyboard_avoider:
+    dependency: "direct main"
+    description:
+      name: keyboard_avoider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.2"
   logging:
     dependency: transitive
     description:

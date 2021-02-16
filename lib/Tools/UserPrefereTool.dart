@@ -13,12 +13,15 @@ const String CURRENTTIME = "currentTime"; // 当前时间
 const String CURRENTTASK = "currentTask"; // 当前任务
 const String ALLTASK = "allTask"; // 全部任务
 const String TASKID = "taskId"; // 任务id
+const String NAME = "name"; // 昵称
+const String DESC = "desc"; // 目标
+const String FIGHTING = "fighting"; // 鸡汤
 
 class UserPrefereTool {
   static SharedPreferences _pres;
-
   static int _taskId = _pres.getInt("TASKID") ?? 0;
 
+  // init
   static Future init() async {
     _pres = await SharedPreferences.getInstance();
     UserPrefereToolFirst.isFirstLaunch();
@@ -119,10 +122,6 @@ class UserPrefereTool {
   }
 }
 
-extension UserPrefereToolSecond on UserPrefereTool {
-  void sjfslfjslf() {}
-}
-
 extension UserPrefereToolFirst on UserPrefereTool {
   // 第一次打开app,引导
   static bool isFirstLaunchApp;
@@ -144,6 +143,54 @@ extension UserPrefereToolFirst on UserPrefereTool {
     final nowDay = DateFormat("yyyy-MM-dd").format(time);
     UserPrefereTool._pres.setString(CURRENTTIME, nowDay);
   }
+}
+
+extension UserPrefereToolLogin on UserPrefereTool {
+  // 退出清除头像
+  static void exit() {
+    UserPrefereTool._pres.setString(NAME, "");
+    UserPrefereTool._pres.setString(DESC, "");
+    // todo 头像
+  }
+
+  static void login(String nickName) {
+    print("登录设置名字 - $nickName");
+    UserPrefereTool._pres.setString(NAME, nickName);
+  }
+
+  // 是否有名字(登录过)
+  static bool isName() {
+    String name = UserPrefereTool._pres.getString(NAME);
+    if (name == "" || name == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  // 保存名字
+  static setName(String name) {
+    UserPrefereTool._pres.setString(NAME, name);
+  }
+
+  // 保存描述
+  static setDesc(String desc) {
+    UserPrefereTool._pres.setString(DESC, desc);
+  }
+  // 保存鸡汤
+  // 保存头像
+
+  // 读取名字
+  static String getName() {
+    return UserPrefereTool._pres.getString(NAME);
+  }
+
+  // 读取描述
+  static String getDesc() {
+    return UserPrefereTool._pres.getString(DESC);
+  }
+  // 读取鸡汤
+  // 读取头像
 }
 
 // JSON工具类

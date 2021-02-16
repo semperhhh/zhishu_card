@@ -6,8 +6,10 @@ import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Home/HomeAddVC.dart';
 import 'Custom/Extensions/CustomFloatingActionLocation.dart';
+import 'Login/LoginViewController.dart';
 
 main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,9 @@ class MyApp extends StatelessWidget {
         ScreenUtil.init(constraints,
             designSize: Size(375, 667), allowFontScaling: false);
         return MaterialApp(
-            home: RootViewController(),
+            home: UserPrefereToolLogin.isName()
+                ? RootViewController()
+                : LoginViewController(),
             theme: ThemeData(
                 platform: TargetPlatform.iOS,
                 // brightness: Brightness.light, // 主题颜色
@@ -55,42 +59,54 @@ class _RootViewControllerState extends State<RootViewController> {
   @override
   Widget build(BuildContext context) {
     Widget scaf = Scaffold(
-      body: PageView(
-        pageSnapping: false, // 回弹
-        physics: NeverScrollableScrollPhysics(), //
-        children: pageList,
-        controller: _pageController,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 12,
-        unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-        selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "add"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "setting"),
-        ],
-        onTap: ((index) {
-          _pageController.jumpToPage(index);
-          setState(() {
-            _currentIndex = index;
-          });
-        }),
-        currentIndex: _currentIndex,
-      ),
-      floatingActionButtonLocation:
-          CustomFloatingActionButtonLocation.tabbarCenter,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add_alarm),
-        onPressed: () {
-          print("FloatingActionButton");
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (builderText) => HomeAddVC(),
-            fullscreenDialog: true,
-          ));
-        },
-      ),
-    );
+        body: PageView(
+          pageSnapping: false, // 回弹
+          physics: NeverScrollableScrollPhysics(), //
+          children: pageList,
+          controller: _pageController,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 12,
+          unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+          selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: "add"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "setting"),
+          ],
+          onTap: ((index) {
+            if (index == 1) {
+              return;
+            }
+            _pageController.jumpToPage(index);
+            setState(() {
+              print("index");
+              _currentIndex = index;
+            });
+          }),
+          currentIndex: _currentIndex,
+        ),
+        floatingActionButtonLocation:
+            CustomFloatingActionButtonLocation.tabbarCenter,
+        floatingActionButton: TextButton(
+          onPressed: () {
+            print("FloatingActionButton");
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (builderText) => HomeAddVC(),
+              fullscreenDialog: true,
+            ));
+          },
+          child: Container(
+            child: Icon(Icons.add, color: Colors.white),
+            width: 80,
+            height: 48,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24), color: Colors.blue),
+          ),
+          style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(Colors.transparent)),
+        ));
     return scaf;
   }
 }

@@ -43,22 +43,16 @@ class _HomeViewControllerState extends State<HomeViewController>
     if (UserPrefereTool.sharedTimeIsToday() == true) {
       // 今天,读已有数据
       UserPrefereTool.sharedReadCurrentTask().then((list) {
-        // list转model
-        list.forEach((element) {
-          HomeModel model = HomeModel.fromJson(element);
-          dataList.add(model);
-        });
+        dataList = list.map((e) => HomeModel.fromJson(e)).toList();
         setState(() {});
       }); // 任务
     } else {
       // 昨天,保存数据,读新数据
       UserPrefereTool.sharedSaveDataFromSqlite();
       UserPrefereTool.sharedReadAllTask().then((list) {
-        list.forEach((element) {
-          HomeModel model = HomeModel.fromJson(element);
-          dataList.add(model);
-        });
-        // dataList = list.map((e) => HomeModel.fromJson(e));
+        dataList = list.map((e) => HomeModel.fromJson(e)).toList();
+        // 写入今天的数据
+        UserPrefereTool.sharedWriteCurrentTask(dataList);
         setState(() {});
       });
     }
