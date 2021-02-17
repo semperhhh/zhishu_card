@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:zhishu_card/Home/Models/HomeModel.dart';
+import 'package:zhishu_card/Tools/FileUtil.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Home/Models/HomeModel.dart';
 
@@ -20,7 +22,7 @@ const String FIGHTING = "fighting"; // 鸡汤
 class UserPrefereTool {
   static SharedPreferences _pres;
   static int _taskId = _pres.getInt("TASKID") ?? 0;
-
+  static String name;
   // init
   static Future init() async {
     _pres = await SharedPreferences.getInstance();
@@ -150,7 +152,7 @@ extension UserPrefereToolLogin on UserPrefereTool {
   static void exit() {
     UserPrefereTool._pres.setString(NAME, "");
     UserPrefereTool._pres.setString(DESC, "");
-    // todo 头像
+    FileUtil.deleteLocalFile("head.png");
   }
 
   static void login(String nickName) {
@@ -173,24 +175,30 @@ extension UserPrefereToolLogin on UserPrefereTool {
     UserPrefereTool._pres.setString(NAME, name);
   }
 
-  // 保存描述
-  static setDesc(String desc) {
-    UserPrefereTool._pres.setString(DESC, desc);
-  }
-  // 保存鸡汤
-  // 保存头像
-
   // 读取名字
   static String getName() {
     return UserPrefereTool._pres.getString(NAME);
+  }
+
+  // 保存描述
+  static setDesc(String desc) {
+    UserPrefereTool._pres.setString(DESC, desc);
   }
 
   // 读取描述
   static String getDesc() {
     return UserPrefereTool._pres.getString(DESC);
   }
+
+  // 保存鸡汤
+  static setFighting(String fighting) {
+    UserPrefereTool._pres.setString(FIGHTING, fighting);
+  }
+
   // 读取鸡汤
-  // 读取头像
+  static String getFighting() {
+    return UserPrefereTool._pres.getString(FIGHTING);
+  }
 }
 
 // JSON工具类

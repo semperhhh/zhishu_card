@@ -23,6 +23,9 @@ class _HomeViewControllerState extends State<HomeViewController>
   // 数据
   List<HomeModel> dataList = [];
 
+  // 鸡汤
+  String _fightingString;
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +40,10 @@ class _HomeViewControllerState extends State<HomeViewController>
       UserPrefereTool.sharedWriteCurrentTask(l);
       UserPrefereTool.sharedWriteAllTask(l);
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
+      UserPrefereToolLogin.setFighting("今天也要fighting!(点击修改激励语)");
     }
+
+    _fightingString = UserPrefereToolLogin.getFighting() ?? "今天也要fighting!";
 
     // 判断时间,是不是保存昨天的
     if (UserPrefereTool.sharedTimeIsToday() == true) {
@@ -116,8 +122,7 @@ class _HomeViewControllerState extends State<HomeViewController>
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, right: 115),
-                      child: Text(
-                          "今天的鸡汤d哦哦飞机搜房解耦佛建瓯市就佛教佛山接of解耦司法局噢司法局OS董事局佛山金佛山金佛的解耦福建省",
+                      child: Text(_fightingString,
                           style: TextStyle(fontSize: 18.sp)),
                     ),
                   ],

@@ -2,25 +2,37 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class FileUtil {
+  static String _dir;
+
+  // 类对象初始化
+  static init() async {
+    _dir = (await getApplicationDocumentsDirectory()).path;
+  }
+
   // 查询文件是否存在
   void isExistense() {}
 
   // 读取本地文件
   // ignore: missing_return
   static Future<File> getLocalFile(String name) async {
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    final f = File("$dir/$name");
+    final f = File("$_dir/$name");
     var r = await f.exists();
     return r == true ? f : null;
   }
 
   // 写入本地文件
   static Future<bool> writeAsFile(String name, List<int> bytes) async {
-    final dir = (await getApplicationDocumentsDirectory()).path;
-    final p = "$dir/$name";
+    final p = "$_dir/$name";
     File f = File(p);
     File r = await f.writeAsBytes(bytes);
     final b = await r.exists();
     return b;
+  }
+
+  // 删除本地文件
+  static Future deleteLocalFile(String name) async {
+    final p = "$_dir/$name";
+    File f = File(p);
+    return await f.delete();
   }
 }
