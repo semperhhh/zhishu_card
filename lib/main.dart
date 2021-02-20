@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
-import 'package:zhishu_card/Home/Views/HomeAddView.dart';
 import 'package:zhishu_card/Setting/SettingViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
@@ -11,7 +10,6 @@ import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Home/HomeAddVC.dart';
 import 'Custom/Extensions/CustomFloatingActionLocation.dart';
 import 'Login/LoginViewController.dart';
-import 'Home/Views/HomeAddView.dart';
 
 main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,12 +90,10 @@ class _RootViewControllerState extends State<RootViewController> {
         floatingActionButton: TextButton(
           onPressed: () {
             debugPrint("FloatingActionButton");
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return HomeAddView();
-              },
-            );
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeAddVC(), fullscreenDialog: true));
           },
           child: Container(
             child: Icon(Icons.add, color: Colors.white),
