@@ -1,24 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card/Tools/MainTool.dart';
 
 class HomeAddVC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("add task", style: TextStyle(fontFamily: fontErasBold)),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add_to_photos),
-            onPressed: () {
-              print("点击了添加");
-              Navigator.of(context).pop();
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTapDown: (details) {
+              Navigator.pop(context);
             },
-          )
+            child: Visibility(
+              maintainAnimation: true,
+              maintainState: true,
+              visible: true,
+              child: Opacity(
+                opacity: 0.5,
+                child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color:
+                        // Theme.of(context).bottomSheetTheme.modalBackgroundColor,
+                        Colors.red),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100.0,
+            left: 50.0,
+            child: Visibility(
+              visible: true,
+              child: Text("添加任务"),
+            ),
+          ),
         ],
-      ),
-      body: Container(
-        child: Text("添加任务"),
       ),
     );
   }

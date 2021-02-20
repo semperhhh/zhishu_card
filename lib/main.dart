@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
+import 'package:zhishu_card/Home/Views/HomeAddView.dart';
 import 'package:zhishu_card/Setting/SettingViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
@@ -10,6 +11,7 @@ import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Home/HomeAddVC.dart';
 import 'Custom/Extensions/CustomFloatingActionLocation.dart';
 import 'Login/LoginViewController.dart';
+import 'Home/Views/HomeAddView.dart';
 
 main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,11 +51,9 @@ class RootViewController extends StatefulWidget {
 
 class _RootViewControllerState extends State<RootViewController> {
   int _currentIndex = 0;
-  List<Widget> pageList = [
-    HomeViewController(),
-    HomeAddVC(),
-    SettingViewController()
-  ];
+  final HomeViewController _home = HomeViewController();
+  final HomeAddVC _homeAdd = HomeAddVC();
+  final SettingViewController _setting = SettingViewController();
   final _pageController = PageController(initialPage: 0);
 
   @override
@@ -62,7 +62,7 @@ class _RootViewControllerState extends State<RootViewController> {
         body: PageView(
           pageSnapping: false, // 回弹
           physics: NeverScrollableScrollPhysics(), //
-          children: pageList,
+          children: [_home, _homeAdd, _setting],
           controller: _pageController,
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -91,11 +91,13 @@ class _RootViewControllerState extends State<RootViewController> {
             CustomFloatingActionButtonLocation.tabbarCenter,
         floatingActionButton: TextButton(
           onPressed: () {
-            print("FloatingActionButton");
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (builderText) => HomeAddVC(),
-              fullscreenDialog: true,
-            ));
+            debugPrint("FloatingActionButton");
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return HomeAddView();
+              },
+            );
           },
           child: Container(
             child: Icon(Icons.add, color: Colors.white),
