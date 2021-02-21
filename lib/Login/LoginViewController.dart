@@ -5,6 +5,7 @@ import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'package:zhishu_card/main.dart';
+import 'package:get/get.dart';
 
 // 登录界面
 
@@ -93,14 +94,14 @@ class _LoginViewControllerState extends State<LoginViewController> {
             return;
           }
           UserPrefereToolLogin.login(nickName);
-          Navigator.pushReplacement(
-            loginContext,
-            MaterialPageRoute(
-              builder: (context) => RootViewController(),
-              maintainState: false,
-              fullscreenDialog: true,
-            ),
-          );
+          Navigator.pushReplacementNamed(context, "root");
+          // Navigator.pushReplacement(
+          //   loginContext,
+          //   MaterialPageRoute(
+          //     builder: (context) => RootViewController(),
+          //     fullscreenDialog: true,
+          //   ),
+          // );
         },
         child: Container(
             width: 120.0,
@@ -108,8 +109,8 @@ class _LoginViewControllerState extends State<LoginViewController> {
             decoration: BoxDecoration(
                 color: Colors.blue[400],
                 borderRadius: BorderRadius.circular(18.0)),
-            child: Text("开始",
-                style: TextStyle(color: Colors.white, fontSize: 16.sp)),
+            child:
+                Text("开始", style: TextStyle(color: Colors.white, fontSize: 16)),
             alignment: Alignment.center),
         style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(Colors.transparent)));

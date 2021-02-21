@@ -33,6 +33,12 @@ class FileUtil {
   static Future deleteLocalFile(String name) async {
     final p = "$_dir/$name";
     File f = File(p);
-    return await f.delete();
+    bool isHave = await f.exists();
+    if (isHave) {
+      return await f.delete();
+    } else {
+      print("未找到文件");
+      return null;
+    }
   }
 }

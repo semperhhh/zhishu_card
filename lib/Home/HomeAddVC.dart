@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
+import 'package:zhishu_card/Home/Models/HomeModel.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 
 class HomeAddVC extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   FocusNode _nameFocus = FocusNode();
+  TextEditingController _timeController = TextEditingController();
+  FocusNode _timeFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("新建任务"),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shadowColor: Colors.transparent,
       ),
       body: GestureDetector(
@@ -20,15 +25,20 @@ class HomeAddVC extends StatelessWidget {
           child: Column(
             children: [
               _nameWidget(),
-              SizedBox(height: 24),
-              _timeWidget(),
-              SizedBox(height: 120),
-              _addButtonWidget()
+              SizedBox(height: 24.h),
+              _timeWidget(context),
+              SizedBox(height: 150.h),
+              _addButtonWidget(context)
             ],
           ),
         ),
         onTap: () {
-          _nameFocus.unfocus();
+          if (_nameFocus.hasFocus) {
+            _nameFocus.unfocus();
+          }
+          if (_timeFocus.hasFocus) {
+            _timeFocus.unfocus();
+          }
         },
       ),
     );
@@ -51,33 +61,57 @@ class HomeAddVC extends StatelessWidget {
     );
   }
 
-  Widget _timeWidget() {
-    return Listener(
-      child: Padding(
-        padding: EdgeInsets.only(top: 20.0, left: 12.0, right: 12.0),
-        child: Container(
-          color: Colors.red,
-          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-          width: ScreenUtil().screenWidth,
-          child: Text(
-            "添加预计时长",
-            // textAlign: TextAlign.start,
-            style: TextStyle(fontSize: 16.0, color: Colors.black54),
+  Widget _timeWidget(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 15, right: 15, top: 24),
+      child: TextField(
+        controller: _timeController,
+        focusNode: _timeFocus,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: "任务时间",
+          labelStyle: TextStyle(color: Colors.grey),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 2.0),
           ),
         ),
       ),
-      onPointerDown: (event) {
-        print("添加时间");
-      },
     );
   }
 
-  Widget _addButtonWidget() {
+  Widget _addButtonWidget(BuildContext context) {
     return CupertinoButton(
       color: ColorUtil.blue,
-      child: Text("添加"),
+      child: Text(
+        "添加",
+        style: TextStyle(fontSize: 16),
+      ),
       onPressed: () {
-        print("添加任务 name - ${_nameController.text}");
+        String name = _nameController.text;
+        String time = _timeController.text;
+        print("添加任务 name - $name -- time - $time");
+        if (name.isEmpty || time.isEmpty) {
+          showToastDialog(context: context, text: "名称与时间不能为空");
+        } else {
+          // 添加全部任务
+          UserPrefereTool.sharedReadAllTask().then((list) {
+            List<HomeModel> l = list.map((e) => HomeModel.fromJson(e)).toList();
+            HomeModel m = HomeModel(
+                UserPrefereTool.sharedTaskId(), name, int.parse(time));
+            l.add(m);
+            UserPrefereTool.sharedWriteAllTask(l);
+          });
+
+          // 添加今日任务
+          UserPrefereTool.sharedReadCurrentTask().then((list) {
+            List<HomeModel> l = list.map((e) => HomeModel.fromJson(e)).toList();
+            HomeModel m = HomeModel(
+                UserPrefereTool.sharedTaskId(), name, int.parse(time));
+            l.add(m);
+            UserPrefereTool.sharedWriteCurrentTask(l);
+          });
+          Navigator.pop(context);
+        }
       },
     );
   }

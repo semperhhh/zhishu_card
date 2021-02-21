@@ -1,8 +1,6 @@
 // 分享工具类
 
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:zhishu_card/Home/Models/HomeModel.dart';
@@ -148,10 +146,12 @@ extension UserPrefereToolFirst on UserPrefereTool {
 }
 
 extension UserPrefereToolLogin on UserPrefereTool {
-  // 退出清除头像
+  // 退出清除数据
   static void exit() {
     UserPrefereTool._pres.setString(NAME, "");
     UserPrefereTool._pres.setString(DESC, "");
+    UserPrefereTool.sharedWriteAllTask([]);
+    UserPrefereTool.sharedWriteCurrentTask([]);
     FileUtil.deleteLocalFile("head.png");
   }
 
