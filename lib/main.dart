@@ -42,14 +42,14 @@ class MyApp extends StatelessWidget {
             "/": (context) => UserPrefereToolLogin.isName()
                 ? RootViewController()
                 : LoginViewController(),
-            "root": (context) => RootViewController(),
-            "home": (context) => HomeViewController(),
-            "setting": (context) => SettingViewController(),
-            "homeAdd": (context) => HomeAddVC(),
-            "settingAbout": (context) => SettingAboutVC(),
-            "settingSend": (context) => SettingSendVC(),
-            "login": (context) => LoginViewController(),
-            "homeCalendar": (context) => HomeCalendarVC(),
+            "/root": (context) => RootViewController(),
+            "/home": (context) => HomeViewController(),
+            "/setting": (context) => SettingViewController(),
+            "/homeAdd": (context) => HomeAddVC(),
+            "/settingAbout": (context) => SettingAboutVC(),
+            "/settingSend": (context) => SettingSendVC(),
+            "/login": (context) => LoginViewController(),
+            "/homeCalendar": (context) => HomeCalendarVC(),
           },
         );
       },

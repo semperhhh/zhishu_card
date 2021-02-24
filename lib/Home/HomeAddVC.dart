@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Home/Models/HomeModel.dart';
+import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 
@@ -93,23 +94,11 @@ class HomeAddVC extends StatelessWidget {
         if (name.isEmpty || time.isEmpty) {
           showToastDialog(context: context, text: "名称与时间不能为空");
         } else {
-          // 添加全部任务
-          UserPrefereTool.sharedReadAllTask().then((list) {
-            List<HomeModel> l = list.map((e) => HomeModel.fromJson(e)).toList();
-            HomeModel m = HomeModel(
-                UserPrefereTool.sharedTaskId(), name, int.parse(time));
-            l.add(m);
-            UserPrefereTool.sharedWriteAllTask(l);
-          });
+          HomeModel m =
+              HomeModel(UserPrefereTool.sharedTaskId(), name, int.parse(time));
 
-          // 添加今日任务
-          UserPrefereTool.sharedReadCurrentTask().then((list) {
-            List<HomeModel> l = list.map((e) => HomeModel.fromJson(e)).toList();
-            HomeModel m = HomeModel(
-                UserPrefereTool.sharedTaskId(), name, int.parse(time));
-            l.add(m);
-            UserPrefereTool.sharedWriteCurrentTask(l);
-          });
+          HomeModelUtil.allTaskList.add(m); // 添加全部任务
+          HomeModelUtil.currentTaskList.add(m); // 添加今日任务
           Navigator.pop(context);
         }
       },

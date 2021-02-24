@@ -94,14 +94,13 @@ class _LoginViewControllerState extends State<LoginViewController> {
             return;
           }
           UserPrefereToolLogin.login(nickName);
-          Navigator.pushReplacementNamed(context, "root");
-          // Navigator.pushReplacement(
-          //   loginContext,
-          //   MaterialPageRoute(
-          //     builder: (context) => RootViewController(),
-          //     fullscreenDialog: true,
-          //   ),
-          // );
+          Navigator.pushReplacement(
+            loginContext,
+            MaterialPageRoute(
+              builder: (context) => RootViewController(),
+              fullscreenDialog: true,
+            ),
+          );
         },
         child: Container(
             width: 120.0,

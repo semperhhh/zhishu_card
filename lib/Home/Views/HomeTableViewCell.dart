@@ -93,8 +93,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         print("click button");
         widget.model.isDone = true;
         setState(() {});
-        widget.didSetCallback();
-        // 回调
+        widget.didSetCallback(); // 回调
       },
       child: Container(
         padding: EdgeInsets.only(left: 15, right: 15),

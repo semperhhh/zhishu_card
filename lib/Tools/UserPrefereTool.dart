@@ -46,7 +46,7 @@ class UserPrefereTool {
   }
 
   // 写-全部任务
-  static Future sharedWriteAllTask(List<HomeModel> dataList) async {
+  static Future<bool> sharedWriteAllTask(List<HomeModel> dataList) async {
     List<Map> list = [];
     for (var model in dataList) {
       model.isDone = false;
@@ -58,10 +58,12 @@ class UserPrefereTool {
     final String str = _pres.getString(ALLTASK);
     print("allTaskString = $allTaskString \nstr = $str");
     if (str == allTaskString) {
-      return "和上次没有改变,不需要写入";
+      print("和上次没有改变,不需要写入");
+      return false;
     } else {
       _pres.setString(ALLTASK, allTaskString);
-      return "写入成功";
+      print("写入成功");
+      return true;
     }
   }
 
@@ -77,7 +79,7 @@ class UserPrefereTool {
   }
 
   // 写-今天任务
-  static Future<String> sharedWriteCurrentTask(List<HomeModel> dataList) async {
+  static Future<bool> sharedWriteCurrentTask(List<HomeModel> dataList) async {
     List<Map> list = [];
     for (var model in dataList) {
       Map c = model.toJson();
@@ -87,10 +89,12 @@ class UserPrefereTool {
     final String str = _pres.getString(CURRENTTASK);
     print("currentTaskString = $currentTaskString \nstr = $str");
     if (str == currentTaskString) {
-      return "和上次没有改变,不需要写入";
+      print("和上次没有改变,不需要写入");
+      return false;
     } else {
       _pres.setString(CURRENTTASK, currentTaskString);
-      return "写入成功";
+      print("写入成功");
+      return true;
     }
   }
 

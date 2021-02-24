@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
+import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../Tools/ColorUtil.dart';
@@ -7,6 +9,7 @@ import 'Models/HomeModel.dart';
 import 'Views/HomeTableViewCell.dart';
 import '../Tools/UserPrefereTool.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 // 主页
 class HomeViewController extends StatefulWidget {
@@ -21,7 +24,7 @@ class _HomeViewControllerState extends State<HomeViewController>
   bool get wantKeepAlive => true;
 
   // 数据
-  List<HomeModel> dataList = [];
+  List<HomeModel> dataList = HomeModelUtil.currentTaskList;
 
   // 鸡汤
   String _fightingString;
@@ -29,39 +32,32 @@ class _HomeViewControllerState extends State<HomeViewController>
   @override
   void initState() {
     super.initState();
+
+    // 变化时调用
+    ever(HomeModelUtil.currentTaskList, (_) {
+      print("ever - currentTaskList");
+      UserPrefereTool.sharedWriteCurrentTask(HomeModelUtil.currentTaskList);
+    });
+    ever(HomeModelUtil.allTaskList, (_) {
+      print("ever - allTaskList");
+      UserPrefereTool.sharedWriteAllTask(HomeModelUtil.allTaskList);
+    });
+
     // 第一次打开
-    if (UserPrefereToolFirst.isFirstLaunchApp) {
+    if (!UserPrefereToolFirst.isFirstLaunchApp) {
       final List<HomeModel> l = [
         HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30),
         HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
             isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
       ];
       // 更新偏好
-      UserPrefereTool.sharedWriteCurrentTask(l);
-      UserPrefereTool.sharedWriteAllTask(l);
+      HomeModelUtil.currentTaskList.value = l;
+      HomeModelUtil.allTaskList.value = l;
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
       UserPrefereToolLogin.setFighting("今天也要fighting!(点击修改激励语)");
     }
 
     _fightingString = UserPrefereToolLogin.getFighting() ?? "今天也要fighting!";
-
-    // 判断时间,是不是保存昨天的
-    if (UserPrefereTool.sharedTimeIsToday() == true) {
-      // 今天,读已有数据
-      UserPrefereTool.sharedReadCurrentTask().then((list) {
-        dataList = list.map((e) => HomeModel.fromJson(e)).toList();
-        setState(() {});
-      }); // 任务
-    } else {
-      // 昨天,保存数据,读新数据
-      UserPrefereTool.sharedSaveDataFromSqlite();
-      UserPrefereTool.sharedReadAllTask().then((list) {
-        dataList = list.map((e) => HomeModel.fromJson(e)).toList();
-        // 写入今天的数据
-        UserPrefereTool.sharedWriteCurrentTask(dataList);
-        setState(() {});
-      });
-    }
   }
 
   @override
@@ -78,16 +74,19 @@ class _HomeViewControllerState extends State<HomeViewController>
   Widget _bodyView() {
     return Expanded(
         child: Container(
-            color: ColorUtil.grey,
-            child: ListView.builder(
-                padding:
-                    EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-                itemBuilder: (context, index) => _itemBuilder(context, index),
-                itemCount: dataList.length + 1)));
+      color: ColorUtil.grey,
+      child: Obx(() {
+        return ListView.builder(
+            padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+            itemBuilder: (context, index) => _itemBuilder(context, index),
+            itemCount: dataList.length + 1);
+      }),
+    ));
   }
 
   // cell
   Widget _itemBuilder(BuildContext context, int index) {
+    print("_itemBuilder");
     if (index == 0) {
       return _topView();
     } else {
@@ -122,8 +121,10 @@ class _HomeViewControllerState extends State<HomeViewController>
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, right: 115),
-                      child: Text(_fightingString,
-                          style: TextStyle(fontSize: 18.sp)),
+                      child: Text(
+                        _fightingString,
+                        style: TextStyle(fontSize: 18.sp),
+                      ),
                     ),
                   ],
                 ),
