@@ -11,22 +11,22 @@ class HomeModelUtil {
   // 初始化
   static init() async {
     UserPrefereTool.sharedReadAllTask().then((list) {
-      allTaskList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+      allTaskList = list.map((e) => HomeModel.fromJson(e)).toList().obs;
     });
 
     // 判断时间,是不是保存昨天的
     if (UserPrefereTool.sharedTimeIsToday() == true) {
       UserPrefereTool.sharedReadCurrentTask().then((list) {
-        currentTaskList.value = list.map((e) => HomeModel.fromJson(e)).toList();
+        currentTaskList = list.map((e) => HomeModel.fromJson(e)).toList().obs;
         print("今天 - 读取数据");
       });
     } else {
       // 昨天,保存数据,读新数据
       UserPrefereTool.sharedSaveDataFromSqlite();
       UserPrefereTool.sharedReadAllTask().then((list) {
-        currentTaskList.value = list.map((e) => HomeModel.fromJson(e)).toList();
-        print("昨天,保存数据,读新数据 - 写入今天的数据");
-        UserPrefereTool.sharedWriteCurrentTask(currentTaskList);
+        currentTaskList = list.map((e) => HomeModel.fromJson(e)).toList().obs;
+        print("昨天,保存数据,读新数据 - 写入今天的数据 currentTaskList = $currentTaskList");
+        UserPrefereTool.sharedWriteCurrentTask();
       });
     }
   }

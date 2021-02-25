@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:zhishu_card/Home/Models/HomeModel.dart';
+import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Home/Models/HomeModel.dart';
+import 'package:get/get.dart';
 
 const String ISFIRSTLSUNCHAPP = "isFirstLaunchApp"; // 第一次打开app
 const String CURRENTTIME = "currentTime"; // 当前时间
@@ -46,23 +48,24 @@ class UserPrefereTool {
   }
 
   // 写-全部任务
-  static Future<bool> sharedWriteAllTask(List<HomeModel> dataList) async {
+  static Future<bool> sharedWriteAllTask() async {
     List<Map> list = [];
-    for (var model in dataList) {
-      model.isDone = false;
-      model.descriptionString = "";
-      Map c = model.toJson();
+    for (var model in HomeModelUtil.allTaskList) {
+      HomeModel m = HomeModel.fromJson(model.toJson());
+      m.isDone = false;
+      m.descriptionString = "";
+      Map c = m.toJson();
       list.add(c);
     }
     final allTaskString = JSONTool.toJSONString(list);
     final String str = _pres.getString(ALLTASK);
-    print("allTaskString = $allTaskString \nstr = $str");
+    // print("allTaskString = $allTaskString \nstr = $str");
     if (str == allTaskString) {
       print("和上次没有改变,不需要写入");
       return false;
     } else {
       _pres.setString(ALLTASK, allTaskString);
-      print("写入成功");
+      print("写入成功 - 全部任务");
       return true;
     }
   }
@@ -79,21 +82,21 @@ class UserPrefereTool {
   }
 
   // 写-今天任务
-  static Future<bool> sharedWriteCurrentTask(List<HomeModel> dataList) async {
+  static Future<bool> sharedWriteCurrentTask() async {
     List<Map> list = [];
-    for (var model in dataList) {
+    for (var model in HomeModelUtil.currentTaskList) {
       Map c = model.toJson();
       list.add(c);
     }
     final currentTaskString = JSONTool.toJSONString(list);
     final String str = _pres.getString(CURRENTTASK);
-    print("currentTaskString = $currentTaskString \nstr = $str");
+    // print("currentTaskString = $currentTaskString \nstr = $str");
     if (str == currentTaskString) {
       print("和上次没有改变,不需要写入");
       return false;
     } else {
       _pres.setString(CURRENTTASK, currentTaskString);
-      print("写入成功");
+      print("写入成功 - 今天任务");
       return true;
     }
   }
@@ -154,8 +157,8 @@ extension UserPrefereToolLogin on UserPrefereTool {
   static void exit() {
     UserPrefereTool._pres.setString(NAME, "");
     UserPrefereTool._pres.setString(DESC, "");
-    UserPrefereTool.sharedWriteAllTask([]);
-    UserPrefereTool.sharedWriteCurrentTask([]);
+    // HomeModelUtil.currentTaskList.value = [];
+    // HomeModelUtil.allTaskList.value = [];
     FileUtil.deleteLocalFile("head.png");
   }
 

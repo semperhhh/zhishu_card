@@ -35,24 +35,23 @@ class _HomeViewControllerState extends State<HomeViewController>
 
     // 变化时调用
     ever(HomeModelUtil.currentTaskList, (_) {
-      print("ever - currentTaskList");
-      UserPrefereTool.sharedWriteCurrentTask(HomeModelUtil.currentTaskList);
+      print("变化时调用 - homeModelUtil.currentTaskList");
+      UserPrefereTool.sharedWriteCurrentTask();
     });
     ever(HomeModelUtil.allTaskList, (_) {
-      print("ever - allTaskList");
-      UserPrefereTool.sharedWriteAllTask(HomeModelUtil.allTaskList);
+      UserPrefereTool.sharedWriteAllTask();
     });
 
     // 第一次打开
-    if (!UserPrefereToolFirst.isFirstLaunchApp) {
+    if (UserPrefereToolFirst.isFirstLaunchApp) {
       final List<HomeModel> l = [
         HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30),
         HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
             isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
       ];
       // 更新偏好
-      HomeModelUtil.currentTaskList.value = l;
-      HomeModelUtil.allTaskList.value = l;
+      HomeModelUtil.currentTaskList.assignAll(l);
+      HomeModelUtil.allTaskList.assignAll(l);
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
       UserPrefereToolLogin.setFighting("今天也要fighting!(点击修改激励语)");
     }
@@ -94,7 +93,7 @@ class _HomeViewControllerState extends State<HomeViewController>
         model: dataList[index - 1],
         didSetCallback: () {
           // 更新偏好
-          UserPrefereTool.sharedWriteCurrentTask(dataList).then((value) {
+          UserPrefereTool.sharedWriteCurrentTask().then((value) {
             print(value);
           });
           // 更新数据库
