@@ -96,8 +96,8 @@ class HomeAddVC extends StatelessWidget {
         } else {
           HomeModel m =
               HomeModel(UserPrefereTool.sharedTaskId(), name, int.parse(time));
-          HomeModelUtil.allTaskList.add(m); // 添加全部任务
-          HomeModelUtil.currentTaskList.add(m); // 添加今日任务
+          HomeModelUtil.shared.allTaskList.add(m); // 添加全部任务
+          HomeModelUtil.shared.currentTaskList.add(m); // 添加今日任务
           Navigator.pop(context);
         }
       },

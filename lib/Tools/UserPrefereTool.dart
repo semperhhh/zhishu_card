@@ -50,7 +50,7 @@ class UserPrefereTool {
   // 写-全部任务
   static Future<bool> sharedWriteAllTask() async {
     List<Map> list = [];
-    for (var model in HomeModelUtil.allTaskList) {
+    for (var model in HomeModelUtil.shared.allTaskList) {
       HomeModel m = HomeModel.fromJson(model.toJson());
       m.isDone = false;
       m.descriptionString = "";
@@ -84,7 +84,7 @@ class UserPrefereTool {
   // 写-今天任务
   static Future<bool> sharedWriteCurrentTask() async {
     List<Map> list = [];
-    for (var model in HomeModelUtil.currentTaskList) {
+    for (var model in HomeModelUtil.shared.currentTaskList) {
       Map c = model.toJson();
       list.add(c);
     }
@@ -157,8 +157,8 @@ extension UserPrefereToolLogin on UserPrefereTool {
   static void exit() {
     UserPrefereTool._pres.setString(NAME, "");
     UserPrefereTool._pres.setString(DESC, "");
-    // HomeModelUtil.currentTaskList.value = [];
-    // HomeModelUtil.allTaskList.value = [];
+    HomeModelUtil.shared.currentTaskList.value = [];
+    HomeModelUtil.shared.allTaskList.value = [];
     FileUtil.deleteLocalFile("head.png");
   }
 

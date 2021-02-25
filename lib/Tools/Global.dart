@@ -9,7 +9,6 @@ class Global {
     await UserPrefereTool.init();
     await SqliteTool.openData();
     await FileUtil.init();
-    await HomeModelUtil.init();
     print("Global load success -----");
   }
 }

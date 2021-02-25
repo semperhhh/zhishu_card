@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
@@ -24,7 +25,7 @@ class _HomeViewControllerState extends State<HomeViewController>
   bool get wantKeepAlive => true;
 
   // 数据
-  List<HomeModel> dataList = HomeModelUtil.currentTaskList;
+  List<HomeModel> dataList = HomeModelUtil.shared.currentTaskList;
 
   // 鸡汤
   String _fightingString;
@@ -32,15 +33,6 @@ class _HomeViewControllerState extends State<HomeViewController>
   @override
   void initState() {
     super.initState();
-
-    // 变化时调用
-    ever(HomeModelUtil.currentTaskList, (_) {
-      print("变化时调用 - homeModelUtil.currentTaskList");
-      UserPrefereTool.sharedWriteCurrentTask();
-    });
-    ever(HomeModelUtil.allTaskList, (_) {
-      UserPrefereTool.sharedWriteAllTask();
-    });
 
     // 第一次打开
     if (UserPrefereToolFirst.isFirstLaunchApp) {
@@ -50,8 +42,8 @@ class _HomeViewControllerState extends State<HomeViewController>
             isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
       ];
       // 更新偏好
-      HomeModelUtil.currentTaskList.assignAll(l);
-      HomeModelUtil.allTaskList.assignAll(l);
+      HomeModelUtil.shared.currentTaskList.assignAll(l);
+      HomeModelUtil.shared.allTaskList.assignAll(l);
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
       UserPrefereToolLogin.setFighting("今天也要fighting!(点击修改激励语)");
     }
@@ -60,15 +52,23 @@ class _HomeViewControllerState extends State<HomeViewController>
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Column(children: [
-          SizedBox(
-              height: ScreenUtil().statusBarHeight,
-              child: Container(color: ColorUtil.grey)),
-          // _topView(),
-          _bodyView()
-        ]),
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(children: [
+        SizedBox(
+            height: ScreenUtil().statusBarHeight,
+            child: Container(color: ColorUtil.grey)),
+        // _topView(),
+        _bodyView()
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          HomeModelUtil.shared.currentTaskList.value = [];
+        },
+        child: Text("update"),
+      ),
+    );
+  }
 
   Widget _bodyView() {
     return Expanded(

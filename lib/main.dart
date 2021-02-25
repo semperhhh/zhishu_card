@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
@@ -15,6 +16,7 @@ import 'Custom/Extensions/CustomFloatingActionLocation.dart';
 import 'Login/LoginViewController.dart';
 
 main(List<String> args) {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting()
       .then((_) => Global.init().then((value) => runApp(MyApp())));
@@ -31,13 +33,20 @@ class MyApp extends StatelessWidget {
           initialRoute: "/",
           theme: ThemeData(
               platform: TargetPlatform.iOS,
-              // brightness: Brightness.light, // 主题颜色
+              brightness: Brightness.light, // 主题颜色
               primaryColor: ColorUtil.styleGreen,
               appBarTheme: AppBarTheme(
                   color: ColorUtil.styleGreen, shadowColor: Colors.white),
               fontFamily: fontPingFange,
               splashColor: Colors.transparent, // 水波纹
               highlightColor: Colors.transparent),
+          darkTheme: ThemeData(
+            platform: TargetPlatform.iOS,
+            appBarTheme: AppBarTheme(color: Colors.black),
+            primaryColor: Colors.black,
+            splashColor: Colors.transparent, // 水波纹
+            highlightColor: Colors.transparent,
+          ),
           routes: {
             "/": (context) => UserPrefereToolLogin.isName()
                 ? RootViewController()
