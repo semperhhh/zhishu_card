@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/ThemeTool.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
@@ -28,7 +30,7 @@ class _HomeViewControllerState extends State<HomeViewController>
   List<HomeModel> dataList = HomeModelUtil.shared.currentTaskList;
 
   // 鸡汤
-  String _fightingString;
+  UserController user = Get.put(UserController());
 
   @override
   void initState() {
@@ -45,10 +47,7 @@ class _HomeViewControllerState extends State<HomeViewController>
       HomeModelUtil.shared.currentTaskList.assignAll(l);
       HomeModelUtil.shared.allTaskList.assignAll(l);
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
-      UserPrefereToolLogin.setFighting("今天也要fighting!(点击修改激励语)");
     }
-
-    _fightingString = UserPrefereToolLogin.getFighting() ?? "今天也要fighting!";
   }
 
   @override
@@ -57,23 +56,21 @@ class _HomeViewControllerState extends State<HomeViewController>
       body: Column(children: [
         SizedBox(
             height: ScreenUtil().statusBarHeight,
-            child: Container(color: ColorUtil.grey)),
+            child: Container(
+                color: ThemeTool.isDark(context)
+                    ? ColorUtil.main_dark_app
+                    : ColorUtil.grey)),
         // _topView(),
         _bodyView()
       ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          HomeModelUtil.shared.currentTaskList.value = [];
-        },
-        child: Text("update"),
-      ),
     );
   }
 
   Widget _bodyView() {
     return Expanded(
         child: Container(
-      color: ColorUtil.grey,
+      color:
+          ThemeTool.isDark(context) ? ColorUtil.main_dark_app : ColorUtil.grey,
       child: Obx(() {
         return ListView.builder(
             padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
@@ -87,28 +84,24 @@ class _HomeViewControllerState extends State<HomeViewController>
   Widget _itemBuilder(BuildContext context, int index) {
     print("_itemBuilder");
     if (index == 0) {
-      return _topView();
+      return _topView(context);
     } else {
       return HomeTableViewCell(
         model: dataList[index - 1],
         didSetCallback: () {
-          // 更新偏好
-          UserPrefereTool.sharedWriteCurrentTask().then((value) {
-            print(value);
-          });
           // 更新数据库
         },
       );
     }
   }
 
-  Widget _topView() {
+  Widget _topView(BuildContext context) {
     return ConstrainedBox(
         constraints: BoxConstraints(minHeight: 160),
         child: Container(
             padding: EdgeInsets.only(bottom: 8),
             width: 375.sw,
-            color: ColorUtil.grey,
+            // color: ThemeTool.isDark(context) ? Colors.black : ColorUtil.grey,
             child: Stack(
               children: [
                 Column(
@@ -116,13 +109,40 @@ class _HomeViewControllerState extends State<HomeViewController>
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 20),
-                      child: Text("任务", style: TextStyle(fontSize: 32.sp)),
+                      child: Text("任务",
+                          style: TextStyle(
+                              fontSize: 32.sp,
+                              fontWeight: fontMedium,
+                              color: ThemeTool.isDark(context)
+                                  ? ColorUtil.main_light_app
+                                  : ColorUtil.main_dark_app)),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8, right: 115),
-                      child: Text(
-                        _fightingString,
-                        style: TextStyle(fontSize: 18.sp),
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onLongPress: () {
+                        print("长按");
+                        showFightingChangeDialogView(
+                                context: context,
+                                currentStr: user.fightingString.value)
+                            .then((value) {
+                          print(value);
+                          user.fightingString.value = value;
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8, right: 115),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: 66),
+                          child: Obx(() {
+                            print(
+                                "user.fightingString.value - ${user.fightingString.value}");
+                            return Text(
+                              user.fightingString.value,
+                              style: TextStyle(
+                                  fontSize: 18.sp, fontFamily: fontKuaile),
+                            );
+                          }),
+                        ),
                       ),
                     ),
                   ],
@@ -135,4 +155,18 @@ class _HomeViewControllerState extends State<HomeViewController>
               ],
             )));
   }
+}
+
+class UserController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+
+    ever(fightingString, (_) {
+      UserPrefereToolLogin.setFighting(fightingString.value);
+    });
+  }
+
+  var fightingString =
+      (UserPrefereToolLogin.getFighting() ?? "今天也要fighting!(点击修改激励语)").obs;
 }

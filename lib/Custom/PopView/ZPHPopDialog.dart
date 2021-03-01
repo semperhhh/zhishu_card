@@ -37,9 +37,23 @@ void showToastDialog(
   });
 }
 
+// 任务描述弹窗
+Future<String> showDescriptionChangeDialogView(
+    {@required BuildContext context, String currentStr}) {
+  return showTextFieldDialogView(
+      context: context, currentStr: currentStr, hintStr: "记录下努力的过程吧");
+}
+
+// fightingString弹窗
+Future<String> showFightingChangeDialogView(
+    {@required BuildContext context, String currentStr}) {
+  return showTextFieldDialogView(
+      context: context, currentStr: currentStr, hintStr: "更新您的今日鸡汤吧!");
+}
+
 // 自定义弹窗
 Future<String> showTextFieldDialogView(
-    {@required BuildContext context, String currentStr}) async {
+    {@required BuildContext context, String currentStr, String hintStr}) async {
   TextEditingController _textcontroller =
       TextEditingController(text: currentStr);
   var result = await Navigator.of(context).push(
@@ -51,7 +65,7 @@ Future<String> showTextFieldDialogView(
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.all(15),
-                hintText: "记录下努力的过程吧~",
+                hintText: hintStr,
                 hintStyle: TextStyle(fontSize: 15.sp)),
             style: TextStyle(fontSize: 16.sp),
             maxLines: null);
@@ -72,24 +86,34 @@ Future<String> showTextFieldDialogView(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      color: ColorUtil.grey,
-                      child: Text("稍后",
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.black54)))),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(ColorUtil.grey),
+                  ),
+                  child: Text(
+                    "稍后",
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                ),
+              ),
               Expanded(
-                  child: FlatButton(
-                      onPressed: () {
-                        print("textcontroller - ${_textcontroller.text}");
-                        Navigator.of(context).pop("navigator pop");
-                      },
-                      color: ColorUtil.blue,
-                      child: Text("确定",
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.black87)))),
+                child: TextButton(
+                  onPressed: () {
+                    print("textcontroller - ${_textcontroller.text}");
+                    Navigator.of(context).pop("navigator pop");
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(ColorUtil.blue),
+                  ),
+                  child: Text(
+                    "确定",
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                ),
+              ),
             ],
           ),
         );

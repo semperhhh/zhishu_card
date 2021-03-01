@@ -10,6 +10,7 @@ import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:zhishu_card/Tools/ThemeTool.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Home/HomeAddVC.dart';
 import 'Custom/Extensions/CustomFloatingActionLocation.dart';
@@ -31,22 +32,8 @@ class MyApp extends StatelessWidget {
             designSize: Size(375, 667), allowFontScaling: false);
         return MaterialApp(
           initialRoute: "/",
-          theme: ThemeData(
-              platform: TargetPlatform.iOS,
-              brightness: Brightness.light, // 主题颜色
-              primaryColor: ColorUtil.styleGreen,
-              appBarTheme: AppBarTheme(
-                  color: ColorUtil.styleGreen, shadowColor: Colors.white),
-              fontFamily: fontPingFange,
-              splashColor: Colors.transparent, // 水波纹
-              highlightColor: Colors.transparent),
-          darkTheme: ThemeData(
-            platform: TargetPlatform.iOS,
-            appBarTheme: AppBarTheme(color: Colors.black),
-            primaryColor: Colors.black,
-            splashColor: Colors.transparent, // 水波纹
-            highlightColor: Colors.transparent,
-          ),
+          theme: ThemeTool.getTheme(false),
+          darkTheme: ThemeTool.getTheme(true),
           routes: {
             "/": (context) => UserPrefereToolLogin.isName()
                 ? RootViewController()
@@ -80,6 +67,8 @@ class _RootViewControllerState extends State<RootViewController> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themedata = Theme.of(context);
+    bool isDark = themedata.brightness == Brightness.dark;
     Widget scaf = Scaffold(
         body: PageView(
           pageSnapping: false, // 回弹
@@ -88,6 +77,7 @@ class _RootViewControllerState extends State<RootViewController> {
           controller: _pageController,
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: isDark ? ColorUtil.black : Colors.white,
           selectedFontSize: 12,
           unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
           selectedLabelStyle: TextStyle(fontFamily: fontErasBold),

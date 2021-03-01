@@ -12,9 +12,15 @@ class ColorUtil {
   static const Color blue = Color(0xFF229ffd);
   static const Color green = Color(0xFFA5DE37);
   static const Color purple = Color(0xFF7B72E9);
+  static const Color black = Color(0xFF0c0c0c);
 
-  // 主题颜色-绿
-  static const Color styleGreen = Color(0xFF21C38F);
+  // 主颜色 - 绿色
+  static const Color main_app = Color(0xFF21C38F);
+
+  static const Color main_light_app = Color(0xFFE0E0E0);
+  // 主颜色-dark
+  static const Color main_dark_app = Color(0xFF252525);
+  static const Color main_dark1_app = Color(0xFF333333);
 
   // 颜色生成
   static Color fromHex(String hexString) {

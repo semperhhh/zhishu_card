@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/ThemeTool.dart';
 import 'Views/SettingTopView.dart';
 import 'Views/SettingViewCell.dart';
 
@@ -48,13 +49,23 @@ class _SettingViewControllerState extends State<SettingViewController>
       body: SettingInheritedWidget(
         index: 0,
         child: Container(
-            color: ColorUtil.grey,
+            color: ThemeTool.isDark(context)
+                ? ColorUtil.main_dark_app
+                : ColorUtil.grey,
             child: ListView(children: [
               SettingTopView(),
               SizedBox(height: 40),
-              SettingViewCell(name: "推送设置"),
-              SettingViewCell(name: "关于"),
-              SettingViewCell(name: "重新开始", color: ColorUtil.styleGreen)
+              SettingViewCell(
+                  name: "推送设置",
+                  color: ThemeTool.isDark(context)
+                      ? ColorUtil.main_dark1_app
+                      : Colors.white),
+              SettingViewCell(
+                  name: "关于",
+                  color: ThemeTool.isDark(context)
+                      ? ColorUtil.main_dark1_app
+                      : Colors.white),
+              SettingViewCell(name: "重新开始", color: ColorUtil.main_app)
             ])),
       ),
     );

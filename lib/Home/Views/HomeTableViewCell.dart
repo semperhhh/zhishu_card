@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
 
@@ -92,7 +93,9 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       onPressed: () {
         print("click button");
         widget.model.isDone = true;
-        setState(() {});
+        setState(() {
+          updateCurrentTask();
+        });
         widget.didSetCallback(); // 回调
       },
       child: Container(
@@ -192,17 +195,27 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         child: _container,
         onLongPress: () {
           print("长按添加记录");
-          showTextFieldDialogView(
+          showDescriptionChangeDialogView(
                   context: context, currentStr: widget.model.descriptionString)
               .then((value) {
             print("showTextFieldDialogView - $value");
-            setState(() {
+            if (value != widget.model.descriptionString) {
               widget.model.descriptionString = value;
-            });
+              setState(() {
+                updateCurrentTask(); // 更新偏好
+              });
+            }
           });
           // showToastDialog(
           // context: context, milliseconds: 2000, text: "点击了弹窗!!!");
         });
     return _gesture;
+  }
+
+  // 更新偏好
+  void updateCurrentTask() {
+    UserPrefereTool.sharedWriteCurrentTask().then((value) {
+      print("更新currentTask改变到偏好 - $value");
+    });
   }
 }
