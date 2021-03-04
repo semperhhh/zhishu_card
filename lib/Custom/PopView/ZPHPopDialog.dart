@@ -67,14 +67,17 @@ Future<String> showTextFieldDialogView(
                 contentPadding: EdgeInsets.all(15),
                 hintText: hintStr,
                 hintStyle: TextStyle(fontSize: 15.sp)),
-            style: TextStyle(fontSize: 16.sp),
+            style: TextStyle(
+                fontSize: 16.sp,
+                color: Theme.of(context).textTheme.bodyText2.color),
             maxLines: null);
 
         // 输入View
         Widget contentView = Container(
             constraints: BoxConstraints(minHeight: 80, maxHeight: 280),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(4)),
+                color: Theme.of(context).backgroundColor,
+                borderRadius: BorderRadius.circular(4)),
             width: 280,
             child: _textfield);
 
@@ -122,7 +125,7 @@ Future<String> showTextFieldDialogView(
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Material(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                   child: Column(
                     children: [
                       contentView,

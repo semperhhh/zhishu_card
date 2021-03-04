@@ -17,9 +17,7 @@ class HomeAddVC extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("新建任务"),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        shadowColor: Colors.transparent,
+        title: Text("新建任务", style: Theme.of(context).textTheme.headline6),
       ),
       body: GestureDetector(
         child: SingleChildScrollView(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/ThemeTool.dart';
+import 'package:zhishu_card/Tools/Global.dart';
+import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'Views/SettingTopView.dart';
 import 'Views/SettingViewCell.dart';
+import 'package:get/get.dart';
 
 // 数据共享
 class SettingInheritedWidget extends InheritedWidget {
@@ -44,27 +47,23 @@ class _SettingViewControllerState extends State<SettingViewController>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("设置", style: TextStyle(color: Colors.white)),
+        title: Text(
+          "设置",
+          style: Theme.of(context).textTheme.headline6,
+        ),
       ),
       body: SettingInheritedWidget(
         index: 0,
         child: Container(
-            color: ThemeTool.isDark(context)
+            color: ThemeModel.isDarkMode(context)
                 ? ColorUtil.main_dark_app
                 : ColorUtil.grey,
             child: ListView(children: [
               SettingTopView(),
               SizedBox(height: 40),
-              SettingViewCell(
-                  name: "推送设置",
-                  color: ThemeTool.isDark(context)
-                      ? ColorUtil.main_dark1_app
-                      : Colors.white),
-              SettingViewCell(
-                  name: "关于",
-                  color: ThemeTool.isDark(context)
-                      ? ColorUtil.main_dark1_app
-                      : Colors.white),
+              // SettingViewCell(name: "推送"),
+              SettingViewCell(name: "外观"),
+              SettingViewCell(name: "关于"),
               SettingViewCell(name: "重新开始", color: ColorUtil.main_app)
             ])),
       ),

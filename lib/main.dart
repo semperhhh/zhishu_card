@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
@@ -10,14 +9,16 @@ import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:zhishu_card/Tools/ThemeTool.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import 'Home/HomeAddVC.dart';
 import 'Custom/Extensions/CustomFloatingActionLocation.dart';
 import 'Login/LoginViewController.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'Tools/ThemeModel.dart';
 
 main(List<String> args) {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark); // 导航栏
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting()
       .then((_) => Global.init().then((value) => runApp(MyApp())));
@@ -30,23 +31,33 @@ class MyApp extends StatelessWidget {
       builder: (context, constraints) {
         ScreenUtil.init(constraints,
             designSize: Size(375, 667), allowFontScaling: false);
-        return MaterialApp(
-          initialRoute: "/",
-          theme: ThemeTool.getTheme(false),
-          darkTheme: ThemeTool.getTheme(true),
-          routes: {
-            "/": (context) => UserPrefereToolLogin.isName()
-                ? RootViewController()
-                : LoginViewController(),
-            "/root": (context) => RootViewController(),
-            "/home": (context) => HomeViewController(),
-            "/setting": (context) => SettingViewController(),
-            "/homeAdd": (context) => HomeAddVC(),
-            "/settingAbout": (context) => SettingAboutVC(),
-            "/settingSend": (context) => SettingSendVC(),
-            "/login": (context) => LoginViewController(),
-            "/homeCalendar": (context) => HomeCalendarVC(),
-          },
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: ThemeModel()),
+          ],
+          child: Consumer<ThemeModel>(
+            builder: (_, thememodel, __) {
+              return GetMaterialApp(
+                initialRoute: "/",
+                theme: ThemeModel.getTheme(),
+                darkTheme: ThemeModel.getTheme(isDarkMode: true),
+                themeMode: thememodel.themeMode,
+                routes: {
+                  "/": (context) => UserPrefereToolLogin.isName()
+                      ? RootViewController()
+                      : LoginViewController(),
+                  "/root": (context) => RootViewController(),
+                  "/home": (context) => HomeViewController(),
+                  "/setting": (context) => SettingViewController(),
+                  "/homeAdd": (context) => HomeAddVC(),
+                  "/settingAbout": (context) => SettingAboutVC(),
+                  "/settingSend": (context) => SettingSendVC(),
+                  "/login": (context) => LoginViewController(),
+                  "/homeCalendar": (context) => HomeCalendarVC(),
+                },
+              );
+            },
+          ),
         );
       },
     );
@@ -67,8 +78,6 @@ class _RootViewControllerState extends State<RootViewController> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themedata = Theme.of(context);
-    bool isDark = themedata.brightness == Brightness.dark;
     Widget scaf = Scaffold(
         body: PageView(
           pageSnapping: false, // 回弹
@@ -77,7 +86,9 @@ class _RootViewControllerState extends State<RootViewController> {
           controller: _pageController,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: isDark ? ColorUtil.black : Colors.white,
+          backgroundColor: ThemeModel.isDarkMode(context)
+              ? ColorUtil.main_dark1_app
+              : Colors.white,
           selectedFontSize: 12,
           unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
           selectedLabelStyle: TextStyle(fontFamily: fontErasBold),

@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
+import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
+import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 
 class SettingTopView extends StatefulWidget {
@@ -112,7 +115,9 @@ class _SettingTopViewState extends State<SettingTopView> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Colors.black87,
+                              color: ThemeModel.isDarkMode(context)
+                                  ? ColorUtil.main_light_app
+                                  : Colors.black87,
                               fontWeight: FontWeight.w600,
                               fontFamily: fontPingFange,
                               fontSize: 20.sp))
@@ -120,7 +125,9 @@ class _SettingTopViewState extends State<SettingTopView> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Colors.black45,
+                              color: ThemeModel.isDarkMode(context)
+                                  ? ColorUtil.main_light_app
+                                  : Colors.black45,
                               fontWeight: FontWeight.w600,
                               fontSize: 20.sp)))
             ],
@@ -132,13 +139,19 @@ class _SettingTopViewState extends State<SettingTopView> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      color: Colors.black54,
+                      color: ThemeModel.isDarkMode(context)
+                          ? ColorUtil.main_light_app
+                          : Colors.black45,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.normal))
               : Text("目标",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black45, fontSize: 13.sp))
+                  style: TextStyle(
+                      color: ThemeModel.isDarkMode(context)
+                          ? ColorUtil.main_light_app
+                          : Colors.black45,
+                      fontSize: 13.sp))
         ],
       ),
     );
@@ -198,7 +211,9 @@ class _SettingTopViewState extends State<SettingTopView> {
 
     Widget content = Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ThemeModel.isDarkMode(context)
+              ? ColorUtil.main_dark1_app
+              : Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
         margin: EdgeInsets.only(top: 20, left: 15, right: 15),

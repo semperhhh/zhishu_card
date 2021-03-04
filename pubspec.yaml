@@ -48,6 +48,8 @@ dependencies:
   keyboard_avoider: ^0.1.2
   # getx
   get:
+  # Provider
+  provider: ^4.3.3
   
 dev_dependencies:
   flutter_test:

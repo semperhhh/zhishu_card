@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
+import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
-import 'package:zhishu_card/Tools/ThemeTool.dart';
+import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../Tools/ColorUtil.dart';
 import 'Models/HomeModel.dart';
@@ -52,32 +54,39 @@ class _HomeViewControllerState extends State<HomeViewController>
 
   @override
   Widget build(BuildContext context) {
+    print("123");
     return Scaffold(
-      body: Column(children: [
-        SizedBox(
-            height: ScreenUtil().statusBarHeight,
-            child: Container(
-                color: ThemeTool.isDark(context)
+      body: Column(
+        children: [
+          SizedBox(
+              height: ScreenUtil().statusBarHeight,
+              child: Container(
+                color: ThemeModel.isDarkMode(context)
                     ? ColorUtil.main_dark_app
-                    : ColorUtil.grey)),
-        // _topView(),
-        _bodyView()
-      ]),
+                    : ColorUtil.grey,
+              )),
+          // _topView(),
+          _bodyView(context)
+        ],
+      ),
     );
   }
 
-  Widget _bodyView() {
+  Widget _bodyView(BuildContext context) {
     return Expanded(
-        child: Container(
-      color:
-          ThemeTool.isDark(context) ? ColorUtil.main_dark_app : ColorUtil.grey,
-      child: Obx(() {
-        return ListView.builder(
-            padding: EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-            itemBuilder: (context, index) => _itemBuilder(context, index),
-            itemCount: dataList.length + 1);
-      }),
-    ));
+      child: Container(
+        color: ThemeModel.isDarkMode(context)
+            ? ColorUtil.main_dark_app
+            : ColorUtil.grey,
+        child: Obx(() {
+          return ListView.builder(
+              padding:
+                  EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+              itemBuilder: (context, index) => _itemBuilder(context, index),
+              itemCount: dataList.length + 1);
+        }),
+      ),
+    );
   }
 
   // cell
@@ -113,7 +122,7 @@ class _HomeViewControllerState extends State<HomeViewController>
                           style: TextStyle(
                               fontSize: 32.sp,
                               fontWeight: fontMedium,
-                              color: ThemeTool.isDark(context)
+                              color: ThemeModel.isDarkMode(context)
                                   ? ColorUtil.main_light_app
                                   : ColorUtil.main_dark_app)),
                     ),
