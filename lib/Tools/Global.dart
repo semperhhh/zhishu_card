@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
-import 'ColorUtil.dart';
-import 'MainTool.dart';
 import 'UserPrefereTool.dart';
 import 'SqliteTool.dart';
 

@@ -25,16 +25,8 @@ class HomeModel {
       _$HomeModelFromJson(json);
   Map<String, dynamic> toJson() => _$HomeModelToJson(this);
 
-  // HomeModel.fromJSON(Map<String, dynamic> json)
-  //     : name = json["name"],
-  //       time = json["time"],
-  //       isDone = json["isDone"],
-  //       descriptionString = json["descriptionString"];
+  bool operator ==(other) => this.taskId > other.taskId;
 
-  // Map<String, dynamic> toMap() => <String, dynamic>{
-  //       "name": name,
-  //       "time": time,
-  //       "isDone": isDone,
-  //       "descriptionString": descriptionString
-  //     };
+  @override
+  int get hashCode => taskId.hashCode;
 }

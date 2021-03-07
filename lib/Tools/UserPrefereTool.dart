@@ -1,6 +1,4 @@
-// 分享工具类
-
-import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:zhishu_card/Home/Models/HomeModel.dart';
@@ -8,8 +6,9 @@ import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
 import 'package:zhishu_card/Tools/SqliteTool.dart';
 import '../Home/Models/HomeModel.dart';
-import 'package:get/get.dart';
+import 'JSONTool.dart';
 
+// 用户工具类
 const String ISFIRSTLSUNCHAPP = "isFirstLaunchApp"; // 第一次打开app
 const String CURRENTTIME = "currentTime"; // 当前时间
 const String CURRENTTASK = "currentTask"; // 当前任务
@@ -18,11 +17,21 @@ const String TASKID = "taskId"; // 任务id
 const String NAME = "name"; // 昵称
 const String DESC = "desc"; // 目标
 const String FIGHTING = "fighting"; // 鸡汤
+const String APPEARANCETYPE = "appearanceType"; // 外观
 
 class UserPrefereTool {
   static SharedPreferences _pres;
-  static int _taskId = _pres.getInt("TASKID") ?? 0;
-  static String name;
+  static int _taskId = _pres.getInt(TASKID) ?? 0;
+  static String name = _pres.getString(NAME) ?? "昵称";
+  static String desc = _pres.getString(DESC) ?? "目标";
+  static String fighting =
+      _pres.getString(FIGHTING) ?? "今天也要fighting!(点击修改激励语)";
+  static int appearanceType = _pres.getInt(APPEARANCETYPE) ?? 0;
+  // 今天任务
+  static String currentTask = _pres.getString(CURRENTTASK);
+  // 全部任务
+  static String allTask = _pres.getString(ALLTASK);
+
   // init
   static Future init() async {
     _pres = await SharedPreferences.getInstance();
@@ -37,13 +46,27 @@ class UserPrefereTool {
     return _taskId;
   }
 
+  static ThemeMode currentThemeMode() {
+    switch (appearanceType) {
+      case 0:
+        return ThemeMode.system;
+      case 1:
+        return ThemeMode.light;
+      default:
+        return ThemeMode.dark;
+    }
+  }
+
+  static changeThemeMode(int type) {
+    _pres.setInt(APPEARANCETYPE, type);
+  }
+
   // 读-全部任务
   static Future<List> sharedReadAllTask() async {
-    final str = _pres.getString(ALLTASK);
-    if (str == null) {
+    if (allTask == null) {
       return [];
     }
-    List l = JSONTool.toClass(str);
+    List l = JSONTool.toClass(allTask);
     return l;
   }
 
@@ -58,26 +81,25 @@ class UserPrefereTool {
       list.add(c);
     }
     final allTaskString = JSONTool.toJSONString(list);
-    final String str = _pres.getString(ALLTASK);
     // print("allTaskString = $allTaskString \nstr = $str");
-    if (str == allTaskString) {
+    if (allTask == allTaskString) {
       print("和上次没有改变,不需要写入");
       return false;
     } else {
       _pres.setString(ALLTASK, allTaskString);
       print("写入成功 - 全部任务");
+      allTask = allTaskString;
       return true;
     }
   }
 
   // 读-今天任务
   static Future<List> sharedReadCurrentTask() async {
-    final str = _pres.getString(CURRENTTASK);
-    if (str == null) {
+    if (currentTask == null) {
       return [];
     }
     // 字符串转list
-    List l = JSONTool.toClass(str);
+    List l = JSONTool.toClass(currentTask);
     return l;
   }
 
@@ -89,14 +111,14 @@ class UserPrefereTool {
       list.add(c);
     }
     final currentTaskString = JSONTool.toJSONString(list);
-    final String str = _pres.getString(CURRENTTASK);
-    // print("currentTaskString = $currentTaskString \nstr = $str");
-    if (str == currentTaskString) {
+    // print("currentTaskString = $currentTaskString \nstr = $currentTask");
+    if (currentTask == currentTaskString) {
       print("和上次没有改变,不需要写入");
       return false;
     } else {
       _pres.setString(CURRENTTASK, currentTaskString);
       print("写入成功 - 今天任务");
+      currentTask = currentTaskString;
       return true;
     }
   }
@@ -176,47 +198,34 @@ extension UserPrefereToolLogin on UserPrefereTool {
       return true;
     }
   }
-
-  // 保存名字
-  static setName(String name) {
-    UserPrefereTool._pres.setString(NAME, name);
-  }
-
-  // 读取名字
-  static String getName() {
-    return UserPrefereTool._pres.getString(NAME);
-  }
-
-  // 保存描述
-  static setDesc(String desc) {
-    UserPrefereTool._pres.setString(DESC, desc);
-  }
-
-  // 读取描述
-  static String getDesc() {
-    return UserPrefereTool._pres.getString(DESC);
-  }
-
-  // 保存鸡汤
-  static setFighting(String fighting) {
-    UserPrefereTool._pres.setString(FIGHTING, fighting);
-  }
-
-  // 读取鸡汤
-  static String getFighting() {
-    return UserPrefereTool._pres.getString(FIGHTING);
-  }
 }
 
-// JSON工具类
-class JSONTool {
-  // 转json字符串
-  static String toJSONString<T>(T object) {
-    return jsonEncode(object);
+class UserModel extends ChangeNotifier {
+  String get name => UserPrefereTool.name;
+  String get desc => UserPrefereTool.desc;
+  String get fighting => UserPrefereTool.fighting;
+
+  set name(String str) {
+    if (name != str) {
+      UserPrefereTool.name = str;
+      UserPrefereTool._pres.setString(NAME, name);
+      notifyListeners();
+    }
   }
 
-  // json转class(list map)
-  static dynamic toClass(String string) {
-    return jsonDecode(string);
+  set desc(String str) {
+    if (desc != str) {
+      UserPrefereTool.desc = str;
+      UserPrefereTool._pres.setString(DESC, desc);
+      notifyListeners();
+    }
+  }
+
+  set fighting(String str) {
+    if (fighting != str) {
+      UserPrefereTool.fighting = str;
+      UserPrefereTool._pres.setString(FIGHTING, fighting);
+      notifyListeners();
+    }
   }
 }

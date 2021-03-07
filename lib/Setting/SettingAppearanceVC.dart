@@ -32,9 +32,9 @@ class SettingAppearanceVC extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       body: ListView(
         children: <Widget>[
+          _buildListItem("跟随系统", ThemeMode.system),
           _buildListItem("浅色", ThemeMode.light),
           _buildListItem("深色", ThemeMode.dark),
-          _buildListItem("跟随系统", ThemeMode.system)
         ],
       ),
     );

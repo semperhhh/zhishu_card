@@ -41,7 +41,7 @@ class _SettingViewCellState extends State<SettingViewCell> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SettingAboutVC()));
           } else if (name == "外观") {
-            Get.to(SettingAppearanceVC());
+            Get.to(() => SettingAppearanceVC());
           }
         },
         child: Container(

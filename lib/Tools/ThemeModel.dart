@@ -1,3 +1,5 @@
+import 'package:zhishu_card/Tools/UserPrefereTool.dart';
+
 import 'ColorUtil.dart';
 import 'MainTool.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +7,12 @@ import 'package:flutter/material.dart';
 // 全局主题
 class ThemeModel extends ChangeNotifier {
   // 主题
-  ThemeMode themeMode = ThemeMode.system;
+  ThemeMode themeMode = UserPrefereTool.currentThemeMode();
 
   set theme(ThemeMode mode) {
     if (mode != themeMode) {
       themeMode = mode;
+      UserPrefereTool.changeThemeMode(mode.index);
       notifyListeners();
       print("主题发生改变-$mode");
     }
@@ -34,8 +37,7 @@ class ThemeModel extends ChangeNotifier {
       fontFamily: fontPingFange,
       splashColor: Colors.transparent, // 水波纹
       highlightColor: Colors.transparent,
-      backgroundColor:
-          isDarkMode ? ColorUtil.main_dark_app : ColorUtil.main_light_app,
+      backgroundColor: isDarkMode ? ColorUtil.main_dark_app : ColorUtil.grey,
       textTheme: TextTheme(
         bodyText2: TextStyle(
             color: isDarkMode

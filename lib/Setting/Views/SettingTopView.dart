@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/FileUtil.dart';
-import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
@@ -45,11 +44,10 @@ class _SettingTopViewState extends State<SettingTopView> {
   @override
   void initState() {
     super.initState();
-
     // get name
     print("设置获取名字 -- ");
-    _nameStr = UserPrefereToolLogin.getName() ?? "";
-    _descStr = UserPrefereToolLogin.getDesc() ?? "";
+    _nameStr = UserPrefereTool.name ?? "";
+    _descStr = UserPrefereTool.desc ?? "";
     // get head
     FileUtil.getLocalFile("head.png").then((value) {
       if (value != null) {
@@ -165,6 +163,7 @@ class _SettingTopViewState extends State<SettingTopView> {
         showDialog(
             context: context,
             builder: (BuildContext currentText) {
+              UserModel user = Provider.of<UserModel>(currentText);
               return AlertDialog(
                 title: Text("信息"),
                 content: SingleChildScrollView(
@@ -181,24 +180,24 @@ class _SettingTopViewState extends State<SettingTopView> {
                           labelText: "小目标", hintText: "不超过20个字符")),
                 ])),
                 actions: [
-                  FlatButton(
+                  TextButton(
                       child: Text("确定"),
                       onPressed: () {
                         // 昵称
                         if (_nameController.text.length > 0) {
                           _nameStr = _nameController.text;
-                          UserPrefereToolLogin.setName(_nameController.text);
+                          user.name = _nameController.text;
                         }
                         // 描述
                         if (_descController.text.length > 0) {
                           _descStr = _descController.text;
-                          UserPrefereToolLogin.setDesc(_descController.text);
+                          user.desc = _descController.text;
                         }
                         Navigator.of(currentText).pop();
                         // 更新topview
                         setState(() {});
                       }),
-                  FlatButton(
+                  TextButton(
                       child: Text("取消"),
                       onPressed: () {
                         Navigator.of(currentText).pop();

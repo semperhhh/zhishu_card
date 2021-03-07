@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
+import 'package:zhishu_card/Custom/PopView/PHPopDialog.dart';
+import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../../Tools/ColorUtil.dart';
 import '../Models/HomeModel.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef CellDidSelectCallback = void Function();
 
@@ -209,7 +211,23 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
           // showToastDialog(
           // context: context, milliseconds: 2000, text: "点击了弹窗!!!");
         });
-    return _gesture;
+    Widget _slidable = Slidable(
+      child: _gesture,
+      actionPane: SlidableBehindActionPane(),
+      actionExtentRatio: 0.25,
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: "Delete",
+          color: Theme.of(context).backgroundColor,
+          icon: Icons.delete,
+          onTap: () {
+            deleteTask();
+          },
+        ),
+      ],
+    );
+
+    return _slidable;
   }
 
   // 更新偏好
@@ -217,5 +235,22 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     UserPrefereTool.sharedWriteCurrentTask().then((value) {
       print("更新currentTask改变到偏好 - $value");
     });
+  }
+
+  // 删除任务
+  void deleteTask() {
+    print("delete task-${widget.model.taskId}");
+    for (var i = 0; i < HomeModelUtil.shared.currentTaskList.length; i++) {
+      var m = HomeModelUtil.shared.currentTaskList[i];
+      if (m.taskId == widget.model.taskId) {
+        HomeModelUtil.shared.currentTaskList.removeAt(i);
+      }
+    }
+    for (var i = 0; i < HomeModelUtil.shared.allTaskList.length; i++) {
+      var m = HomeModelUtil.shared.allTaskList[i];
+      if (m.taskId == widget.model.taskId) {
+        HomeModelUtil.shared.allTaskList.removeAt(i);
+      }
+    }
   }
 }

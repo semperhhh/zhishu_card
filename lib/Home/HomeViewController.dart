@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:zhishu_card/Custom/PopView/ZPHPopDialog.dart';
+import 'package:zhishu_card/Custom/PopView/PHPopDialog.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
@@ -29,25 +28,24 @@ class _HomeViewControllerState extends State<HomeViewController>
   bool get wantKeepAlive => true;
 
   // 数据
-  List<HomeModel> dataList = HomeModelUtil.shared.currentTaskList;
-
-  // 鸡汤
-  UserController user = Get.put(UserController());
+  List<HomeModel> dataList;
 
   @override
   void initState() {
     super.initState();
 
+    dataList = HomeModelUtil.shared.currentTaskList;
+    print("_HomeViewControllerState - $dataList");
+
     // 第一次打开
     if (UserPrefereToolFirst.isFirstLaunchApp) {
-      final List<HomeModel> l = [
-        HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30),
-        HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
-            isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情")
-      ];
+      var m1 = HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30);
+      var m2 = HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
+          isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情");
+
       // 更新偏好
-      HomeModelUtil.shared.currentTaskList.assignAll(l);
-      HomeModelUtil.shared.allTaskList.assignAll(l);
+      HomeModelUtil.shared.currentTaskList.addAll([m1, m2]);
+      HomeModelUtil.shared.allTaskList.addAll([m1, m2]);
       UserPrefereToolFirst.userSaveTimeFirstLaunch();
     }
   }
@@ -105,12 +103,12 @@ class _HomeViewControllerState extends State<HomeViewController>
   }
 
   Widget _topView(BuildContext context) {
+    final user = Provider.of<UserModel>(context);
     return ConstrainedBox(
         constraints: BoxConstraints(minHeight: 160),
         child: Container(
             padding: EdgeInsets.only(bottom: 8),
             width: 375.sw,
-            // color: ThemeTool.isDark(context) ? Colors.black : ColorUtil.grey,
             child: Stack(
               children: [
                 Column(
@@ -131,26 +129,20 @@ class _HomeViewControllerState extends State<HomeViewController>
                       onLongPress: () {
                         print("长按");
                         showFightingChangeDialogView(
-                                context: context,
-                                currentStr: user.fightingString.value)
+                                context: context, currentStr: user.fighting)
                             .then((value) {
-                          print(value);
-                          user.fightingString.value = value;
+                          user.fighting = value;
                         });
                       },
                       child: Padding(
                         padding: EdgeInsets.only(top: 8, right: 115),
                         child: ConstrainedBox(
                           constraints: BoxConstraints(minHeight: 66),
-                          child: Obx(() {
-                            print(
-                                "user.fightingString.value - ${user.fightingString.value}");
-                            return Text(
-                              user.fightingString.value,
-                              style: TextStyle(
-                                  fontSize: 18.sp, fontFamily: fontKuaile),
-                            );
-                          }),
+                          child: Text(
+                            user.fighting,
+                            style: TextStyle(
+                                fontSize: 18.sp, fontFamily: fontKuaile),
+                          ),
                         ),
                       ),
                     ),
@@ -164,18 +156,4 @@ class _HomeViewControllerState extends State<HomeViewController>
               ],
             )));
   }
-}
-
-class UserController extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-
-    ever(fightingString, (_) {
-      UserPrefereToolLogin.setFighting(fightingString.value);
-    });
-  }
-
-  var fightingString =
-      (UserPrefereToolLogin.getFighting() ?? "今天也要fighting!(点击修改激励语)").obs;
 }

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zhishu_card/Custom/UI/PHBaseButton.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 
 // 自定义toast
@@ -89,13 +91,11 @@ Future<String> showTextFieldDialogView(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: TextButton(
+                child: PHBaseButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(ColorUtil.grey),
-                  ),
+                  color: ColorUtil.grey,
                   child: Text(
                     "稍后",
                     style: TextStyle(fontSize: 16, color: Colors.black54),
@@ -103,18 +103,16 @@ Future<String> showTextFieldDialogView(
                 ),
               ),
               Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    print("textcontroller - ${_textcontroller.text}");
-                    Navigator.of(context).pop("navigator pop");
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(ColorUtil.blue),
-                  ),
+                child: PHBaseButton(
                   child: Text(
                     "确定",
                     style: TextStyle(fontSize: 16, color: Colors.black87),
                   ),
+                  onPressed: () {
+                    print("textcontroller - ${_textcontroller.text}");
+                    Navigator.of(context).pop("navigator pop");
+                  },
+                  color: ColorUtil.blue,
                 ),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/HomeViewController.dart';
@@ -20,8 +21,9 @@ import 'Tools/ThemeModel.dart';
 main(List<String> args) {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark); // 导航栏
   WidgetsFlutterBinding.ensureInitialized();
-  initializeDateFormatting()
-      .then((_) => Global.init().then((value) => runApp(MyApp())));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+      (value) => initializeDateFormatting()
+          .then((_) => Global.init().then((value) => runApp(MyApp()))));
 }
 
 class MyApp extends StatelessWidget {
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(value: ThemeModel()),
+            ChangeNotifierProvider.value(value: UserModel()),
           ],
           child: Consumer<ThemeModel>(
             builder: (_, thememodel, __) {

@@ -35,6 +35,7 @@ class _SettingViewControllerState extends State<SettingViewController>
   @override
   void initState() {
     super.initState();
+    print("_SettingViewControllerState");
   }
 
   @override

@@ -50,6 +50,8 @@ dependencies:
   get:
   # Provider
   provider: ^4.3.3
+  # 列表侧滑
+  flutter_slidable: ^0.5.7
   
 dev_dependencies:
   flutter_test:
