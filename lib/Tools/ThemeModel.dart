@@ -25,7 +25,7 @@ class ThemeModel extends ChangeNotifier {
   static ThemeData getTheme({bool isDarkMode = false}) {
     return ThemeData(
       platform: TargetPlatform.iOS,
-      primaryColor: ColorUtil.main_app,
+      primaryColor: ColorUtil.fromHex("#5B7CFF"),
       primaryIconTheme: IconThemeData(
           color:
               isDarkMode ? ColorUtil.main_light_app : ColorUtil.main_dark_app),

@@ -92,14 +92,23 @@ class _RootViewControllerState extends State<RootViewController> {
           backgroundColor: ThemeModel.isDarkMode(context)
               ? ColorUtil.main_dark1_app
               : Colors.white,
-          selectedFontSize: 12,
-          unselectedLabelStyle: TextStyle(fontFamily: fontErasBold),
-          selectedLabelStyle: TextStyle(fontFamily: fontErasBold),
+          unselectedLabelStyle: TextStyle(
+              fontFamily: fontErasBold,
+              fontWeight: FontWeight.w500,
+              fontSize: 11),
+          selectedLabelStyle: TextStyle(
+              fontFamily: fontErasBold,
+              fontWeight: FontWeight.w500,
+              fontSize: 11),
+          selectedIconTheme: IconThemeData(color: ColorUtil.fromHex("#5B7CFF")),
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: "home"),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage("asset/images/homepage_copy.png")),
+                label: "首页"),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: "add"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "setting"),
+                icon: ImageIcon(AssetImage("asset/images/setting_copy.png")),
+                label: "设置"),
           ],
           onTap: ((index) {
             if (index == 1) {
@@ -124,11 +133,11 @@ class _RootViewControllerState extends State<RootViewController> {
                     builder: (context) => HomeAddVC(), fullscreenDialog: true));
           },
           child: Container(
-            child: Icon(Icons.add, color: Colors.white),
-            width: 80,
-            height: 48,
+            child: Image.asset("asset/images/tabbar_add.png"),
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24), color: Colors.blue),
+                borderRadius: BorderRadius.circular(22), color: Colors.white),
           ),
           style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent)),

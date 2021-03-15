@@ -61,7 +61,7 @@ class _HomeViewControllerState extends State<HomeViewController>
               child: Container(
                 color: ThemeModel.isDarkMode(context)
                     ? ColorUtil.main_dark_app
-                    : ColorUtil.grey,
+                    : Colors.white,
               )),
           // _topView(),
           _bodyView(context)
@@ -75,7 +75,7 @@ class _HomeViewControllerState extends State<HomeViewController>
       child: Container(
         color: ThemeModel.isDarkMode(context)
             ? ColorUtil.main_dark_app
-            : ColorUtil.grey,
+            : Colors.white,
         child: Obx(() {
           return ListView.builder(
               padding:
