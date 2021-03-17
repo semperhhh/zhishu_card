@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zhishu_card/Login/LoginViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../SettingAboutVC.dart';
 import '../SettingSendVC.dart';
 import '../SettingAppearanceVC.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingViewCell extends StatefulWidget {
   String name;
-  Color color;
-  SettingViewCell({Key key, @required this.name, this.color}) : super(key: key);
+  String iconName;
+  SettingViewCell({Key key, @required this.name, @required this.iconName})
+      : super(key: key);
   @override
   _SettingViewCellState createState() => _SettingViewCellState();
 }
@@ -21,7 +20,39 @@ class SettingViewCell extends StatefulWidget {
 class _SettingViewCellState extends State<SettingViewCell> {
   @override
   Widget build(BuildContext context) {
-    // bool isDark = ;
+    Widget contentView = Container(
+      height: 64,
+      child: Stack(
+        alignment: AlignmentDirectional.centerStart,
+        children: <Widget>[
+          Positioned(
+            left: 20,
+            child: Image.asset(
+              widget.iconName,
+              width: 24,
+              height: 24,
+            ),
+          ),
+          Positioned(
+            left: 64,
+            child: Text(
+              widget.name,
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Positioned(
+            right: 20,
+            child: Image.asset("asset/images/setting_arrows.png"),
+          )
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: (ThemeModel.isDarkMode(context)
+            ? ColorUtil.main_dark1_app
+            : Colors.white),
+      ),
+    );
+
     var gesture = GestureDetector(
         onTap: () {
           final name = widget.name;
@@ -41,26 +72,11 @@ class _SettingViewCellState extends State<SettingViewCell> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SettingAboutVC()));
           } else if (name == "外观") {
-            Get.to(() => SettingAppearanceVC());
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingAppearanceVC()));
           }
         },
-        child: Container(
-          margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-          height: 64,
-          child: Center(
-            child: Text(
-              widget.name,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-          ),
-          decoration: BoxDecoration(
-              color: widget.color != null
-                  ? widget.color
-                  : (ThemeModel.isDarkMode(context)
-                      ? ColorUtil.main_dark1_app
-                      : Colors.white),
-              borderRadius: BorderRadius.circular(8)),
-        ));
+        child: contentView);
     return gesture;
   }
 }

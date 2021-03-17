@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:provider/provider.dart';
-import 'package:zhishu_card/Custom/PopView/PHPopDialog.dart';
 import 'package:zhishu_card/Home/HomeCalendarVC.dart';
 import 'package:zhishu_card/Home/Util/HomeModelUtil.dart';
+import 'package:zhishu_card/Home/Views/HomeTopView.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/MainTool.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'package:zhishu_card/Tools/UserPrefereTool.dart';
 import '../Tools/ColorUtil.dart';
@@ -55,17 +53,7 @@ class _HomeViewControllerState extends State<HomeViewController>
     print("123");
     return Scaffold(
       body: Column(
-        children: [
-          SizedBox(
-              height: ScreenUtil().statusBarHeight,
-              child: Container(
-                color: ThemeModel.isDarkMode(context)
-                    ? ColorUtil.main_dark_app
-                    : Colors.white,
-              )),
-          // _topView(),
-          _bodyView(context)
-        ],
+        children: [_bodyView(context)],
       ),
     );
   }
@@ -78,8 +66,6 @@ class _HomeViewControllerState extends State<HomeViewController>
             : Colors.white,
         child: Obx(() {
           return ListView.builder(
-              padding:
-                  EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
               itemBuilder: (context, index) => _itemBuilder(context, index),
               itemCount: dataList.length + 1);
         }),
@@ -91,7 +77,7 @@ class _HomeViewControllerState extends State<HomeViewController>
   Widget _itemBuilder(BuildContext context, int index) {
     print("_itemBuilder");
     if (index == 0) {
-      return _topView(context);
+      return HomeTopView();
     } else {
       return HomeTableViewCell(
         model: dataList[index - 1],
@@ -100,60 +86,5 @@ class _HomeViewControllerState extends State<HomeViewController>
         },
       );
     }
-  }
-
-  Widget _topView(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
-    return ConstrainedBox(
-        constraints: BoxConstraints(minHeight: 160),
-        child: Container(
-            padding: EdgeInsets.only(bottom: 8),
-            width: 375.sw,
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Text("任务",
-                          style: TextStyle(
-                              fontSize: 32.sp,
-                              fontWeight: fontMedium,
-                              color: ThemeModel.isDarkMode(context)
-                                  ? ColorUtil.main_light_app
-                                  : ColorUtil.main_dark_app)),
-                    ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onLongPress: () {
-                        print("长按");
-                        showFightingChangeDialogView(
-                                context: context, currentStr: user.fighting)
-                            .then((value) {
-                          user.fighting = value;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 8, right: 115),
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(minHeight: 66),
-                          child: Text(
-                            user.fighting,
-                            style: TextStyle(
-                                fontSize: 18.sp, fontFamily: fontKuaile),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                    bottom: 2,
-                    right: 0,
-                    child: Image.asset("asset/images/home_top.png",
-                        width: 100, height: 100)),
-              ],
-            )));
   }
 }

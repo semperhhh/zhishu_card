@@ -163,10 +163,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       child: Stack(
         children: [
           Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
-              child: Container(height: 0.5, color: ColorUtil.grey)),
-          Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(left: 20, bottom: 12, top: 0, right: 20),
               child: Text(
                 widget.model.descriptionString,
                 style: TextStyle(fontSize: 13.sp),
@@ -183,7 +180,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
     );
 
     Widget _container = Container(
-      margin: EdgeInsets.only(top: 6, bottom: 6),
+      margin: EdgeInsets.only(top: 8, bottom: 8),
       child: ClipRRect(
         child: Container(
           child: contentView,
@@ -218,7 +215,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       secondaryActions: <Widget>[
         IconSlideAction(
           caption: "Delete",
-          color: Theme.of(context).backgroundColor,
+          color: Colors.white,
           icon: Icons.delete,
           onTap: () {
             deleteTask();
@@ -227,7 +224,10 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
       ],
     );
 
-    return _slidable;
+    return Padding(
+      padding: EdgeInsets.only(left: 20, right: 20),
+      child: _slidable,
+    );
   }
 
   // 更新偏好

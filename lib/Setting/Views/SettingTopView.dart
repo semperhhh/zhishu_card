@@ -78,8 +78,8 @@ class _SettingTopViewState extends State<SettingTopView> {
   @override
   Widget build(BuildContext context) {
     var headView = Container(
-      height: 60,
-      width: 60,
+      height: 72,
+      width: 72,
       child: GestureDetector(
         onTap: () {
           print("GestureDetector");
@@ -87,12 +87,11 @@ class _SettingTopViewState extends State<SettingTopView> {
         },
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            border: Border.all(width: 4, color: ColorUtil.grey),
+            borderRadius: BorderRadius.all(Radius.circular(36)),
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: _image == null
-                    ? AssetImage("asset/images/me_head_empty.png")
+                    ? AssetImage("asset/images/setting_head_empty.png")
                     : FileImage(_image)),
           ),
         ),
@@ -118,16 +117,16 @@ class _SettingTopViewState extends State<SettingTopView> {
                                   : Colors.black87,
                               fontWeight: FontWeight.w600,
                               fontFamily: fontPingFange,
-                              fontSize: 20.sp))
+                              fontSize: 26.sp))
                       : Text("名字",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: ThemeModel.isDarkMode(context)
                                   ? ColorUtil.main_light_app
-                                  : Colors.black45,
+                                  : ColorUtil.fromHex("#222222"),
                               fontWeight: FontWeight.w600,
-                              fontSize: 20.sp)))
+                              fontSize: 26.sp)))
             ],
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
@@ -140,16 +139,16 @@ class _SettingTopViewState extends State<SettingTopView> {
                       color: ThemeModel.isDarkMode(context)
                           ? ColorUtil.main_light_app
                           : Colors.black45,
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.normal))
-              : Text("目标",
+              : Text("冲鸭!越努力越幸运",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: ThemeModel.isDarkMode(context)
                           ? ColorUtil.main_light_app
-                          : Colors.black45,
-                      fontSize: 13.sp))
+                          : ColorUtil.fromHex("#ABABAB"),
+                      fontSize: 14.sp))
         ],
       ),
     );
@@ -212,14 +211,13 @@ class _SettingTopViewState extends State<SettingTopView> {
         decoration: BoxDecoration(
           color: ThemeModel.isDarkMode(context)
               ? ColorUtil.main_dark1_app
-              : Colors.white,
+              : ColorUtil.fromHex("#FBFBFF"),
           borderRadius: BorderRadius.circular(12),
         ),
-        margin: EdgeInsets.only(top: 20, left: 15, right: 15),
-        height: 140,
-        padding: EdgeInsets.only(left: 20),
+        height: 175.sp,
+        padding: EdgeInsets.only(left: 20, right: 20),
         child: Row(
-          children: [headView, Expanded(child: nameGesture)],
+          children: [Expanded(child: nameGesture), headView],
         ));
     return content;
   }
