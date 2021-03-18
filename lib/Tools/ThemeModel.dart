@@ -25,19 +25,19 @@ class ThemeModel extends ChangeNotifier {
   static ThemeData getTheme({bool isDarkMode = false}) {
     return ThemeData(
       platform: TargetPlatform.iOS,
-      primaryColor: ColorUtil.fromHex("#5B7CFF"),
+      // primaryColor: ColorUtil.fromHex("#5B7CFF"),
       primaryIconTheme: IconThemeData(
           color:
               isDarkMode ? ColorUtil.main_light_app : ColorUtil.main_dark_app),
       brightness: isDarkMode ? Brightness.dark : Brightness.light,
       appBarTheme: AppBarTheme(
-        color: isDarkMode ? ColorUtil.main_dark1_app : ColorUtil.main_app,
-        shadowColor: isDarkMode ? ColorUtil.main_dark1_app : Colors.white,
+        color: isDarkMode ? ColorUtil.main_dark1_app : Colors.white,
+        shadowColor: isDarkMode ? ColorUtil.main_dark1_app : Colors.transparent,
       ),
       fontFamily: fontPingFange,
       splashColor: Colors.transparent, // 水波纹
       highlightColor: Colors.transparent,
-      backgroundColor: isDarkMode ? ColorUtil.main_dark_app : ColorUtil.grey,
+      backgroundColor: isDarkMode ? ColorUtil.main_dark_app : Colors.white,
       textTheme: TextTheme(
         bodyText2: TextStyle(
             color: isDarkMode

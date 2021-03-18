@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
-import 'package:zhishu_card/Tools/Global.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
 import 'Views/SettingTopView.dart';
 import 'Views/SettingViewCell.dart';
@@ -39,14 +39,15 @@ class _SettingViewControllerState extends State<SettingViewController>
             SettingTopView(),
             SizedBox(height: 20),
             SettingViewCell(
-              name: "关于",
-              iconName: "asset/images/setting_about.png",
-            ),
-            // SettingViewCell(name: "推送"),
-            SettingViewCell(
               name: "外观",
               iconName: "asset/images/setting_send.png",
             ),
+            // SettingViewCell(name: "推送"),
+            SettingViewCell(
+              name: "关于",
+              iconName: "asset/images/setting_about.png",
+            ),
+
             SettingViewCell(
               name: "重新开始",
               iconName: "asset/images/setting_exit.png",

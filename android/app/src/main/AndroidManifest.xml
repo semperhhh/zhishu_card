@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zhishu_card">
    <application
-        android:label="zhishu_card"
+        android:label="质数任务"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

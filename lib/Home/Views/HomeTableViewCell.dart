@@ -107,7 +107,7 @@ class _HomeTableViewCellState extends State<HomeTableViewCell> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(36), color: Colors.white),
         child: Text(
-          "打卡",
+          "完成打卡",
           style: TextStyle(
               color: _cellcolor.bgColor,
               fontWeight: fontMedium,

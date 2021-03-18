@@ -212,19 +212,13 @@ class _SettingTopViewState extends State<SettingTopView> {
           color: ThemeModel.isDarkMode(context)
               ? ColorUtil.main_dark1_app
               : ColorUtil.fromHex("#FBFBFF"),
-          borderRadius: BorderRadius.circular(12),
         ),
-        height: 175.sp,
-        padding: EdgeInsets.only(left: 20, right: 20),
+        height: 175.sp + ScreenUtil().statusBarHeight,
+        padding: EdgeInsets.only(
+            left: 20, right: 20, top: ScreenUtil().statusBarHeight),
         child: Row(
           children: [Expanded(child: nameGesture), headView],
         ));
     return content;
-  }
-
-  // 父类widget值(InheritedWidget)改变时调用
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 }

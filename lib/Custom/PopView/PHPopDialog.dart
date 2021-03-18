@@ -76,7 +76,7 @@ Future<String> showTextFieldDialogView(
 
         // 输入View
         Widget contentView = Container(
-            constraints: BoxConstraints(minHeight: 80, maxHeight: 280),
+            constraints: BoxConstraints(minHeight: 120, maxHeight: 280),
             decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(4)),
@@ -120,28 +120,30 @@ Future<String> showTextFieldDialogView(
         );
 
         return UnconstrainedBox(
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Material(
-                  color: Theme.of(context).backgroundColor,
-                  child: Column(
-                    children: [
-                      contentView,
-                      SizedBox(height: 8),
-                      buttonView,
-                    ],
-                  ),
-                )));
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Material(
+              color: Theme.of(context).backgroundColor,
+              child: Column(
+                children: [
+                  contentView,
+                  SizedBox(height: 8),
+                  buttonView,
+                ],
+              ),
+            ),
+          ),
+        );
       },
       barrierColor: Colors.black54,
       barrierDismissible: true,
-      transitionDuration: Duration(milliseconds: 300),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return ScaleTransition(
-          scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
-          child: child,
-        );
-      },
+      transitionDuration: Duration(milliseconds: 200),
+      // transitionBuilder: (context, animation, secondaryAnimation, child) {
+      //   return ScaleTransition(
+      //     scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+      //     child: child,
+      //   );
+      // },
     ),
   );
 

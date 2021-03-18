@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         ScreenUtil.init(constraints,
-            designSize: Size(375, 667), allowFontScaling: false);
+            designSize: Size(375, 667), allowFontScaling: true);
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(value: ThemeModel()),
@@ -101,6 +101,7 @@ class _RootViewControllerState extends State<RootViewController> {
               fontWeight: FontWeight.w500,
               fontSize: 11),
           selectedIconTheme: IconThemeData(color: ColorUtil.fromHex("#5B7CFF")),
+          selectedItemColor: ColorUtil.fromHex("#5B7CFF"),
           items: [
             BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage("asset/images/homepage_copy.png")),
