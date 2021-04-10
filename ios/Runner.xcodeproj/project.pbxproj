@@ -14,6 +14,10 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		DAFDED9C260C431A0045AAC3 /* PHReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */; };
+		DAFDED9F260C460F0045AAC3 /* PHNaviViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDED9E260C460F0045AAC3 /* PHNaviViewController.swift */; };
+		DAFDEDE4260DC7CF0045AAC3 /* ZSGlobalTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDEDE3260DC7CF0045AAC3 /* ZSGlobalTool.swift */; };
+		DAFDEDE8260DCDC70045AAC3 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDEDE7260DCDC70045AAC3 /* UIViewController+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +50,10 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B51E4213B357766A33BC37AC /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		D53917DD476BE19F74E9FB09 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHReportViewController.swift; sourceTree = "<group>"; };
+		DAFDED9E260C460F0045AAC3 /* PHNaviViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHNaviViewController.swift; sourceTree = "<group>"; };
+		DAFDEDE3260DC7CF0045AAC3 /* ZSGlobalTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZSGlobalTool.swift; sourceTree = "<group>"; };
+		DAFDEDE7260DCDC70045AAC3 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
 		ED3DF2962506C4F9C7B0CDF0 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +112,9 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				DAFDEDE5260DCCAC0045AAC3 /* Common */,
+				DAFDED9D260C45F50045AAC3 /* Navi */,
+				DAFDED9A260C42E00045AAC3 /* Report */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -114,6 +125,47 @@
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		DAFDED9A260C42E00045AAC3 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		DAFDED9D260C45F50045AAC3 /* Navi */ = {
+			isa = PBXGroup;
+			children = (
+				DAFDED9E260C460F0045AAC3 /* PHNaviViewController.swift */,
+			);
+			path = Navi;
+			sourceTree = "<group>";
+		};
+		DAFDEDE2260DC77F0045AAC3 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				DAFDEDE3260DC7CF0045AAC3 /* ZSGlobalTool.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		DAFDEDE5260DCCAC0045AAC3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DAFDEDE6260DCCB50045AAC3 /* Extension */,
+				DAFDEDE2260DC77F0045AAC3 /* Tools */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		DAFDEDE6260DCCB50045AAC3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DAFDEDE7260DCDC70045AAC3 /* UIViewController+extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		DB60D634F4A879ECE4CBB984 /* Frameworks */ = {
@@ -272,6 +324,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				DAFDED9C260C431A0045AAC3 /* PHReportViewController.swift in Sources */,
+				DAFDEDE4260DC7CF0045AAC3 /* ZSGlobalTool.swift in Sources */,
+				DAFDED9F260C460F0045AAC3 /* PHNaviViewController.swift in Sources */,
+				DAFDEDE8260DCDC70045AAC3 /* UIViewController+extension.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

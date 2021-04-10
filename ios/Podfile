@@ -32,6 +32,12 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  pod 'SnapKit', '~> 5.0.1'
+  
+#  local
+  pod 'DesignKit', :path => './Frameworks/DesignKit', :inhibit_warnings => false
+  
 end
 
 post_install do |installer|

@@ -33,14 +33,12 @@ class _HomeViewControllerState extends State<HomeViewController>
     super.initState();
 
     dataList = HomeModelUtil.shared.currentTaskList;
-    print("_HomeViewControllerState - $dataList");
 
     // 第一次打开
     if (UserPrefereToolFirst.isFirstLaunchApp) {
       var m1 = HomeModel(UserPrefereTool.sharedTaskId(), "英语单词", 30);
       var m2 = HomeModel(UserPrefereTool.sharedTaskId(), "数学习题", 100,
           isDone: true, descriptionString: "💻任务完成后可以长按添加记录心情");
-
       // 更新偏好
       HomeModelUtil.shared.currentTaskList.addAll([m1, m2]);
       HomeModelUtil.shared.allTaskList.addAll([m1, m2]);
@@ -50,7 +48,6 @@ class _HomeViewControllerState extends State<HomeViewController>
 
   @override
   Widget build(BuildContext context) {
-    print("123");
     return Scaffold(
       body: Column(
         children: [_bodyView(context)],
@@ -65,9 +62,13 @@ class _HomeViewControllerState extends State<HomeViewController>
             ? ColorUtil.main_dark_app
             : Colors.white,
         child: Obx(() {
-          return ListView.builder(
-              itemBuilder: (context, index) => _itemBuilder(context, index),
-              itemCount: dataList.length + 1);
+          return dataList.length > 0
+              ? ListView.builder(
+                  itemBuilder: (context, index) => _itemBuilder(context, index),
+                  itemCount: dataList.length + 1)
+              : ListView(
+                  children: [HomeTopView(), HomeEmptyView()],
+                );
         }),
       ),
     );

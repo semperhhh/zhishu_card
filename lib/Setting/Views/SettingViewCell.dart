@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:zhishu_card/Login/LoginViewController.dart';
 import 'package:zhishu_card/Tools/ColorUtil.dart';
 import 'package:zhishu_card/Tools/ThemeModel.dart';
-import 'package:zhishu_card/Tools/UserPrefereTool.dart';
-import '../SettingAboutVC.dart';
-import '../SettingSendVC.dart';
-import '../SettingAppearanceVC.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingViewCell extends StatefulWidget {
   String name;
   String iconName;
-  SettingViewCell({Key key, @required this.name, @required this.iconName})
-      : super(key: key);
+  void Function() callback;
+  SettingViewCell({
+    Key key,
+    @required this.name,
+    @required this.iconName,
+    this.callback,
+  }) : super(key: key);
   @override
   _SettingViewCellState createState() => _SettingViewCellState();
 }
@@ -55,26 +55,7 @@ class _SettingViewCellState extends State<SettingViewCell> {
 
     var gesture = GestureDetector(
         onTap: () {
-          final name = widget.name;
-          if (name == "重新开始") {
-            print("exit -- ");
-            UserPrefereToolLogin.exit();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (buildContext) => LoginViewController(),
-                  fullscreenDialog: true),
-            );
-          } else if (name == "推送") {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SettingSendVC()));
-          } else if (name == "关于") {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SettingAboutVC()));
-          } else if (name == "外观") {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SettingAppearanceVC()));
-          }
+          widget.callback();
         },
         child: contentView);
     return gesture;

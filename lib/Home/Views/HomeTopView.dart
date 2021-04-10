@@ -74,3 +74,15 @@ class HomeTopView extends StatelessWidget {
     );
   }
 }
+
+class HomeEmptyView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "当前无任务",
+        style: Theme.of(context).textTheme.bodyText2,
+      ),
+    );
+  }
+}

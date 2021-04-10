@@ -79,11 +79,14 @@ import PhotosUI
     // 调用相册
     let vc: FlutterViewController = self.window.rootViewController as! FlutterViewController
 
-    methodChannel = FlutterMethodChannel(name: "picture_page", binaryMessenger: vc as! FlutterBinaryMessenger)
+    methodChannel = FlutterMethodChannel(name: "report_page", binaryMessenger: vc as! FlutterBinaryMessenger)
     methodChannel.setMethodCallHandler { (call, result) in
-        if call.method == "picture" {
-            print("call method - ", call.method)
-//            self.selectUserPrivateState()
+        if call.method == "report_page_push" {
+            print("周报界面")
+            let report = PHReportViewController()
+            let navi = PHNaviViewController(rootViewController: report)
+            navi.modalPresentationStyle = .fullScreen
+            self.window.rootViewController?.present(navi, animated: true, completion: nil)
         }
     }
 

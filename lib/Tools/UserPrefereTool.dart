@@ -187,11 +187,12 @@ extension UserPrefereToolLogin on UserPrefereTool {
   static void login(String nickName) {
     print("登录设置名字 - $nickName");
     UserPrefereTool._pres.setString(NAME, nickName);
+    UserPrefereTool.name = nickName;
   }
 
   // 是否有名字(登录过)
   static bool isName() {
-    String name = UserPrefereTool._pres.getString(NAME);
+    String name = UserPrefereTool.name;
     if (name == "" || name == null) {
       return false;
     } else {

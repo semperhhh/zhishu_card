@@ -1,4 +1,5 @@
 PODS:
+  - DesignKit (0.1.0)
   - Flutter (1.0.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
@@ -9,22 +10,28 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - SnapKit (5.0.1)
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
+  - DesignKit (from `./Frameworks/DesignKit`)
   - Flutter (from `Flutter`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - SnapKit (~> 5.0.1)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
   trunk:
     - FMDB
+    - SnapKit
 
 EXTERNAL SOURCES:
+  DesignKit:
+    :path: "./Frameworks/DesignKit"
   Flutter:
     :path: Flutter
   image_picker:
@@ -37,13 +44,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
+  DesignKit: c54daddc87a77b498b490a244c6f02c4fa78a8ad
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: c9ed42cbaa66b7a57d4928e201a6e224ca458af1
 
 COCOAPODS: 1.10.0
