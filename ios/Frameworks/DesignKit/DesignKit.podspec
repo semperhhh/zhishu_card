@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DesignKit'
-  s.version          = '0.1.0'
+  s.version          = '0.0.1'
   s.summary          = 'design test'
 
 # This description is used to generate tags and improve search results.
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
 design test description.
                        DESC
 
-  s.homepage         = 'https://github.com/zphui5409@163.com/DesignKit'
+  s.homepage         = 'https://github.com/semperhhh/DesignKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zphui5409@163.com' => 'zphui5409@163.com' }

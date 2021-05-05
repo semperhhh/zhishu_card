@@ -14,6 +14,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		DAD8432126428164009BC8E8 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD8432026428164009BC8E8 /* ReportTableViewCell.swift */; };
 		DAFDED9C260C431A0045AAC3 /* PHReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */; };
 		DAFDED9F260C460F0045AAC3 /* PHNaviViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDED9E260C460F0045AAC3 /* PHNaviViewController.swift */; };
 		DAFDEDE4260DC7CF0045AAC3 /* ZSGlobalTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFDEDE3260DC7CF0045AAC3 /* ZSGlobalTool.swift */; };
@@ -50,6 +51,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B51E4213B357766A33BC37AC /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		D53917DD476BE19F74E9FB09 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		DAD8432026428164009BC8E8 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
 		DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHReportViewController.swift; sourceTree = "<group>"; };
 		DAFDED9E260C460F0045AAC3 /* PHNaviViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHNaviViewController.swift; sourceTree = "<group>"; };
 		DAFDEDE3260DC7CF0045AAC3 /* ZSGlobalTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZSGlobalTool.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				DAFDED9B260C431A0045AAC3 /* PHReportViewController.swift */,
+				DAD8432026428164009BC8E8 /* ReportTableViewCell.swift */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				DAFDEDE4260DC7CF0045AAC3 /* ZSGlobalTool.swift in Sources */,
 				DAFDED9F260C460F0045AAC3 /* PHNaviViewController.swift in Sources */,
 				DAFDEDE8260DCDC70045AAC3 /* UIViewController+extension.swift in Sources */,
+				DAD8432126428164009BC8E8 /* ReportTableViewCell.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

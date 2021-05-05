@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DesignKit
+import ZPHSuppleKit
 
 class PHReportViewController: UIViewController {
     
@@ -14,7 +14,7 @@ class PHReportViewController: UIViewController {
         let v = UITableView()
         v.dataSource = self
         v.delegate = self
-        v.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "cell")
+        v.register(ReportTableViewCell.classForCoder(), forCellReuseIdentifier: "cell")
         return v
     }()
     
@@ -49,10 +49,7 @@ extension PHReportViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "日程"
-        cell.backgroundColor = UIColor.designKit.main_app
-        cell.textLabel?.textColor = UIColor.designKit.main_text
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ReportTableViewCell
         return cell
     }
 }

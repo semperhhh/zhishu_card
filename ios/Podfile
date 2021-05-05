@@ -34,10 +34,11 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   
   pod 'SnapKit', '~> 5.0.1'
+  pod 'Alamofire', '~> 5.2'
   
 #  local
   pod 'DesignKit', :path => './Frameworks/DesignKit', :inhibit_warnings => false
-  
+  pod 'ZPHSuppleKit', :path => './Frameworks/ZPHSuppleKit', :inhibit_warnings => false
 end
 
 post_install do |installer|
